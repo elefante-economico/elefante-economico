@@ -73,8 +73,55 @@ layout: default
       border-radius: 6px;
     }
     .tags { font-size: 0.9rem; color: #666; margin-top: 8px; }
+
+    #loading {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      margin-top: 40px;
+    }
   </style>
 </head>
+
+<body>
+
+<header>
+  <div style="display:flex; align-items:center; gap:15px;">
+    <img src="https://elelefanteeconomico.blogspot.com/favicon.ico" alt="Logo" style="width:40px; height:40px;">
+    <h1 style="margin:0; font-size:1.8rem;">{{ site.title }}</h1>
+  </div>
+  <nav>
+    <a href="/elefante-economico/">Inicio</a>
+    <a href="#sobre">Sobre el autor</a>
+    <a href="https://elelefanteeconomico.blogspot.com" target="_blank">Blog original</a>
+  </nav>
+</header>
+
+<p>{{ site.description }}</p>
+
+<input id="searchInput" type="text" placeholder="Buscar artículos...">
+
+<div id="loading">Cargando artículos...</div>
+<div id="feed" style="display:none;"></div>
+
+<div id="pagination" style="margin-top:30px; display:flex; justify-content:center; gap:20px;">
+  <button id="prevBtn">Anterior</button>
+  <button id="nextBtn">Siguiente</button>
+</div>
+
+<section id="sobre" style="margin-top:60px; padding:20px; background:white; border-radius:8px; border:1px solid #e3e3e3;">
+  <h2>Sobre el autor</h2>
+  <p>Economista, investigador y analista de dinámicas procíclicas, instituciones y sistemas complejos. 
+     Autor de El Elefante Económico, un espacio dedicado a la reflexión económica rigurosa y accesible.</p>
+</section>
+
+<footer style="margin-top:60px; padding:20px; border-top:1px solid #e3e3e3; text-align:center; color:#666;">
+  <p>© {{ site.title }} — Espejo estático generado desde Blogger</p>
+  <p><a href="https://elelefanteeconomico.blogspot.com" target="_blank">Visitar blog original</a></p>
+</footer>
+
+<button id="topBtn" style="position:fixed; bottom:30px; right:30px; padding:12px 18px; background:#0056b3; color:white; border:none; border-radius:6px; cursor:pointer; display:none;">↑ Arriba</button>
+<button id="darkModeBtn" style="position:fixed; bottom:30px; left:30px; padding:12px 18px; background:#333; color:white; border:none; border-radius:6px; cursor:pointer;">Modo oscuro</button>
 
 <script>
 let currentPage = 1;
@@ -88,11 +135,11 @@ async function cargarFeed() {
     const data = await response.json();
 
     if (!data.feed || !data.feed.entry) {
-      document.getElementById("feed").innerHTML = "<p>No se encontraron artículos en el feed.</p>";
+      document.getElementById("loading").innerText = "No se encontraron artículos en el feed.";
       return;
     }
 
-    const entries = data.feed.entry;
+  const entries = data.feed.entry;
 
     items = entries.map(e => ({
       title: e.title.$t,
@@ -104,9 +151,11 @@ async function cargarFeed() {
     }));
 
     filteredItems = items;
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("feed").style.display = "block";
     mostrarPagina(currentPage);
   } catch (error) {
-    document.getElementById("feed").innerHTML = "<p>Error al cargar el feed.</p>";
+    document.getElementById("loading").innerText = "Error al cargar el feed.";
     console.error("Error al leer feed.json:", error);
   }
 }
@@ -155,116 +204,23 @@ document.getElementById("searchInput").oninput = (e) => {
   mostrarPagina(currentPage);
 };
 
+window.onscroll = () => {
+  document.getElementById("topBtn").style.display = window.scrollY > 300 ? "block" : "none";
+};
+
+document.getElementById("topBtn").onclick = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+document.getElementById("darkModeBtn").onclick = () => {
+  document.body.classList.toggle("dark-mode");
+};
+
 cargarFeed();
 </script>
 
-
-  
-<body>
-
-<header>
-  <div style="display:flex; align-items:center; gap:15px;">
-    <img src="https://elelefanteeconomico.blogspot.com/favicon.ico" alt="Logo" style="width:40px; height:40px;">
-    <h1 style="margin:0; font-size:1.8rem;">{{ site.title }}</h1>
-  </div>
-  <nav>
-    <a href="/elefante-economico/">Inicio</a>
-    <a href="#sobre">Sobre el autor</a>
-    <a href="https://elelefanteeconomico.blogspot.com" target="_blank">Blog original</a>
-  </nav>
-</header>
-
-<p>{{ site.description }}</p>
-
-<input id="searchInput" type="text" placeholder="Buscar artículos...">
-
-<div id="feed"></div>
-
-<div id="pagination" style="margin-top:30px; display:flex; justify-content:center; gap:20px;">
-  <button id="prevBtn">Anterior</button>
-  <button id="nextBtn">Siguiente</button>
-</div>
-
-<section id="sobre" style="margin-top:60px; padding:20px; background:white; border-radius:8px; border:1px solid #e3e3e3;">
-  <h2>Sobre el autor</h2>
-  <p>Economista, investigador y analista de dinámicas procíclicas, instituciones y sistemas complejos. 
-     Autor de El Elefante Económico, un espacio dedicado a la reflexión económica rigurosa y accesible.</p>
-</section>
-
-<footer style="margin-top:60px; padding:20px; border-top:1px solid #e3e3e3; text-align:center; color:#666;">
-  <p>© {{ site.title }} — Espejo estático generado desde Blogger</p>
-  <p><a href="https://elelefanteeconomico.blogspot.com" target="_blank">Visitar blog original</a></p>
-</footer>
-
-<button id="topBtn" style="position:fixed; bottom:30px; right:30px; padding:12px 18px; background:#0056b3; color:white; border:none; border-radius:6px; cursor:pointer; display:none;">↑ Arriba</button>
-<button id="darkModeBtn" style="position:fixed; bottom:30px; left:30px; padding:12px 18px; background:#333; color:white; border:none; border-radius:6px; cursor:pointer;">Modo oscuro</button>
-
-<script>
-let currentPage = 1;
-const itemsPerPage = 10;
-let items = [];
-let filteredItems = [];
-
-async function cargarFeed() {
-  try {
-    const response = await fetch("feed.json");
-    const data = await response.json();
-    const entries = data.feed.entry;
-
-    items = entries.map(e => ({
-      title: e.title.$t,
-      link: e.link.find(l => l.rel === "alternate").href,
-      summary: e.summary?.$t || e.content?.$t || "",
-      published: e.published.$t,
-      categories: e.category?.map(c => c.term) || [],
-      thumbnail: e.media$thumbnail?.url || "https://via.placeholder.com/140?text=Sin+imagen"
-    }));
-
-    filteredItems = items;
-    mostrarPagina(currentPage);
-  } catch (error) {
-    document.getElementById("feed").innerHTML = "<p>Error al cargar el feed.</p>";
-    console.error(error);
-  }
-}
-
-function mostrarPagina(page) {
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const pageItems = filteredItems.slice(start, end);
-
-  let html = "<ul>";
-  for (let item of pageItems) {
-    const fecha = new Date(item.published).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" });
-    const resumenCorto = item.summary.length > 250 ? item.summary.substring(0, 250) + "…" : item.summary;
-
-    html += `
-      <li class="article-card fade-in">
-        <img src="${item.thumbnail}" alt="Miniatura">
-        <div>
-          <a href="${item.link}" target="_blank">${item.title}</a>
-          <p><strong>${fecha}</strong></p>
-          <p>${resumenCorto}</p>
-          <p class="tags">Etiquetas: ${item.categories.join(", ")}</p>
-        </div>
-      </li>
-    `;
-  }
-  html += "</ul>";
-  document.getElementById("feed").innerHTML = html;
-}
-
-document.getElementById("prevBtn").onclick = () => { if (currentPage > 1) { currentPage--; mostrarPagina(currentPage); } };
-document.getElementById("nextBtn").onclick = () => { if (currentPage * itemsPerPage < filteredItems.length) { currentPage++; mostrarPagina(currentPage); } };
-
-document.getElementById("searchInput").oninput = (e) => {
-  const q = e.target.value.toLowerCase();
-  filteredItems = items.filter(item =>
-    item.title.toLowerCase().includes(q) ||
-    item.summary.toLowerCase().includes(q) ||
-    item.categories.some(cat => cat.toLowerCase().includes(q))
-  );
-  currentPage = 
+</body>
+</html>
 
 
 
