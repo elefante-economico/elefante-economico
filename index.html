@@ -62,8 +62,6 @@ layout: default
     .dark-mode .article-card { background: #2a2a2a; border-color: #444; }
     .article-card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
     .article-card img { width: 140px; height: 140px; object-fit: cover; border-radius: 6px; }
-    .article-card a { font-size: 1.25rem; font-weight: 600; color: #0056b3; text-decoration: none; }
-    .dark-mode .article-card a { color: #4ea3ff; }
 
     #searchInput {
       width: 100%;
@@ -139,7 +137,7 @@ async function cargarFeed() {
       return;
     }
 
-  const entries = data.feed.entry;
+    const entries = data.feed.entry;
 
     items = entries.map(e => ({
       title: e.title.$t,
@@ -147,7 +145,7 @@ async function cargarFeed() {
       summary: e.summary?.$t || e.content?.$t || "",
       published: e.published.$t,
       categories: e.category?.map(c => c.term) || [],
-      thumbnail: e.media$thumbnail?.url || "https://via.placeholder.com/140?text=Sin+imagen"
+      thumbnail: e.media$thumbnail?.url || null
     }));
 
     filteredItems = items;
@@ -172,7 +170,7 @@ function mostrarPagina(page) {
 
     html += `
       <li class="article-card">
-        <img src="${item.thumbnail}" alt="Miniatura">
+        ${item.thumbnail ? `<img src="${item.thumbnail}" alt="Miniatura">` : ""}
         <div>
           <a href="${item.link}" target="_blank">${item.title}</a>
           <p><strong>${fecha}</strong></p>
@@ -221,6 +219,7 @@ cargarFeed();
 
 </body>
 </html>
+
 
 
 
