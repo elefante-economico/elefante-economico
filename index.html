@@ -120,6 +120,12 @@ layout: default
       border:1px solid #ccc;
       border-radius:6px;
     }
+
+    .tags {
+      font-size:0.9rem;
+      color:#666;
+      margin-top:8px;
+    }
   </style>
 </head>
 
@@ -185,16 +191,25 @@ let items = [];
 let filteredItems = [];
 
 async function cargarFeed() {
-  // ESTA ES LA URL CORRECTA QUE SÍ TRAE HASTA 500 ARTÍCULOS
-  const feedUrl =
-    "https://api.rss2json.com/v1/api.json?rss_url=https://elelefanteeconomico.blogspot.com/feeds/posts/default/-/all?max-results=500";
-
-  const response = await fetch(feedUrl);
+  // Leer el feed generado por GitHub Actions
+  const response = await fetch("feed.json");
   const data = await response.json();
 
-  items = data.items;
-  filteredItems = items;
+  const entries = data.feed.entry;
 
+  items = entries.map(e => {
+    return {
+      title: e.title.$t,
+      link: e.link.find(l => l.rel === "alternate").href,
+      summary: e.summary?.$t || "",
+      content: e.content?.$t || "",
+      published: e.published.$t,
+      categories: e.category?.map(c => c.term) || [],
+      thumbnail: e.media$thumbnail?.url || "https://via.placeholder.com/140?text=Sin+imagen"
+    };
+  });
+
+  filteredItems = items;
   mostrarPagina(currentPage);
 }
 
@@ -206,28 +221,23 @@ function mostrarPagina(page) {
   let html = "<ul>";
 
   for (let item of pageItems) {
-    const title = item.title;
-    const link = item.link;
-    const summary = item.description;
-    const fecha = new Date(item.pubDate).toLocaleDateString("es-ES", {
+    const fecha = new Date(item.published).toLocaleDateString("es-ES", {
       year: "numeric",
       month: "long",
       day: "numeric"
     });
 
     const resumenCorto =
-      summary.length > 250 ? summary.substring(0, 250) + "…" : summary;
-
-    const thumbnail =
-      item.thumbnail || "https://via.placeholder.com/140?text=Sin+imagen";
+      item.summary.length > 250 ? item.summary.substring(0, 250) + "…" : item.summary;
 
     html += `
       <li class="article-card fade-in">
-        <img src="${thumbnail}" alt="Miniatura">
+        <img src="${item.thumbnail}" alt="Miniatura">
         <div>
-          <a href="${link}" target="_blank">${title}</a>
+          <a href="${item.link}" target="_blank">${item.title}</a>
           <p><strong>${fecha}</strong></p>
           <p>${resumenCorto}</p>
+          <p class="tags">Etiquetas: ${item.categories.join(", ")}</p>
         </div>
       </li>
     `;
@@ -235,7 +245,6 @@ function mostrarPagina(page) {
 
   html += "</ul>";
   document.getElementById("feed").innerHTML = html;
-
   activarAnimaciones();
 }
 
@@ -243,55 +252,7 @@ function activarAnimaciones() {
   const elementos = document.querySelectorAll(".fade-in");
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add("visible");
-    });
-  });
-  elementos.forEach((el) => observer.observe(el));
-}
 
-document.getElementById("prevBtn").onclick = () => {
-  if (currentPage > 1) {
-    currentPage--;
-    mostrarPagina(currentPage);
-  }
-};
-
-document.getElementById("nextBtn").onclick = () => {
-  if (currentPage * itemsPerPage < filteredItems.length) {
-    currentPage++;
-    mostrarPagina(currentPage);
-  }
-};
-
-document.getElementById("searchInput").oninput = (e) => {
-  const q = e.target.value.toLowerCase();
-  filteredItems = items.filter(
-    (item) =>
-      item.title.toLowerCase().includes(q) ||
-      item.description.toLowerCase().includes(q)
-  );
-  currentPage = 1;
-  mostrarPagina(currentPage);
-};
-
-window.onscroll = () => {
-  document.getElementById("topBtn").style.display =
-    window.scrollY > 300 ? "block" : "none";
-};
-
-document.getElementById("topBtn").onclick = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
-
-document.getElementById("darkModeBtn").onclick = () => {
-  document.body.classList.toggle("dark-mode");
-};
-
-cargarFeed();
-</script>
-
-</body>
-</html>
 
 
 
