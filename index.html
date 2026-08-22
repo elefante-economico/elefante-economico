@@ -76,6 +76,90 @@ layout: default
   </style>
 </head>
 
+<script>
+let currentPage = 1;
+const itemsPerPage = 10;
+let items = [];
+let filteredItems = [];
+
+async function cargarFeed() {
+  try {
+    const response = await fetch("feed.json");
+    const data = await response.json();
+
+    if (!data.feed || !data.feed.entry) {
+      document.getElementById("feed").innerHTML = "<p>No se encontraron artículos en el feed.</p>";
+      return;
+    }
+
+    const entries = data.feed.entry;
+
+    items = entries.map(e => ({
+      title: e.title.$t,
+      link: e.link.find(l => l.rel === "alternate").href,
+      summary: e.summary?.$t || e.content?.$t || "",
+      published: e.published.$t,
+      categories: e.category?.map(c => c.term) || [],
+      thumbnail: e.media$thumbnail?.url || "https://via.placeholder.com/140?text=Sin+imagen"
+    }));
+
+    filteredItems = items;
+    mostrarPagina(currentPage);
+  } catch (error) {
+    document.getElementById("feed").innerHTML = "<p>Error al cargar el feed.</p>";
+    console.error("Error al leer feed.json:", error);
+  }
+}
+
+function mostrarPagina(page) {
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const pageItems = filteredItems.slice(start, end);
+
+  let html = "<ul>";
+  for (let item of pageItems) {
+    const fecha = new Date(item.published).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" });
+    const resumenCorto = item.summary.length > 250 ? item.summary.substring(0, 250) + "…" : item.summary;
+
+    html += `
+      <li class="article-card">
+        <img src="${item.thumbnail}" alt="Miniatura">
+        <div>
+          <a href="${item.link}" target="_blank">${item.title}</a>
+          <p><strong>${fecha}</strong></p>
+          <p>${resumenCorto}</p>
+          <p class="tags">Etiquetas: ${item.categories.join(", ")}</p>
+        </div>
+      </li>
+    `;
+  }
+  html += "</ul>";
+  document.getElementById("feed").innerHTML = html;
+}
+
+document.getElementById("prevBtn").onclick = () => {
+  if (currentPage > 1) { currentPage--; mostrarPagina(currentPage); }
+};
+document.getElementById("nextBtn").onclick = () => {
+  if (currentPage * itemsPerPage < filteredItems.length) { currentPage++; mostrarPagina(currentPage); }
+};
+
+document.getElementById("searchInput").oninput = (e) => {
+  const q = e.target.value.toLowerCase();
+  filteredItems = items.filter(item =>
+    item.title.toLowerCase().includes(q) ||
+    item.summary.toLowerCase().includes(q) ||
+    item.categories.some(cat => cat.toLowerCase().includes(q))
+  );
+  currentPage = 1;
+  mostrarPagina(currentPage);
+};
+
+cargarFeed();
+</script>
+
+
+  
 <body>
 
 <header>
