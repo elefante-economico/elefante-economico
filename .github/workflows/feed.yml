@@ -1,0 +1,26 @@
+name: Actualizar feed de Blogger
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # cada 6 horas
+  workflow_dispatch:        # ejecución manual
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Descargar feed JSON de Blogger
+        run: |
+          curl -L "https://elelefanteeconomico.blogspot.com/feeds/posts/default?alt=json&max-results=500" -o feed.json
+
+      - name: Commit y push del feed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add feed.json
+          git commit -m "Actualización automática del feed" || echo "Sin cambios"
+          git push
