@@ -1,200 +1,3 @@
----
-layout: default
----
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO -->
-  <title>El Elefante Económico — Espejo</title>
-  <meta name="description" content="El Elefante Económico — análisis económico, instituciones, sistemas complejos y dinámicas procíclicas.">
-  <meta name="keywords" content="economía, macroeconomía, instituciones, desigualdad, desarrollo, análisis económico">
-  <meta name="author" content="Maxi">
-  <link rel="canonical" href="https://elefante-economico.github.io/elefante-economico/">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="El Elefante Económico — Espejo">
-  <meta property="og:description" content="Análisis económico riguroso y accesible.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/">
-  <meta property="og:image" content="https://elelefanteeconomico.blogspot.com/favicon.ico">
-
-  <!-- Animaciones -->
-  <style>
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
-
-  <!-- Estilos generales -->
-  <style>
-    body {
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      color: #222;
-      background: #fafafa;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .dark-mode {
-      background: #1e1e1e;
-      color: #ddd;
-    }
-
-    header {
-      background:#ffffff;
-      border-bottom:1px solid #e3e3e3;
-      padding:20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    nav a {
-      margin-right:20px;
-      color:#0056b3;
-      text-decoration:none;
-      font-weight:600;
-    }
-
-    #feed ul {
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-
-    .article-card {
-      background:white;
-      padding:20px;
-      margin-bottom:25px;
-      border-radius:8px;
-      border:1px solid #e3e3e3;
-      box-shadow:0 2px 4px rgba(0,0,0,0.05);
-      transition:box-shadow 0.2s ease;
-      display:flex;
-      gap:20px;
-    }
-
-    .dark-mode .article-card {
-      background:#2a2a2a;
-      border-color:#444;
-    }
-
-    .article-card:hover {
-      box-shadow:0 4px 10px rgba(0,0,0,0.08);
-    }
-
-    .article-card img {
-      width:140px;
-      height:140px;
-      object-fit:cover;
-      border-radius:6px;
-    }
-
-    .article-card a {
-      font-size:1.25rem;
-      font-weight:600;
-      color:#0056b3;
-      text-decoration:none;
-    }
-
-    .dark-mode .article-card a {
-      color:#4ea3ff;
-    }
-
-    #categorias button {
-      padding:8px 16px;
-      margin-right:10px;
-      border:1px solid #ccc;
-      background:white;
-      border-radius:6px;
-      cursor:pointer;
-      transition:background 0.3s;
-    }
-
-    #categorias button:hover {
-      background:#0056b3;
-      color:white;
-    }
-  </style>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<header>
-  <div style="display:flex; align-items:center; gap:15px;">
-    <img src="https://elelefanteeconomico.blogspot.com/favicon.ico" alt="Logo" style="width:40px; height:40px;">
-    <h1 style="margin:0; font-size:1.8rem;">{{ site.title }}</h1>
-  </div>
-  <nav>
-    <a href="/">Inicio</a>
-    <a href="#sobre">Sobre el autor</a>
-    <a href="https://elelefanteeconomico.blogspot.com" target="_blank">Blog original</a>
-  </nav>
-</header>
-
-<p>{{ site.description }}</p>
-
-<!-- BUSCADOR -->
-<input id="searchInput" type="text" placeholder="Buscar artículos..." 
-style="width:100%; padding:12px; margin:20px 0; border:1px solid #ccc; border-radius:6px;">
-
-<!-- CATEGORÍAS -->
-<div id="categorias" style="margin:30px 0;">
-  <button data-cat="todos">Todos</button>
-  <button data-cat="macroeconomía">Macroeconomía</button>
-  <button data-cat="instituciones">Instituciones</button>
-  <button data-cat="desigualdad">Desigualdad</button>
-  <button data-cat="sistemas">Sistemas complejos</button>
-</div>
-
-<!-- FEED -->
-<div id="feed"></div>
-
-<!-- PAGINACIÓN -->
-<div id="pagination" style="margin-top:30px; display:flex; justify-content:center; gap:20px;">
-  <button id="prevBtn">Anterior</button>
-  <button id="nextBtn">Siguiente</button>
-</div>
-
-<!-- SOBRE EL AUTOR -->
-<section id="sobre" style="margin-top:60px; padding:20px; background:white; border-radius:8px; border:1px solid #e3e3e3;">
-  <h2>Sobre el autor</h2>
-  <p>Economista, investigador y analista de dinámicas procíclicas, instituciones y sistemas complejos. 
-     Autor de El Elefante Económico, un espacio dedicado a la reflexión económica rigurosa y accesible.</p>
-</section>
-
-<!-- FOOTER -->
-<footer style="margin-top:60px; padding:20px; border-top:1px solid #e3e3e3; text-align:center; color:#666;">
-  <p>© {{ site.title }} — Espejo estático generado desde Blogger</p>
-  <p><a href="https://elelefanteeconomico.blogspot.com" target="_blank">Visitar blog original</a></p>
-</footer>
-
-<!-- BOTÓN ARRIBA -->
-<button id="topBtn" 
-style="position:fixed; bottom:30px; right:30px; padding:12px 18px; background:#0056b3; color:white; border:none; border-radius:6px; cursor:pointer; display:none;">
-↑ Arriba
-</button>
-
-<!-- MODO OSCURO -->
-<button id="darkModeBtn" 
-style="position:fixed; bottom:30px; left:30px; padding:12px 18px; background:#333; color:white; border:none; border-radius:6px; cursor:pointer;">
-Modo oscuro
-</button>
-
-<!-- SCRIPT COMPLETO -->
 <script>
 let currentPage = 1;
 const itemsPerPage = 10;
@@ -202,11 +5,16 @@ let items = [];
 let filteredItems = [];
 
 async function cargarFeed() {
-  const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://elelefanteeconomico.blogspot.com/feeds/posts/default";
+  // Trae hasta 500 artículos del feed de Blogger
+  const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://elelefanteeconomico.blogspot.com/feeds/posts/default?max-results=500";
+  
   const response = await fetch(feedUrl);
   const data = await response.json();
+
+  // rss2json devuelve los artículos en data.items
   items = data.items;
   filteredItems = items;
+
   mostrarPagina(currentPage);
 }
 
@@ -274,23 +82,13 @@ document.getElementById("nextBtn").onclick = () => {
 
 document.getElementById("searchInput").oninput = (e) => {
   const q = e.target.value.toLowerCase();
-  filteredItems = items.filter(item => item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q));
+  filteredItems = items.filter(item =>
+    item.title.toLowerCase().includes(q) ||
+    item.description.toLowerCase().includes(q)
+  );
   currentPage = 1;
   mostrarPagina(currentPage);
 };
-
-document.querySelectorAll('#categorias button').forEach(btn => {
-  btn.onclick = () => {
-    const categoria = btn.dataset.cat;
-    if (categoria === 'todos') {
-      filteredItems = items;
-    } else {
-      filteredItems = items.filter(item => item.title.toLowerCase().includes(categoria));
-    }
-    currentPage = 1;
-    mostrarPagina(currentPage);
-  };
-});
 
 window.onscroll = () => {
   document.getElementById("topBtn").style.display = window.scrollY > 300 ? "block" : "none";
@@ -307,8 +105,6 @@ document.getElementById("darkModeBtn").onclick = () => {
 cargarFeed();
 </script>
 
-</body>
-</html>
 
 
 
