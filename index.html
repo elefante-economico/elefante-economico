@@ -185,8 +185,9 @@ let items = [];
 let filteredItems = [];
 
 async function cargarFeed() {
+  // ESTA ES LA URL CORRECTA QUE SÍ TRAE HASTA 500 ARTÍCULOS
   const feedUrl =
-    "https://api.rss2json.com/v1/api.json?rss_url=https://elelefanteeconomico.blogspot.com/feeds/posts/default?max-results=500";
+    "https://api.rss2json.com/v1/api.json?rss_url=https://elelefanteeconomico.blogspot.com/feeds/posts/default/-/all?max-results=500";
 
   const response = await fetch(feedUrl);
   const data = await response.json();
@@ -291,6 +292,7 @@ cargarFeed();
 
 </body>
 </html>
+
 
 
 
