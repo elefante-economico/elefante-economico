@@ -122,21 +122,26 @@ let items = [];
 let filteredItems = [];
 
 async function cargarFeed() {
-  const response = await fetch("feed.json");
-  const data = await response.json();
-  const entries = data.feed.entry;
+  try {
+    const response = await fetch("feed.json");
+    const data = await response.json();
+    const entries = data.feed.entry;
 
-  items = entries.map(e => ({
-    title: e.title.$t,
-    link: e.link.find(l => l.rel === "alternate").href,
-    summary: e.summary?.$t || "",
-    published: e.published.$t,
-    categories: e.category?.map(c => c.term) || [],
-    thumbnail: e.media$thumbnail?.url || "https://via.placeholder.com/140?text=Sin+imagen"
-  }));
+    items = entries.map(e => ({
+      title: e.title.$t,
+      link: e.link.find(l => l.rel === "alternate").href,
+      summary: e.summary?.$t || e.content?.$t || "",
+      published: e.published.$t,
+      categories: e.category?.map(c => c.term) || [],
+      thumbnail: e.media$thumbnail?.url || "https://via.placeholder.com/140?text=Sin+imagen"
+    }));
 
-  filteredItems = items;
-  mostrarPagina(currentPage);
+    filteredItems = items;
+    mostrarPagina(currentPage);
+  } catch (error) {
+    document.getElementById("feed").innerHTML = "<p>Error al cargar el feed.</p>";
+    console.error(error);
+  }
 }
 
 function mostrarPagina(page) {
@@ -175,12 +180,7 @@ document.getElementById("searchInput").oninput = (e) => {
     item.summary.toLowerCase().includes(q) ||
     item.categories.some(cat => cat.toLowerCase().includes(q))
   );
-  currentPage = 1;
-  mostrarPagina(currentPage);
-};
-
-window.onscroll = () => { document.getElementById("topBtn").style.display = window.scrollY > 300 ? "block" : "none"; };
-document.getElementById("topBtn").onclick = () => { window.scrollTo
+  currentPage = 
 
 
 
