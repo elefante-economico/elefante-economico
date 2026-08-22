@@ -1,3 +1,42 @@
+<h1>{{ site.title }}</h1>
+<p>{{ site.description }}</p>
+
+<div id="feed"></div>
+
+<script>
+async function cargarFeed() {
+  const feedUrl = "https://elelefanteeconomico.blogspot.com/atom.xml?redirect=false&start-index=1&max-results=10";
+  const response = await fetch(feedUrl);
+  const text = await response.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(text, "application/xml");
+  const entries = xml.getElementsByTagName("entry");
+
+  let html = "<ul>";
+  for (let i = 0; i < entries.length; i++) {
+    const title = entries[i].getElementsByTagName("title")[0].textContent;
+    const link = entries[i].getElementsByTagName("link")[0].getAttribute("href");
+    const summary = entries[i].getElementsByTagName("summary")[0]?.textContent || "";
+    html += `<li><a href="${link}" target="_blank">${title}</a><p>${summary}</p></li>`;
+  }
+  html += "</ul>";
+
+  document.getElementById("feed").innerHTML = html;
+}
+
+cargarFeed();
+</script>
+
+<style>
+body { font-family: Arial, sans-serif; margin: 40px; }
+h1 { color: #222; }
+ul { list-style: none; padding: 0; }
+li { margin-bottom: 20px; }
+a { font-weight: bold; color: #0066cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { color: #555; }
+</style>
+
 ---
 layout: default
 ---
