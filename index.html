@@ -5,7 +5,7 @@ layout: default
 <h1>{{ site.title }}</h1>
 <p>{{ site.description }}</p>
 
-<!-- Estilos profesionales -->
+<!-- Estilos -->
 <style>
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -71,35 +71,26 @@ p {
 <!-- Contenedor del feed -->
 <div id="feed"></div>
 
-<!-- Script RSS con fecha + resumen corto -->
+<!-- Script RSS usando rss2json -->
 <script>
 async function cargarFeed() {
-  const feedUrl = "https://elelefanteeconomico.blogspot.com/atom.xml?redirect=false&start-index=1&max-results=20";
+  const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://elelefanteeconomico.blogspot.com/feeds/posts/default";
   const response = await fetch(feedUrl);
-  const text = await response.text();
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(text, "application/xml");
-  const entries = xml.getElementsByTagName("entry");
+  const data = await response.json();
 
   let html = "<ul>";
 
-  for (let i = 0; i < entries.length; i++) {
-    const entry = entries[i];
-
-    const title = entry.getElementsByTagName("title")[0].textContent;
-    const link = entry.getElementsByTagName("link")[0].getAttribute("href");
-
-    const summaryNode = entry.getElementsByTagName("summary")[0];
-    const summary = summaryNode ? summaryNode.textContent : "";
-
-    const resumenCorto = summary.length > 250 ? summary.substring(0, 250) + "…" : summary;
-
-    const published = entry.getElementsByTagName("published")[0].textContent;
-    const fecha = new Date(published).toLocaleDateString("es-ES", {
+  for (let item of data.items) {
+    const title = item.title;
+    const link = item.link;
+    const summary = item.description;
+    const fecha = new Date(item.pubDate).toLocaleDateString("es-ES", {
       year: "numeric",
       month: "long",
       day: "numeric"
     });
+
+    const resumenCorto = summary.length > 250 ? summary.substring(0, 250) + "…" : summary;
 
     html += `
       <li>
@@ -116,6 +107,7 @@ async function cargarFeed() {
 
 cargarFeed();
 </script>
+
 
 
 
