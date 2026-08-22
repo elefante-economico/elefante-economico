@@ -2,10 +2,60 @@
 layout: default
 ---
 
-<h1>{{ site.title }}</h1>
-<p>{{ site.description }}</p>
+<!-- HEADER -->
+<header style="background:#ffffff; border-bottom:1px solid #e3e3e3; padding:20px; display:flex; align-items:center; justify-content:space-between;">
+  <div style="display:flex; align-items:center; gap:15px;">
+    <img src="https://elelefanteeconomico.blogspot.com/favicon.ico" alt="Logo" style="width:40px; height:40px;">
+    <h1 style="margin:0; font-size:1.8rem; color:#111;">{{ site.title }}</h1>
+  </div>
+  <nav>
+    <a href="/" style="margin-right:20px; color:#0056b3; text-decoration:none; font-weight:600;">Inicio</a>
+    <a href="#sobre" style="margin-right:20px; color:#0056b3; text-decoration:none; font-weight:600;">Sobre el autor</a>
+    <a href="https://elelefanteeconomico.blogspot.com" target="_blank" style="color:#0056b3; text-decoration:none; font-weight:600;">Blog original</a>
+  </nav>
+</header>
 
-<!-- Estilos -->
+<p style="margin-top:20px;">{{ site.description }}</p>
+
+<!-- BUSCADOR -->
+<input id="searchInput" type="text" placeholder="Buscar artículos..." 
+style="width:100%; padding:12px; margin:20px 0; border:1px solid #ccc; border-radius:6px;">
+
+<!-- CONTENEDOR DEL FEED -->
+<div id="feed"></div>
+
+<!-- PAGINACIÓN -->
+<div id="pagination" style="margin-top:30px; display:flex; justify-content:center; gap:20px;">
+  <button id="prevBtn" style="padding:10px 20px; border:1px solid #ccc; background:white; cursor:pointer; border-radius:6px;">Anterior</button>
+  <button id="nextBtn" style="padding:10px 20px; border:1px solid #ccc; background:white; cursor:pointer; border-radius:6px;">Siguiente</button>
+</div>
+
+<!-- SOBRE EL AUTOR -->
+<section id="sobre" style="margin-top:60px; padding:20px; background:white; border-radius:8px; border:1px solid #e3e3e3;">
+  <h2>Sobre el autor</h2>
+  <p>Economista, investigador y analista de dinámicas procíclicas, instituciones y sistemas complejos. 
+     Autor de El Elefante Económico, un espacio dedicado a la reflexión económica rigurosa y accesible.</p>
+</section>
+
+<!-- FOOTER -->
+<footer style="margin-top:60px; padding:20px; border-top:1px solid #e3e3e3; text-align:center; color:#666;">
+  <p>© {{ site.title }} — Espejo estático generado desde Blogger</p>
+  <p><a href="https://elelefanteeconomico.blogspot.com" target="_blank" style="color:#0056b3; text-decoration:none;">Visitar blog original</a></p>
+</footer>
+
+<!-- BOTÓN VOLVER ARRIBA -->
+<button id="topBtn" 
+style="position:fixed; bottom:30px; right:30px; padding:12px 18px; background:#0056b3; color:white; border:none; border-radius:6px; cursor:pointer; display:none;">
+↑ Arriba
+</button>
+
+<!-- MODO OSCURO -->
+<button id="darkModeBtn" 
+style="position:fixed; bottom:30px; left:30px; padding:12px 18px; background:#333; color:white; border:none; border-radius:6px; cursor:pointer;">
+Modo oscuro
+</button>
+
+<!-- ESTILOS -->
 <style>
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -14,17 +64,12 @@ body {
   padding: 0 20px;
   color: #222;
   background: #fafafa;
+  transition: background 0.3s, color 0.3s;
 }
 
-h1 {
-  font-size: 2.4rem;
-  margin-bottom: 10px;
-  color: #111;
-}
-
-p {
-  font-size: 1rem;
-  line-height: 1.6;
+.dark-mode {
+  background: #1e1e1e;
+  color: #ddd;
 }
 
 #feed ul {
@@ -33,7 +78,7 @@ p {
   margin: 0;
 }
 
-#feed li {
+.article-card {
   background: white;
   padding: 20px;
   margin-bottom: 25px;
@@ -41,46 +86,70 @@ p {
   border: 1px solid #e3e3e3;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   transition: box-shadow 0.2s ease;
+  display:flex;
+  gap:20px;
 }
 
-#feed li:hover {
+.dark-mode .article-card {
+  background:#2a2a2a;
+  border-color:#444;
+}
+
+.article-card:hover {
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-#feed a {
+.article-card img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.article-card a {
   font-size: 1.25rem;
   font-weight: 600;
   color: #0056b3;
   text-decoration: none;
 }
 
-#feed a:hover {
+.dark-mode .article-card a {
+  color:#4ea3ff;
+}
+
+.article-card a:hover {
   text-decoration: underline;
 }
 
-#feed strong {
-  color: #444;
-  font-size: 0.95rem;
-}
-
-#feed p {
+.article-card p {
   margin: 8px 0;
 }
 </style>
 
-<!-- Contenedor del feed -->
-<div id="feed"></div>
-
-<!-- Script RSS usando rss2json -->
+<!-- SCRIPT RSS + MINIATURAS + PAGINACIÓN + BUSCADOR + MODO OSCURO + TOP BUTTON -->
 <script>
+let currentPage = 1;
+const itemsPerPage = 10;
+let items = [];
+let filteredItems = [];
+
 async function cargarFeed() {
   const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://elelefanteeconomico.blogspot.com/feeds/posts/default";
   const response = await fetch(feedUrl);
   const data = await response.json();
+  items = data.items;
+  filteredItems = items;
+  mostrarPagina(currentPage);
+}
+
+function mostrarPagina(page) {
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const pageItems = filteredItems.slice(start, end);
 
   let html = "<ul>";
 
-  for (let item of data.items) {
+  for (let item of pageItems) {
     const title = item.title;
     const link = item.link;
     const summary = item.description;
@@ -92,11 +161,16 @@ async function cargarFeed() {
 
     const resumenCorto = summary.length > 250 ? summary.substring(0, 250) + "…" : summary;
 
+    const thumbnail = item.thumbnail || "https://via.placeholder.com/140?text=Sin+imagen";
+
     html += `
-      <li>
-        <a href="${link}" target="_blank">${title}</a>
-        <p><strong>${fecha}</strong></p>
-        <p>${resumenCorto}</p>
+      <li class="article-card">
+        <img src="${thumbnail}" alt="Miniatura">
+        <div>
+          <a href="${link}" target="_blank">${title}</a>
+          <p><strong>${fecha}</strong></p>
+          <p>${resumenCorto}</p>
+        </div>
       </li>
     `;
   }
@@ -105,8 +179,42 @@ async function cargarFeed() {
   document.getElementById("feed").innerHTML = html;
 }
 
+document.getElementById("prevBtn").onclick = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    mostrarPagina(currentPage);
+  }
+};
+
+document.getElementById("nextBtn").onclick = () => {
+  if (currentPage * itemsPerPage < filteredItems.length) {
+    currentPage++;
+    mostrarPagina(currentPage);
+  }
+};
+
+document.getElementById("searchInput").oninput = (e) => {
+  const q = e.target.value.toLowerCase();
+  filteredItems = items.filter(item => item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q));
+  currentPage = 1;
+  mostrarPagina(currentPage);
+};
+
+window.onscroll = () => {
+  document.getElementById("topBtn").style.display = window.scrollY > 300 ? "block" : "none";
+};
+
+document.getElementById("topBtn").onclick = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+document.getElementById("darkModeBtn").onclick = () => {
+  document.body.classList.toggle("dark-mode");
+};
+
 cargarFeed();
 </script>
+
 
 
 
