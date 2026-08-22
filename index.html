@@ -1,85 +1,11 @@
-<h1>{{ site.title }}</h1>
-<p>{{ site.description }}</p>
-
-<div id="feed"></div>
-
-<script>
-async function cargarFeed() {
-  const feedUrl = "https://elelefanteeconomico.blogspot.com/atom.xml?redirect=false&start-index=1&max-results=10";
-  const response = await fetch(feedUrl);
-  const text = await response.text();
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(text, "application/xml");
-  const entries = xml.getElementsByTagName("entry");
-
-  let html = "<ul>";
-  for (let i = 0; i < entries.length; i++) {
-    const title = entries[i].getElementsByTagName("title")[0].textContent;
-    const link = entries[i].getElementsByTagName("link")[0].getAttribute("href");
-    const summary = entries[i].getElementsByTagName("summary")[0]?.textContent || "";
-    html += `<li><a href="${link}" target="_blank">${title}</a><p>${summary}</p></li>`;
-  }
-  html += "</ul>";
-
-  document.getElementById("feed").innerHTML = html;
-}
-
-cargarFeed();
+---
+layout: default
+---
 
 <h1>{{ site.title }}</h1>
 <p>{{ site.description }}</p>
 
-<div id="feed"></div>
-
-</script>
-  
-<script>
-async function cargarFeed() {
-  const feedUrl = "https://elelefanteeconomico.blogspot.com/atom.xml?redirect=false&start-index=1&max-results=20";
-  const response = await fetch(feedUrl);
-  const text = await response.text();
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(text, "application/xml");
-  const entries = xml.getElementsByTagName("entry");
-
-  let html = "<ul>";
-
-  for (let i = 0; i < entries.length; i++) {
-    const entry = entries[i];
-
-    const title = entry.getElementsByTagName("title")[0].textContent;
-    const link = entry.getElementsByTagName("link")[0].getAttribute("href");
-
-    const summaryNode = entry.getElementsByTagName("summary")[0];
-    const summary = summaryNode ? summaryNode.textContent : "";
-
-    // Resumen corto (250 caracteres)
-    const resumenCorto = summary.length > 250 ? summary.substring(0, 250) + "…" : summary;
-
-    // Fecha de publicación
-    const published = entry.getElementsByTagName("published")[0].textContent;
-    const fecha = new Date(published).toLocaleDateString("es-ES", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
-
-    html += `
-      <li>
-        <a href="${link}" target="_blank">${title}</a>
-        <p><strong>${fecha}</strong></p>
-        <p>${resumenCorto}</p>
-      </li>
-    `;
-  }
-
-  html += "</ul>";
-  document.getElementById("feed").innerHTML = html;
-}
-
-cargarFeed();
-</script>
-
+<!-- Estilos profesionales -->
 <style>
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -142,28 +68,54 @@ p {
 }
 </style>
 
-<style>
-body { font-family: Arial, sans-serif; margin: 40px; }
-h1 { color: #222; }
-ul { list-style: none; padding: 0; }
-li { margin-bottom: 20px; }
-a { font-weight: bold; color: #0066cc; text-decoration: none; }
-a:hover { text-decoration: underline; }
-p { color: #555; }
-</style>
+<!-- Contenedor del feed -->
+<div id="feed"></div>
 
----
-layout: default
----
+<!-- Script RSS con fecha + resumen corto -->
+<script>
+async function cargarFeed() {
+  const feedUrl = "https://elelefanteeconomico.blogspot.com/atom.xml?redirect=false&start-index=1&max-results=20";
+  const response = await fetch(feedUrl);
+  const text = await response.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(text, "application/xml");
+  const entries = xml.getElementsByTagName("entry");
 
-<h1>{{ site.title }}</h1>
-<p>{{ site.description }}</p>
+  let html = "<ul>";
 
-<ul>
-{% for entry in site.feed.entries %}
-  <li>
-    <a href="{{ entry.link }}">{{ entry.title }}</a>
-    <p>{{ entry.summary }}</p>
-  </li>
-{% endfor %}
-</ul>
+  for (let i = 0; i < entries.length; i++) {
+    const entry = entries[i];
+
+    const title = entry.getElementsByTagName("title")[0].textContent;
+    const link = entry.getElementsByTagName("link")[0].getAttribute("href");
+
+    const summaryNode = entry.getElementsByTagName("summary")[0];
+    const summary = summaryNode ? summaryNode.textContent : "";
+
+    const resumenCorto = summary.length > 250 ? summary.substring(0, 250) + "…" : summary;
+
+    const published = entry.getElementsByTagName("published")[0].textContent;
+    const fecha = new Date(published).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+    html += `
+      <li>
+        <a href="${link}" target="_blank">${title}</a>
+        <p><strong>${fecha}</strong></p>
+        <p>${resumenCorto}</p>
+      </li>
+    `;
+  }
+
+  html += "</ul>";
+  document.getElementById("feed").innerHTML = html;
+}
+
+cargarFeed();
+</script>
+
+
+
