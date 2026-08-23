@@ -1,16 +1,13 @@
 name: Actualizar feed de Blogger
-
 on:
   schedule:
     - cron: "0 */6 * * *"   # cada 6 horas
   workflow_dispatch:        # ejecución manual
-
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write        # habilita permisos para hacer push
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,11 +16,19 @@ jobs:
         run: |
           curl -L "https://elelefanteeconomico.blogspot.com/feeds/posts/default?alt=json&max-results=500" -o feed.json
 
-      - name: Commit y push del feed
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Generar páginas estáticas por artículo
+        run: ruby generate_posts.rb
+
+      - name: Commit y push
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add feed.json
-          git commit -m "Actualización automática del feed" || echo "Sin cambios"
+          git add feed.json posts/ sitemap.xml
+          git commit -m "Actualización automática del feed y páginas estáticas" || echo "Sin cambios"
           git push origin HEAD:main
 
