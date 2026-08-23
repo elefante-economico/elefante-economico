@@ -1,12 +1,22 @@
 #!/usr/bin/env ruby
 
-puts "=== Generando posts ==="
-system("ruby generate.rb")
+def run_step(name, command)
+  puts "\n=== Ejecutando #{name} ==="
+  success = system(command)
 
-puts "\n=== Generando sitemap ==="
-system("ruby sitemap.rb")
+  if success
+    puts "✔ #{name} completado correctamente."
+  else
+    puts "✖ ERROR: #{name} falló."
+    puts "Deteniendo pipeline."
+    exit(1)
+  end
+end
 
-puts "\n=== Generando índice ==="
-system("ruby index.rb")
+run_step("Generación de posts", "ruby generate.rb")
+run_step("Generación de sitemap", "ruby sitemap.rb")
+run_step("Generación de índice", "ruby index.rb")
 
-puts "\n=== Todo listo ==="
+puts "\n=== Pipeline completado sin errores ==="
+puts "Todo listo para subir a GitHub Pages."
+
