@@ -1,0 +1,180 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> — El Elefante Económico</title>
+  <meta name="description" content="">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2025/08/visualizacion-de-umbrales-en-sistemas.html">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/visualizacion-de-umbrales-en-sistemas.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1></h1>
+  <p class="meta">2025-08-25T10:36:00.000+02:00 · sistemas complejos</p>
+  <article><!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Visualización de Umbrales en Sistemas Complejos</title>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+  <h1>Visualización de Umbrales en Sistemas Complejos</h1>
+
+  <p>Muchos sistemas complejos alcanzan un punto crítico donde su comportamiento cambia radicalmente. Este punto puede modelarse como un <strong>umbral de concentración</strong>, donde la derivada de una función clave tiende a cero:</p>
+
+  <p>
+
+    $$
+
+    \frac{df(x)}{dx} \to 0
+
+    $$
+
+  </p>
+
+  <p>La siguiente gráfica muestra una función logística comprimida, que representa cómo se estabiliza un sistema al acercarse a su umbral:</p>
+
+  <canvas id="thresholdChart" width="600" height="400"></canvas>
+
+  <script>
+
+    const ctx = document.getElementById('thresholdChart').getContext('2d');
+
+    const xValues = [];
+
+    const yValues = [];
+
+    for (let x = 0; x <= 10; x += 0.1) {
+
+      xValues.push(x.toFixed(1));
+
+      const y = 1 / (1 + Math.exp(-2 * (x - 5))); // Función logística centrada en x=5
+
+      yValues.push(y);
+
+    }
+
+    new Chart(ctx, {
+
+      type: 'line',
+
+      data: {
+
+        labels: xValues,
+
+        datasets: [{
+
+          label: 'f(x): Función logística',
+
+          data: yValues,
+
+          borderColor: 'blue',
+
+          fill: false,
+
+          tension: 0.3
+
+        }]
+
+      },
+
+      options: {
+
+        plugins: {
+
+          title: {
+
+            display: true,
+
+            text: 'Comportamiento de f(x) cerca del umbral'
+
+          }
+
+        },
+
+        scales: {
+
+          x: {
+
+            title: {
+
+              display: true,
+
+              text: 'x (variable del sistema)'
+
+            }
+
+          },
+
+          y: {
+
+            title: {
+
+              display: true,
+
+              text: 'f(x) (respuesta del sistema)'
+
+            },
+
+            min: 0,
+
+            max: 1
+
+          }
+
+        }
+
+      }
+
+    });
+
+  </script>
+
+  <h2>Interpretación</h2>
+
+  <p>La función se estabiliza cerca de \( x = 5 \), donde su derivada se aproxima a cero. Este punto representa el <strong>umbral</strong>: el sistema deja de responder significativamente a cambios en la variable \( x \).</p>
+
+  <p>Este comportamiento se observa en:</p>
+
+  <ul>
+
+    <li>📊 Portafolios financieros: riesgo marginal se estabiliza</li>
+
+    <li>🏙️ Distribución salarial: desigualdad comprimida</li>
+
+    <li>🧠 Machine learning: reducción de dimensiones óptima</li>
+
+    <li>🏭 Logística: saturación de nodos de distribución</li>
+
+  </ul>
+
+  <p>Explorar estos umbrales permite entender mejor los límites estructurales de cada sistema y optimizar decisiones estratégicas.</p>
+
+</body>
+
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2025/08/visualizacion-de-umbrales-en-sistemas.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>

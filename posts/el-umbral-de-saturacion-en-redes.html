@@ -1,0 +1,73 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> — El Elefante Económico</title>
+  <meta name="description" content="">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2025/08/el-umbral-de-saturacion-en-redes.html">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/el-umbral-de-saturacion-en-redes.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1></h1>
+  <p class="meta">2025-08-25T10:29:00.003+02:00 · logística, sistemas complejos</p>
+  <article><!DOCTYPE html>
+<html>
+<head>
+  <title>El Umbral de Saturación en Redes Logísticas</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1>El Umbral de Saturación en Redes Logísticas</h1>
+  <p>En sistemas de distribución, añadir más centros logísticos mejora la eficiencia hasta cierto punto. Más allá de ese umbral, el sistema se vuelve redundante y los costos marginales superan los beneficios. Este fenómeno puede modelarse como una <strong>singularidad de concentración</strong>.</p>
+
+  <h2>Modelo Matemático</h2>
+  <p>Sea \( N \) el número de centros logísticos, y \( C(N) \) el costo total del sistema, compuesto por:</p>
+  <ul>
+    <li>Costos fijos por centro: \( c_f \cdot N \)</li>
+    <li>Costos de transporte promedio: \( c_t(N) \), que decrecen con \( N \)</li>
+    <li>Costos de redundancia: \( c_r(N) \), que crecen con \( N \)</li>
+  </ul>
+
+  <p>Entonces:</p>
+  <p>
+    $$
+    C(N) = c_f \cdot N + c_t(N) + c_r(N)
+    $$
+  </p>
+
+  <p>Definimos el <strong>umbral de saturación</strong> como el punto donde la derivada del costo total respecto a \( N \) cambia de signo:</p>
+  <p>
+    $$
+    \frac{dC}{dN} = 0
+    $$
+  </p>
+
+  <p>Este umbral indica que el sistema ha alcanzado su eficiencia óptima. Añadir más nodos logísticos no reduce el costo total, sino que lo incrementa.</p>
+
+  <h2>Interpretación Dirac</h2>
+  <p>En el límite, si todos los recursos se concentran en un único nodo óptimo, el sistema se comporta como una distribución delta:</p>
+  <p>
+    $$
+    \lim_{N \to 1} C(N) \sim \delta(x - x_0)
+    $$
+  </p>
+
+  <p>Donde \( x_0 \) es la ubicación óptima del centro logístico único. Este modelo permite pensar la logística como un sistema de compresión espacial.</p>
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2025/08/el-umbral-de-saturacion-en-redes.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>

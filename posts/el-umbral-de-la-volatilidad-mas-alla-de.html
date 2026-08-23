@@ -1,0 +1,132 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> — El Elefante Económico</title>
+  <meta name="description" content="">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2025/08/el-umbral-de-la-volatilidad-mas-alla-de.html">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/el-umbral-de-la-volatilidad-mas-alla-de.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1></h1>
+  <p class="meta">2025-08-24T14:56:00.000+02:00 · diversificación, Finanzas, teoría moderna de las finanzas</p>
+  <article><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>El Umbral de la Volatilidad: Más Allá de la Diversificación</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    article {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #0056b3;
+    }
+    strong {
+      color: #d9534f;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <article>
+    <h1>Más Allá de la Diversificación: ¿Existe un Umbral de Volatilidad?</h1>
+
+    <p>
+      En el mundo de las inversiones, la diversificación es un mantra. Nos dicen que es la única comida "gratis" en finanzas: una forma de reducir el riesgo sin sacrificar los retornos esperados. Pero, ¿hasta dónde llega este principio? ¿Llega un punto en el que añadir un activo más ya no importa?
+    </p>
+
+    <p>
+      Aquí exploraremos una idea fascinante: el <strong>Umbral de la Volatilidad</strong>, un concepto análogo al "umbral del infinito" que, desde la perspectiva de la concentración, nos ayuda a entender los límites de la diversificación.
+    </p>
+
+    <h2>La Ley de los Rendimientos Decrecientes</h2>
+    <p>
+      El principio de la diversificación se basa en que los precios de los activos no se mueven de forma idéntica. Si un activo cae, es probable que otro suba, o al menos no caiga tanto. El resultado es que la volatilidad total de una cartera, medida por su desviación estándar ($$\sigma_p$$), se reduce a medida que aumenta el número de activos ($$N$$).
+    </p>
+
+    <p>
+      La relación se ve algo así:
+    </p>
+
+    $$ \sigma_p = \sqrt{ w_i^2 \sigma_i^2 + w_j^2 \sigma_j^2 + 2 w_i w_j \rho_{ij} \sigma_i \sigma_j } $$
+
+    <p>
+      Esta fórmula, aunque parezca compleja, nos dice algo simple: la volatilidad de un portafolio depende de la volatilidad de sus activos ($$\sigma_i$$), sus ponderaciones ($$w_i$$), y crucialmente, la correlación entre ellos ($$\rho_{ij}$$). A medida que $$N$$ aumenta y las correlaciones no son perfectas, los términos de covarianza se anulan, reduciendo el riesgo.
+    </p>
+
+    <p>
+      Si graficamos la volatilidad del portafolio en función del número de activos, obtenemos una curva que desciende rápidamente al principio y luego se aplana.
+    </p>
+
+    <h2>El Umbral de la Volatilidad</h2>
+    <p>
+      La clave está en la forma de esa curva. El riesgo de una cartera tiene dos componentes:
+    </p>
+    <ul>
+      <li><strong>Riesgo No Sistemático o Idiosincrático</strong>: Este es el riesgo específico de cada activo (por ejemplo, que una empresa tenga un escándalo). Se puede diversificar.</li>
+      <li><strong>Riesgo Sistemático o de Mercado</strong>: Este es el riesgo que afecta a todo el mercado (por ejemplo, una recesión). No se puede diversificar.</li>
+    </ul>
+
+    <p>
+      A medida que añadimos activos, el riesgo no sistemático se "comprime" hasta volverse insignificante. El <strong>umbral de la volatilidad</strong> es ese punto en la curva donde la reducción de la volatilidad se vuelve casi nula. En ese momento, la cartera ha alcanzado un estado de <strong>concentración efectiva</strong>, y su riesgo está dominado casi por completo por el riesgo del mercado.
+    </p>
+
+    <p>
+      Podríamos decir que el "cambio deja de importar" porque la adición de un activo más no nos acercará significativamente a una cartera con volatilidad cero.
+    </p>
+
+    <h2>El Delta de Dirac como Límite Teórico</h2>
+    <p>
+      En el límite, a medida que $$N$$ tiende a infinito ($$N \to \infty$$), la distribución de los retornos de nuestra cartera se aproxima a un solo punto: el retorno esperado del mercado.
+    </p>
+
+    $$ \lim_{N \to \infty} f_N(\text{retornos}) = \delta(\text{retorno esperado}) $$
+
+    <p>
+      Esta es la analogía financiera de la <strong>función delta de Dirac</strong> que vimos en el concepto original. El delta de Dirac representa una concentración infinita de masa en un solo punto, y en nuestro modelo, representa el estado ideal de una cartera perfectamente diversificada, donde toda la dispersión (riesgo no sistemático) ha sido eliminada.
+    </p>
+
+    <h2>Conclusión</h2>
+    <p>
+      El "umbral de la volatilidad" no es un número mágico que podamos señalar, sino una <strong>transición conceptual</strong>. Pensar en la diversificación de esta manera nos ayuda a entender que es un proceso con límites, y que el verdadero objetivo no es eliminar el riesgo por completo, sino alcanzar el punto en el que nuestro riesgo se ha reducido a su forma más fundamental: el riesgo del propio mercado.
+    </p>
+
+    <p>
+      Al igual que el "umbral del infinito" nos ayuda a pensar en lo ilimitado desde lo finito, este umbral financiero nos recuerda que el verdadero desafío no está en añadir más activos, sino en comprender el riesgo que no podemos evitar.
+    </p>
+
+  </article>
+</body>
+</html>
+<div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2025/08/el-umbral-de-la-volatilidad-mas-alla-de.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>

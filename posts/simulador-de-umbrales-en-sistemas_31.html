@@ -1,0 +1,212 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> — El Elefante Económico</title>
+  <meta name="description" content="">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2025/08/simulador-de-umbrales-en-sistemas_31.html">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/simulador-de-umbrales-en-sistemas_31.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1></h1>
+  <p class="meta">2025-08-31T17:24:00.005+02:00 · simuladores, sistemas complejos</p>
+  <article><head>
+  <title>Simulador de Umbrales en Sistemas Complejos - Gráficos mejorados</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Simulador de Umbrales en Sistemas Complejos</h1>
+  <p>Este simulador permite explorar cómo distintos sistemas alcanzan sus umbrales críticos. Ajustá los sliders para ver cómo cambian las curvas y detectá el punto donde la derivada tiende a cero.</p>
+
+  <h2>📊 Volatilidad Financiera</h2>
+  <p>Modelo: \( \sigma_p^2 = \frac{A}{n} + B \)</p>
+  <label for="nAssets">Número de activos (n):</label>
+  <input id="nAssets" max="100" min="1" oninput="updateCharts()" type="range" value="10" />
+  <span id="nAssetsVal">10</span>
+
+  <h2>🏭 Saturación Logística</h2>
+  <p>Modelo: \( C(N) = c_f \cdot N + \frac{c_t}{N} + c_r \cdot N^2 \)</p>
+  <label for="nodes">Nodos logísticos (N):</label>
+  <input id="nodes" max="100" min="1" oninput="updateCharts()" type="range" value="10" />
+  <span id="nodesVal">10</span>
+
+  <canvas height="400" id="thresholdChart1" width="800"></canvas>
+ 
+  <script>
+    const ctx = document.getElementById('thresholdChart1').getContext('2d');
+    let chart;
+
+    function updateCharts() {
+      const n = parseInt(document.getElementById('nAssets').value);
+      const N = parseInt(document.getElementById('nodes').value);
+
+      document.getElementById('nAssetsVal').textContent = n;
+      document.getElementById('nodesVal').textContent = N;
+
+      const volatility = 100 / n + 5;
+      const cost = 2 * N + 100 / N + 0.1 * N * N;
+
+      const labels = ['Volatilidad', 'Costo logístico'];
+      const data = [volatility, cost];
+
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Valor del sistema',
+            data: data,
+            backgroundColor: ['blue', 'purple']
+          }]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: 'Simulación de Umbrales en Sistemas Complejos 1'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    updateCharts();
+  </script>
+  
+  <h2>🧠 Compresión en Machine Learning</h2>
+  <p>Modelo: \( V(k) = 1 - e^{-k/\tau} \)</p>
+  <label for="components">Componentes (k):</label>
+  <input id="components" max="50" min="1" oninput="updateCharts2()" type="range" value="10" />
+  <span id="componentsVal">10</span>
+  
+  
+  <canvas height="400"id="thresholdChart2" width="800"></canvas>
+  
+  <script>
+    const ctx2 = document.getElementById('thresholdChart2').getContext('2d');
+    let chart2;
+
+    function updateCharts2() {
+      const k = parseInt(document.getElementById('components').value);
+      
+      document.getElementById('componentsVal').textContent = k;
+      
+      const compression = 1 - Math.exp(-k / 10);
+      
+      const labels = ['Compresión'];
+      const data = [compression];
+
+      if (chart2) chart2.destroy();
+      chart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Valor del sistema',
+            data: data,
+            backgroundColor: ['orange']
+          }]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: 'Simulación de Umbrales en Sistemas Complejos 2'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    updateCharts2();
+  </script>
+  
+  <h2>🏙️ Desigualdad Económica</h2>
+  <p>Modelo: \( H(\mu) = -\mu \log(\mu) \)</p>
+  <label for="income">Ingreso medio (μ):</label>
+  <input id="income" max="2" min="0.01" oninput="updateCharts3()" step="0.01" type="range" value="1" />
+  <span id="incomeVal">1</span>
+
+<canvas height="400"id="thresholdChart3" width="800"></canvas>
+  
+  <script>
+    const ctx3 = document.getElementById('thresholdChart3').getContext('2d');
+    let chart3;
+
+    function updateCharts3() {
+      const μ = parseFloat(document.getElementById('income').value);
+      
+      
+      document.getElementById('incomeVal').textContent = μ.toFixed(2);
+      
+      
+      const entropy = -μ * Math.log(μ);
+      
+      
+      const labels = ['Desigualdad'];
+      const data = [entropy];
+
+      if (chart3) chart3.destroy();
+      chart3 = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Valor del sistema',
+            data: data,
+            backgroundColor: ['green']
+          }]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: 'Simulación de Umbrales en Sistemas Complejos 3'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    updateCharts3();
+  </script>
+  
+</body>
+
+<div>&nbsp;¿Qué hace cada slider?</div><div><br /></div><div>- n (activos): Aumenta la diversificación, reduciendo la volatilidad hasta que se estabiliza.</div><div>- μ (ingreso medio): Modifica la entropía de la distribución salarial, mostrando el punto de compresión.</div><div>- k (componentes): Simula la reducción de dimensiones en PCA, hasta que la ganancia marginal desaparece.</div><div>- N (nodos logísticos): Muestra cómo el costo total se comporta con saturación y redundancia.</div><div><br /></div>
+
+<html>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2025/08/simulador-de-umbrales-en-sistemas_31.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>

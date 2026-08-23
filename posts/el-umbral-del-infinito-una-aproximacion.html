@@ -1,0 +1,107 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> — El Elefante Económico</title>
+  <meta name="description" content="">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2025/08/el-umbral-del-infinito-una-aproximacion.html">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/el-umbral-del-infinito-una-aproximacion.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1></h1>
+  <p class="meta">2025-08-24T14:12:00.000+02:00 · delta de dirac, matemáticas</p>
+  <article><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>El Umbral del Infinito: Una Aproximación Empírica desde la Concentración</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <article>
+    <h1>El Umbral del Infinito: Una Aproximación Empírica desde la Concentración</h1>
+
+    <p><strong>Autor:</strong> Maximiliano Mozetic<br>
+    <strong>Fecha:</strong> Agosto 2025</p>
+
+    <h2>Introducción</h2>
+    <p>
+      En física, la longitud de Planck marca el límite donde la geometría clásica del espacio-tiempo deja de tener sentido. ¿Existe un equivalente en matemáticas? En este artículo proponemos una idea operativa: el <em>umbral del infinito</em>, definido como el punto donde una distribución deja de comportarse como una entidad extendida y comienza a actuar como una masa puntual, acercándose al delta de Dirac.
+    </p>
+
+    <h2>Modelo de compresión logarítmica</h2>
+    <p>
+      Consideramos un modelo empírico para el percentil 95 de una distribución de Laplace, en función del tamaño muestral $N$:
+    </p>
+    <p>
+      $$ c(N) = a \cdot \ln(N) + b $$
+    </p>
+    <p>
+      Con parámetros estimados:
+      $$ a = 1.442,\quad b = -6.626 $$
+    </p>
+
+    <h2>Invariantes de compresión</h2>
+    <p>Para estudiar la concentración progresiva, definimos tres invariantes:</p>
+    <ul>
+      <li><strong>Razón de compresión:</strong> $r(N) = \frac{c(N)}{c(N/2)}$</li>
+      <li><strong>Diferencia absoluta:</strong> $\Delta(N) = c(N) - c(N/2)$</li>
+      <li><strong>Derivada logarítmica discreta:</strong> $\frac{d\ln c}{d\ln N} = \frac{\ln c(N) - \ln c(N/2)}{\ln 2}$</li>
+    </ul>
+
+    <h2>Resultados empíricos</h2>
+    <p>
+      A partir de $N = 10^7$, observamos que:
+    </p>
+    <ul>
+      <li>$r(N) \approx 1.05$</li>
+      <li>$\Delta(N) \approx 0.73$</li>
+      <li>$\frac{d\ln c}{d\ln N} < 0.05$</li>
+    </ul>
+    <p>
+      Esto indica que el sistema ha entrado en una fase de <strong>concentración efectiva</strong>, donde el comportamiento estadístico se aproxima al límite idealizado del delta de Dirac.
+    </p>
+
+    <h2>El delta de Dirac como límite</h2>
+    <p>
+      El delta de Dirac $\delta(x)$ representa una concentración infinita en un punto. En nuestro modelo, conforme $N \to \infty$, la distribución se aproxima a:
+    </p>
+    <p>
+      $$ \lim_{N \to \infty} f_N(x) = \delta(x) $$
+    </p>
+    <p>
+      Por lo tanto, podemos definir el <strong>umbral de Dirac</strong> como el valor de $N$ a partir del cual:
+    </p>
+    <ul>
+      <li>$c(N) < \varepsilon$ para algún $\varepsilon$ pequeño</li>
+      <li>$r(N) \approx 1$</li>
+      <li>$\Delta(N) \approx 0$</li>
+    </ul>
+
+    <h2>Conclusión</h2>
+    <p>
+      El umbral del infinito no es un número mágico, sino una transición conceptual. En nuestro estudio, $N = 10^7$ marca el inicio de un régimen donde la distribución deja de expandirse y comienza a comportarse como una singularidad. Esta idea puede extenderse a otros contextos matemáticos y físicos, ofreciendo una herramienta para pensar el infinito desde lo finito.
+    </p>
+
+    <p><em>¿Dónde empieza el infinito? Tal vez justo donde el cambio deja de importar.</em></p>
+  </article>
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2025/08/el-umbral-del-infinito-una-aproximacion.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
