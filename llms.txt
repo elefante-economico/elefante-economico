@@ -1,0 +1,20 @@
+# El Elefante Económico — Espejo
+
+> Mirror estático generado desde Blogger del blog "El Elefante Económico", escrito por Maximiliano Mozetic (Maxi). Economía, filosofía, sistemas complejos, Conjetura de Goldbach, matemáticas y finanzas.
+
+Este sitio es un espejo del blog original en Blogger. La página principal (index.html) carga los artículos dinámicamente vía JavaScript, por lo que agentes o crawlers que no ejecuten JS deben usar el feed JSON directamente.
+
+## Datos estructurados
+
+- [feed.json](https://elefante-economico.github.io/elefante-economico/feed.json): feed completo en formato Atom/JSON de Blogger, con los 231 posts del blog (título, contenido HTML completo, fecha de publicación, categorías, URL original).
+
+## Enlaces
+
+- [Blog original en Blogger](https://elelefanteeconomico.blogspot.com)
+- [Repositorio del mirror](https://github.com/elefante-economico/elefante-economico)
+
+## Notas para agentes/IAs
+
+- El feed.json sigue el formato del feed de Blogger (`entry[].title.$t`, `entry[].content.$t` en HTML, `entry[].published.$t`, `entry[].category[].term`).
+- El contenido de `content.$t` viene en HTML; el texto plano requiere strip de tags.
+- No hay páginas HTML individuales pre-renderizadas por artículo (todo el contenido vive en feed.json); si se necesita, se puede fetchear directo desde ahí.
