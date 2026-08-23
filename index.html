@@ -1,234 +1,155 @@
----
----
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="alternate" type="application/json" href="feed.json" title="El Elefante Económico — Feed completo">
-
-  <title>El Elefante Económico — Espejo</title>
-  <meta name="description" content="El Elefante Económico — análisis económico, instituciones, sistemas complejos y dinámicas procíclicas.">
-  <meta name="keywords" content="economía, macroeconomía, instituciones, desigualdad, desarrollo, análisis económico">
-  <meta name="author" content="Maxi">
-  <link rel="canonical" href="https://elefante-economico.github.io/elefante-economico/">
-
-  <meta property="og:title" content="El Elefante Económico — Espejo">
-  <meta property="og:description" content="Análisis económico riguroso y accesible.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/">
-  <meta property="og:image" content="https://elelefanteeconomico.blogspot.com/favicon.ico">
-
-  <style>
-    body {
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      color: #222;
-      background: #fafafa;
-      transition: background 0.3s, color 0.3s;
-    }
-    .dark-mode { background: #1e1e1e; color: #ddd; }
-
-    header {
-      background: #fff;
-      border-bottom: 1px solid #e3e3e3;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    nav a {
-      margin-right: 20px;
-      color: #0056b3;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    #feed ul { list-style: none; padding: 0; margin: 0; }
-    .article-card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 25px;
-      border-radius: 8px;
-      border: 1px solid #e3e3e3;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      transition: box-shadow 0.2s ease;
-      display: flex;
-      gap: 20px;
-    }
-    .dark-mode .article-card { background: #2a2a2a; border-color: #444; }
-    .article-card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-    .article-card img { width: 140px; height: 140px; object-fit: cover; border-radius: 6px; }
-
-    #searchInput {
-      width: 100%;
-      padding: 12px;
-      margin: 20px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .tags { font-size: 0.9rem; color: #666; margin-top: 8px; }
-
-    #loading {
-      text-align: center;
-      font-size: 1.1rem;
-      color: #555;
-      margin-top: 40px;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <div style="display:flex; align-items:center; gap:15px;">
-    <img src="https://elelefanteeconomico.blogspot.com/favicon.ico" alt="Logo" style="width:40px; height:40px;">
-    <h1 style="margin:0; font-size:1.8rem;">{{ site.title }}</h1>
-  </div>
-  <nav>
-    <a href="/elefante-economico/">Inicio</a>
-    <a href="#sobre">Sobre el autor</a>
-    <a href="https://elelefanteeconomico.blogspot.com" target="_blank">Blog original</a>
-  </nav>
-</header>
-
-<p>{{ site.description }}</p>
-
-<input id="searchInput" type="text" placeholder="Buscar artículos...">
-
-<div id="loading">Cargando artículos...</div>
-<div id="feed" style="display:none;"></div>
-
-<div id="pagination" style="margin-top:30px; display:flex; justify-content:center; gap:20px;">
-  <button id="prevBtn">Anterior</button>
-  <button id="nextBtn">Siguiente</button>
-</div>
-
-<section id="sobre" style="margin-top:60px; padding:20px; background:white; border-radius:8px; border:1px solid #e3e3e3;">
-  <h2>Sobre el autor</h2>
-  <p>Economista, investigador y analista de dinámicas procíclicas, instituciones y sistemas complejos. 
-     Autor de El Elefante Económico, un espacio dedicado a la reflexión económica rigurosa y accesible.</p>
-</section>
-
-<footer style="margin-top:60px; padding:20px; border-top:1px solid #e3e3e3; text-align:center; color:#666;">
-  <p>© {{ site.title }} — Espejo estático generado desde Blogger</p>
-  <p><a href="https://elelefanteeconomico.blogspot.com" target="_blank">Visitar blog original</a> · <a href="feed.json" rel="alternate" type="application/json">Feed JSON</a></p>
-</footer>
-
-
-<button id="topBtn" style="position:fixed; bottom:30px; right:30px; padding:12px 18px; background:#0056b3; color:white; border:none; border-radius:6px; cursor:pointer; display:none;">↑ Arriba</button>
-<button id="darkModeBtn" style="position:fixed; bottom:30px; left:30px; padding:12px 18px; background:#333; color:white; border:none; border-radius:6px; cursor:pointer;">Modo oscuro</button>
-
-<script>
-let currentPage = 1;
-const itemsPerPage = 10;
-let items = [];
-let filteredItems = [];
-
-async function cargarFeed() {
-  try {
-    const response = await fetch("feed.json");
-    const data = await response.json();
-
-    if (!data.feed || !data.feed.entry) {
-      document.getElementById("loading").innerText = "No se encontraron artículos en el feed.";
-      return;
-    }
-
-    const entries = data.feed.entry;
-
-    items = entries.map(e => ({
-      title: e.title.$t,
-      link: e.link.find(l => l.rel === "alternate").href,
-      summary: e.summary?.$t || e.content?.$t || "",
-      published: e.published.$t,
-      categories: e.category?.map(c => c.term) || [],
-      thumbnail: e.media$thumbnail?.url || null
-    }));
-
-    filteredItems = items;
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("feed").style.display = "block";
-    mostrarPagina(currentPage);
-  } catch (error) {
-    document.getElementById("loading").innerText = "Error al cargar el feed.";
-    console.error("Error al leer feed.json:", error);
-  }
-}
-
-function mostrarPagina(page) {
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const pageItems = filteredItems.slice(start, end);
-
-  let html = "<ul>";
-  for (let item of pageItems) {
-    const fecha = new Date(item.published).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" });
-    const resumenCorto = item.summary.length > 250 ? item.summary.substring(0, 250) + "…" : item.summary;
-
-    html += `
-      <li class="article-card">
-        ${item.thumbnail ? `<img src="${item.thumbnail}" alt="Miniatura">` : ""}
-        <div>
-          <a href="${item.link}" target="_blank">${item.title}</a>
-          <p><strong>${fecha}</strong></p>
-          <p>${resumenCorto}</p>
-          <p class="tags">Etiquetas: ${item.categories.join(", ")}</p>
-        </div>
-      </li>
-    `;
-  }
-  html += "</ul>";
-  document.getElementById("feed").innerHTML = html;
-}
-
-document.getElementById("prevBtn").onclick = () => {
-  if (currentPage > 1) { currentPage--; mostrarPagina(currentPage); }
-};
-document.getElementById("nextBtn").onclick = () => {
-  if (currentPage * itemsPerPage < filteredItems.length) { currentPage++; mostrarPagina(currentPage); }
-};
-
-document.getElementById("searchInput").oninput = (e) => {
-  const q = e.target.value.toLowerCase();
-  filteredItems = items.filter(item =>
-    item.title.toLowerCase().includes(q) ||
-    item.summary.toLowerCase().includes(q) ||
-    item.categories.some(cat => cat.toLowerCase().includes(q))
-  );
-  currentPage = 1;
-  mostrarPagina(currentPage);
-};
-
-window.onscroll = () => {
-  document.getElementById("topBtn").style.display = window.scrollY > 300 ? "block" : "none";
-};
-
-document.getElementById("topBtn").onclick = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
-
-document.getElementById("darkModeBtn").onclick = () => {
-  document.body.classList.toggle("dark-mode");
-};
-
-cargarFeed();
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
+<html><body>
+<h1>El Elefante Económico — Índice</h1>
+<ul>
+<li><a href="posts/el-elefante-economico-sigue-creciendo.html">El Elefante Económico sigue creciendo: radiografía de 16 meses de búsquedas en Google</a> — 2026-08-21</li>
+<li><a href="posts/ensayo-como-reconstruimos-lo-oculto.html">Ensayo: Cómo reconstruimos lo oculto — trayectorias continuas a partir de puntos discretos</a> — 2026-08-20</li>
+<li><a href="posts/nuevo-articulo-en-zenodo-finanzas-pleno.html">Nuevo artículo en Zenodo, Finanzas a pleno!</a> — 2026-06-08</li>
+<li><a href="posts/nuevo-ensayo-instituciones-prociclicas.html">Nuevo Ensayo: Instituciones Procíclicas de Inclusión</a> — 2026-05-31</li>
+<li><a href="posts/under-construction-tiempo-de-formacion.html">Under Construction - Tiempo de Formación</a> — 2026-05-09</li>
+<li><a href="posts/filosofia-manifestaciones-del-absoluto_45.html">Filosofía: Manifestaciones del Absoluto (V) Breve ensayo sobre la transformación y la riqueza espiritual </a> — 2026-05-02</li>
+<li><a href="posts/filosofia-manifestaciones-del-absoluto_17.html">Filosofía: Manifestaciones del Absoluto (IV) Breve ensayo sobre la obra</a> — 2026-05-02</li>
+<li><a href="posts/filosofia-manifestaciones-del-absoluto_75.html">Filosofía: Manifestaciones del Absoluto (III) Breve ensayo sobre la acción</a> — 2026-05-02</li>
+<li><a href="posts/filosofia-manifestaciones-del-absoluto_2.html">Filosofía: Manifestaciones del Absoluto (II) Breve ensayo sobre la respuesta del hombre</a> — 2026-05-02</li>
+<li><a href="posts/filosofia-manifestaciones-del-absoluto.html">Filosofía: Manifestaciones del Absoluto (I) Breve Ensayo sobre el despertar de lo eterno en el hombre </a> — 2026-05-02</li>
+<li><a href="posts/una-formalizacion-integrada-de-la.html">Una Formalización Integrada de la Relación entre Desarrollo y Desigualdad</a> — 2026-04-25</li>
+<li><a href="posts/nuevo-articulo-en-zenodo-modelo-de.html"> Nuevo artículo en Zenodo modelo de desarrollo integrado: "Crecimiento, Demanda Agregada, Política Fiscal y Desigualdad: Un Modelo Dinámico Integrado de Desarrollo y Curva de Kuznets"</a> — 2026-03-19</li>
+<li><a href="posts/diez-anos-de-un-modelo-la-evolucion-de.html">📘 Diez años de un modelo: la evolución de una idea sobre desarrollo y desigualdad (2014–2026)</a> — 2026-03-17</li>
+<li><a href="posts/opinion-sobre-el-libro-discute-menos.html">Opinión sobre el Libro: "Discute menos, habla más; El poder de una nueva conversación" - Jefferson Fisher</a> — 2026-02-14</li>
+<li><a href="posts/proximos-dialogos-y-escritos.html">Próximos Diálogos y Escritos</a> — 2026-02-07</li>
+<li><a href="posts/dialogos-con-la-ia-los-eslavos-un.html">Diálogos con la I.A.: Los Eslavos: un pueblo, un territorio y una historia que ordena Europa</a> — 2026-02-01</li>
+<li><a href="posts/dialogos-con-la-ia-la-presion.html">Diálogos con la I.A.: La presión demográfica y el empuje de las estepas: ¿por qué los eslavos migraron?</a> — 2026-02-01</li>
+<li><a href="posts/bienvenidos-el-elefante-economico.html">🐘 Bienvenidos a El Elefante Económico @elelefanteeconomico</a> — 2026-01-10</li>
+<li><a href="posts/nuevo-articulo-en-zenodo-sobre-el.html"> Nuevo Artículo en Zenodo Sobre el Colapso Estadístico en la Conjetura de Goldbach"</a> — 2025-12-07</li>
+<li><a href="posts/dialogos-con-la-ia-pagos-en-argentina.html">Diálogos con la I.A.: Pagos en Argentina con tarjeta BBVA y alternativas (Diciembre 2025)</a> — 2025-12-06</li>
+<li><a href="posts/dialogos-con-la-ia-mineria-simbolica.html">Diálogos con la I.A.: Minería simbólica: cuando el esfuerzo vale más que el resultado </a> — 2025-11-15</li>
+<li><a href="posts/bonoloto-vs-nerdminer-como-canalizar-40.html">Diálogos con la I.A.: Bonoloto vs. NerdMiner: ¿Cómo Canalizar 40€ de Gasto de Lotería en Algo Más Barato (y que te Enseña)?</a> — 2025-11-08</li>
+<li><a href="posts/dialogos-con-la-ia-tasas-de-interes.html">Diálogos con la IA: tasas de interés pasivas</a> — 2025-10-18</li>
+<li><a href="posts/dialogos-con-la-ia-macroeconomia.html">Diálogos con la IA: Macroeconomía Española Actual</a> — 2025-10-18</li>
+<li><a href="posts/paradoja-del-colapso-estadistico-en-la.html"></a> — 2025-10-06</li>
+<li><a href="posts/de-goldbach-la-entropia-una.html"></a> — 2025-10-06</li>
+<li><a href="posts/simulador-de-umbrales-en-sistemas_31.html"></a> — 2025-08-31</li>
+<li><a href="posts/transiciones-fluidas-emergentes-body.html"></a> — 2025-08-30</li>
+<li><a href="posts/simulador-de-umbrales-en-sistemas.html"></a> — 2025-08-25</li>
+<li><a href="posts/visualizacion-de-umbrales-en-sistemas.html"></a> — 2025-08-25</li>
+<li><a href="posts/el-umbral-de-saturacion-en-redes.html"></a> — 2025-08-25</li>
+<li><a href="posts/el-umbral-de-compresion-en-machine.html"></a> — 2025-08-25</li>
+<li><a href="posts/el-umbral-de-desigualdad-en-economias.html"></a> — 2025-08-25</li>
+<li><a href="posts/el-umbral-de-volatilidad-en-portafolios.html"></a> — 2025-08-25</li>
+<li><a href="posts/umbrales-de-concentracion.html"></a> — 2025-08-25</li>
+<li><a href="posts/el-umbral-del-cambio-de-la-fisica-las.html"></a> — 2025-08-24</li>
+<li><a href="posts/el-umbral-de-la-volatilidad-mas-alla-de.html"></a> — 2025-08-24</li>
+<li><a href="posts/el-umbral-del-infinito-una-aproximacion.html"></a> — 2025-08-24</li>
+<li><a href="posts/el-destino-de-los-pares-de-goldbach.html"></a> — 2025-08-24</li>
+<li><a href="posts/distribucion-laplaciana-de-desviaciones_23.html"></a> — 2025-08-23</li>
+<li><a href="posts/azar-aquello-que-no-comprendemos.html">Azar, aquello que no comprendemos</a> — 2025-08-03</li>
+<li><a href="posts/primeras-publicaciones-en-zenodo.html">Primeras publicaciones en Zenodo!</a> — 2025-08-02</li>
+<li><a href="posts/goldbach-entre-la-intuicion-y-el.html">🧠 Goldbach entre la intuición y el algoritmo: Un recorrido desde la conjetura hacia una función generadora</a> — 2025-07-27</li>
+<li><a href="posts/dialogo-con-la-ia-causalidad-de-granger.html">Diálogo con la I.A.: Causalidad de Granger</a> — 2025-06-29</li>
+<li><a href="posts/dialogo-con-la-ia-construccion-de.html">Diálogo con la I.A.: construcción de modelos económicos </a> — 2025-06-29</li>
+<li><a href="posts/dialogos-con-la-ia-controversia-sobre.html">Diálogos con la I.A.: Controversia sobre el Capital - Cambridge vs. Cambridge</a> — 2025-06-29</li>
+<li><a href="posts/que-tienen-en-comun-la-conjetura-de.html">🔍 ¿Qué tienen en común la Conjetura de Collatz y las Ecuaciones en Diferencias?</a> — 2025-06-21</li>
+<li><a href="posts/dialogos-con-la-ia-lo-que-es-que-debe.html">Diálogos con la IA. Lo que es, lo que debe ser y lo que quiero</a> — 2025-06-02</li>
+<li><a href="posts/essay-on-goldbach-conjecture.html">Essay on Goldbach Conjecture</a> — 2025-05-15</li>
+<li><a href="posts/explorando-las-distancias-entre-primos.html">Explorando las Distancias entre "Primos" en una Descomposición Iterativa de Goldbach</a> — 2025-05-02</li>
+<li><a href="posts/desvelando-secretos-con-un-nuevo.html">Desvelando Secretos con un Nuevo Algoritmo: ¿Pistas de la Hipótesis de Riemann en la Conjetura de Goldbach?</a> — 2025-05-01</li>
+<li><a href="posts/el-fenomeno-influencer-una-mirada.html">El Fenómeno Influencer: Una Mirada Económica y Social</a> — 2025-05-01</li>
+<li><a href="posts/desigualdad-economica-comprendiendo-el.html">Desigualdad Económica: Comprendiendo el Desafío y Buscando Soluciones</a> — 2025-04-30</li>
+<li><a href="posts/desentranando-la-desigualdad-un-modelo.html">Desentrañando la Desigualdad: Un Modelo Cuadrático para Comprender su Dinámica Macroeconómica</a> — 2025-04-30</li>
+<li><a href="posts/articulo-de-blog-la-danza-oculta-de-los.html">La Danza Oculta de los Primos: ¿Una Pista de Riemann en el Corazón de Goldbach?</a> — 2025-04-29</li>
+<li><a href="posts/desvelando-los-secretos-de-goldbach-un.html">Desvelando los Secretos de Goldbach: Un Algoritmo, un "Punto Dulce" y Ecos de Riemann</a> — 2025-04-29</li>
+<li><a href="posts/el-punto-dulce-de-goldbach-testeando-la.html">El "Punto Dulce" de Goldbach: Testeando la Eficiencia de un Algoritmo Centrado en la Media</a> — 2025-04-29</li>
+<li><a href="posts/el-punto-dulce-de-goldbach-una-clave-en.html">El Punto Dulce de Goldbach: ¿Una Clave en el Cambio de Pendiente de una Función?</a> — 2025-04-28</li>
+<li><a href="posts/descifrando-goldbach-con-una-funcion.html">Descifrando Goldbach con una Función Reveladora (III): ¿Un Nuevo Camino a la Suma de Primos?</a> — 2025-04-28</li>
+<li><a href="posts/un-nuevo-enfoque-para-la-conjetura-de_28.html">Un Nuevo Enfoque para la Conjetura de Goldbach (II): Explorando Todas las Sumas de Primos</a> — 2025-04-28</li>
+<li><a href="posts/testeo-de-la-ecuacion-de-goldbach-en.html">Testeo de la ecuación de goldbach en Python</a> — 2025-04-28</li>
+<li><a href="posts/un-nuevo-enfoque-para-la-conjetura-de.html">Un Nuevo Enfoque para la Conjetura de Goldbach: Descifrando los Pares con Primos</a> — 2025-04-27</li>
+<li><a href="posts/teorema-suma-simetrica-de-numeros.html">Teorema (Suma Simétrica de Números Primos Dobles)</a> — 2025-04-27</li>
+<li><a href="posts/corto-sobre-el-cuento-protagonistas-de.html">Corto sobre el cuento "Protagonistas de un Mundo Perfecto"</a> — 2025-04-15</li>
+<li><a href="posts/corto-sobre-el-cuento-aventura.html">Corto sobre el cuento "Aventura Impensada" en InVideo</a> — 2025-04-15</li>
+<li><a href="posts/video-sobre-el-libro-notas-tecnicas.html">Video sobre el libro "Notas Técnicas"</a> — 2025-04-14</li>
+<li><a href="posts/video-y-podcast-del-libro-pensando-una.html">Video y Podcast del Libro "Pensando una Economía Diferente"</a> — 2025-04-14</li>
+<li><a href="posts/video-y-podcast-del-libro-ideas-en-el.html">Video y Podcast del libro "Ideas en el Tintero"</a> — 2025-04-14</li>
+<li><a href="posts/presentacion-en-video-y-podcast-del.html">Presentación en Video y Podcast del nuevo libro: Fenómeno Influencers: ¿Cómo Explicarlo?</a> — 2025-04-13</li>
+<li><a href="posts/new-book-presentation-fenomeno.html">New book presentation: "Fenómeno Influencers: ¿Cómo Explicarlo?"</a> — 2025-04-12</li>
+<li><a href="posts/nuevo-cuento-corto-llamado-una-aventura.html">Nuevo Cuento Corto llamado "Una Aventura Impensada"</a> — 2025-04-01</li>
+<li><a href="posts/web-invideo-ai-para-realizar-videos.html">Web Invideo AI para realizar videos instructivos</a> — 2025-03-27</li>
+<li><a href="posts/notebooklm-para-estudiar-y-podcast-de.html">NotebookLM para estudiar y Podcast de Ejemplo</a> — 2025-03-27</li>
+<li><a href="posts/mi-primer-cuento-corto-publicado-ecos.html">Mi Primer Cuento Corto Publicado "Ecos en un Mundo Perfecto"</a> — 2025-01-05</li>
+<li><a href="posts/el-dilema-de-la-austeridad.html">El Dilema de la Austeridad Macroeconómica</a> — 2023-10-07</li>
+<li><a href="posts/nuevo-libro-pensando-una-economia.html">Nuevo libro "Pensando una Economía Diferente"</a> — 2023-07-08</li>
+<li><a href="posts/regalo-7-libros-del-elefante-economico.html">Regalo 7 libros del Elefante Económico en formato PDF</a> — 2022-08-22</li>
+<li><a href="posts/compendio-de-ensayos-sobre-diferentes.html">Compendio de Ensayos Sobre Diferentes Tópicos en Economía</a> — 2022-08-11</li>
+<li><a href="posts/servicios-de-el-elefante-economico.html">Servicios de El Elefante Económico </a> — 2022-07-11</li>
+<li><a href="posts/saludos-desde-madrid.html">Saludos desde Madrid!</a> — 2022-06-05</li>
+<li><a href="posts/el-triangulo-implica-caos-como-recorrer.html">El triángulo implica Caos: ¿Cómo recorrer la ciudad siendo Turista?</a> — 2022-05-30</li>
+<li><a href="posts/crecimiento-economico-por-diferenciacion.html">Crecimiento Económico por Diferenciación</a> — 2022-05-27</li>
+<li><a href="posts/dia-internacional-de-las-matematicas-un.html">Día Internacional de las Matemáticas: un grato recuerdo</a> — 2022-03-14</li>
+<li><a href="posts/el-ser-y-la-nada-una-revision.html">El Ser y la Nada: Una Revisión</a> — 2022-01-29</li>
+<li><a href="posts/a-mi-querido-barrio-de-palermo.html">A mi querido barrio de Palermo</a> — 2022-01-22</li>
+<li><a href="posts/j-m-keynes-y-su-legado-olvidado.html">J. M. Keynes y su legado olvidado</a> — 2022-01-22</li>
+<li><a href="posts/caminante-urbano-los-pies-en-la-tierra.html">Caminante Urbano: Los pies en la tierra y la mirada atenta</a> — 2022-01-22</li>
+<li><a href="posts/economia-informal-aspectos-positivos.html">Economía Informal: Aspectos Positivos</a> — 2021-10-30</li>
+<li><a href="posts/el-elefante-llego-las-18486-vistas.html">El Elefante llegó a las 18.486 vistas!</a> — 2021-07-24</li>
+<li><a href="posts/estructura-del-valor-de-las-monedas.html">Estructura del Valor de las Monedas Internacionales</a> — 2021-07-24</li>
+<li><a href="posts/para-vos-mente-brillante.html">Para vos mente brillante</a> — 2021-06-05</li>
+<li><a href="posts/receta-heterodoxa-para-el-desarrollo.html">Receta heterodoxa para el desarrollo económico</a> — 2021-05-16</li>
+<li><a href="posts/entrevista-en-luloenmadrid.html">Entrevista en LuloenMadrid</a> — 2021-03-29</li>
+<li><a href="posts/las-raices-de-la-imaginacion-al-poder-y.html">Las raíces de "la imaginación al poder" y "el flower power", presentes en el mundo de hoy</a> — 2021-03-28</li>
+<li><a href="posts/expansionismo-y-austeridad.html">Expansión y Austeridad</a> — 2021-02-20</li>
+<li><a href="posts/estructura-y-expectativas.html">Estructura y Expectativas</a> — 2020-12-26</li>
+<li><a href="posts/un-economista-suelto-en-madrid.html">Un Economista suelto en Madrid</a> — 2020-10-31</li>
+<li><a href="posts/algun-econometrista-en-la-sala.html">¿Algún Econometrista en la sala?</a> — 2020-09-19</li>
+<li><a href="posts/whats-happening-with-stock-markets.html">What's happening with the stocks markets?</a> — 2020-07-08</li>
+<li><a href="posts/webinar-16062020-precios-de.html">WEBINAR 16/06/2020: Precios de Transferencia - Nueva Regulación en Argentina</a> — 2020-06-09</li>
+<li><a href="posts/feliz-dia-internacional-del-libro.html">Feliz día internacional del Libro</a> — 2020-04-23</li>
+<li><a href="posts/happy-easter-and-news.html">Happy Easter! and Good News</a> — 2020-04-12</li>
+<li><a href="posts/cursos-online-para-enfrentar-la.html">Cursos online para enfrentar la Cuarentena</a> — 2020-03-28</li>
+<li><a href="posts/the-economic-elephant-ideas-in-inkwell.html">The Economic Elephant, Ideas in the Inkwell</a> — 2020-01-13</li>
+<li><a href="posts/cierre-de-ano-viejo.html">Cierre de Año Viejo...</a> — 2019-12-22</li>
+<li><a href="posts/estimads-en-el-dia-de-la-fecha-se.html">Nuevo Jaque a la Pobreza </a> — 2019-10-14</li>
+<li><a href="posts/nuevo-ebook-y-libro-en-amazon-notas.html">Nuevo Ebook y Libro en Amazon: "Notas Técnicas"</a> — 2019-05-18</li>
+<li><a href="posts/metas-del-ano-2019.html">Metas del año 2019</a> — 2019-02-23</li>
+<li><a href="posts/ebook-para-kindle-y-libro-impreso-de.html">Ebook para Kindle y Libro impreso de Amazon </a> — 2018-11-18</li>
+<li><a href="posts/las-ramificaciones-de-la-hipotesis-de.html">Las ramificaciones de la hipótesis de Kuznets</a> — 2018-09-29</li>
+<li><a href="posts/implicancias-de-la-hipotesis-de-kuznets.html">Implicancias de la Hipótesis de Kuznets y el modelo de Solow</a> — 2018-06-03</li>
+<li><a href="posts/buena-oportunidad.html">Buena oportunidad</a> — 2018-04-08</li>
+<li><a href="posts/jaque-la-pobreza.html">Jaque a la Pobreza</a> — 2018-02-13</li>
+<li><a href="posts/llegamos-las-10000.html">Llegamos a las 10.000!!!</a> — 2016-10-21</li>
+<li><a href="posts/una-oportunidad-la-paz.html">Una oportunidad para la Paz</a> — 2016-10-20</li>
+<li><a href="posts/nuevo-informe-de-la-red-consultora.html">Nuevo informe de la Red-Consultora sobre la Industria Argentina</a> — 2016-10-13</li>
+<li><a href="posts/el-pasado-no-me-determina.html">El pasado No me determina</a> — 2016-09-16</li>
+<li><a href="posts/la-especie-humana-es-la-mas-evolucionada.html">¿Es la especie humana la más evolucionada?</a> — 2016-09-16</li>
+<li><a href="posts/nuevo-articulo-de-la-red-consultora.html">Nuevo Artículo de la Red Consultora sobre el BREXIT</a> — 2016-08-30</li>
+<li><a href="posts/pagina-wwwred-consultoracomar.html">Página www.red-consultora.com.ar</a> — 2016-08-26</li>
+<li><a href="posts/a-10-de-las-9000-visitas.html">A 10 de las 9.000 visitas!</a> — 2016-08-20</li>
+<li><a href="posts/vocacion_18.html">Vocación</a> — 2016-08-18</li>
+<li><a href="posts/breve-resumen-del-informe-del-barometro.html">Presentación Informe del Barómetro de la deuda social Argentina (UCA)</a> — 2016-08-17</li>
+<li><a href="posts/breve-resumen-de-la-economia-ii.html">Breve Resumen de la Situación Económica Argentina (II)</a> — 2016-08-17</li>
+<li><a href="posts/breve-resumen-de-la-situacion-economica.html">Breve Resumen de la Situación Económica Argentina (I)</a> — 2016-08-16</li>
+<li><a href="posts/analisis-comparativo-hoy-usa-vs-china_12.html">Análisis Comparativo, Hoy USA vs. China</a> — 2016-08-12</li>
+<li><a href="posts/edx-rompiendo-la-barrera-de-la-distancia.html">EDX rompiendo la barrera de la distancia</a> — 2016-08-05</li>
+<li><a href="posts/hoy-baje-los-brazos-de-una-vez.html">Hoy por fin bajé los brazos</a> — 2016-08-01</li>
+<li><a href="posts/acertando-el-azar.html">Acertando el azar</a> — 2016-07-22</li>
+<li><a href="posts/refugio-y-rendimiento-de-los.html">Refugio y rendimiento de los capitales_Ejercicio muy simplificado</a> — 2016-07-19</li>
+<li><a href="posts/preservacion-de-los-animales.html">Preservación de los animales</a> — 2016-07-16</li>
+<li><a href="posts/final-de-la-eurocopa-francia-vs.html">Final de la Eurocopa, Francia vs. Portugal, en estadísticas</a> — 2016-07-10</li>
+<li><a href="posts/semifinal-de-la-eurocopa-alemania-vs.html">Semifinal de la Eurocopa, Alemania vs. Francia en términos estadísticos</a> — 2016-07-07</li>
+<li><a href="posts/herramientas-para-el-calculo-mental.html">Herramientas para el cálculo mental versión video</a> — 2016-07-05</li>
+<li><a href="posts/apartado-de-economia.html">¡Apartado de Economía!</a> — 2016-06-23</li>
+<li><a href="posts/un-esbozo-de-libro.html">Un esbozo de libro</a> — 2016-06-21</li>
+<li><a href="posts/el-estudio-de-casos-comparados.html">El Estudio de Casos Comparados</a> — 2016-06-18</li>
+<li><a href="posts/argumentos-en-contra-de-uber.html">Argumentos en contra de Uber</a> — 2016-06-09</li>
+<li><a href="posts/nafta-y-diesel-determinantes-de-las.html">Nafta y Diésel determinantes de las Ventas de Automóviles en un ejercicio teórico</a> — 2016-06-08</li>
+<li><a href="posts/la-economia-responde-las-normativas-y.html">La Economía Responde a Las Normativas y Políticas Públicas</a> — 2016-06-07</li>
+<li><a href="posts/crecimiento-la-solow.html">Crecimiento a la Solow</a> — 2016-06-03</li>
+<li><a href="posts/no-existe-el-presente-pero-si-el-hoy.html">El presente no es autónomo</a> — 2016-06-01</li>
+<li><a href="posts/a-100-de-las-7000-visitas.html">A 100 de las 7.000 visitas!!!</a> — 2016-06-01</li>
+<li><a href="posts/rosenstein-rodan-reloaded.html">Rosenstein Rodan reloaded</a> — 2016-05-27</li>
+<li><a href="posts/prestamos-para-los-negocios.html">Préstamos para los negocios</a> — 2016-05-26</li>
+<li><a href="posts/toma-y-daca-en-la-publicidad-online.html">Toma y daca en la publicidad online</a> — 2016-05-26</li>
+<li><a href="posts/entendiendo-mal-los-mensajes.html">Entendiendo mal los mensajes</a> — 2016-05-24</li>
+<li><a href="posts/calculo-mental-una-herramienta-necesaria.html">Cálculo mental, una herramienta necesaria</a> — 2016-05-22</li>
+<li><a href="posts/las-ecuaciones-nos-gobiernan.html">Las Ecuaciones Nos Gobiernan</a> — 2016-05-18</li>
+<li><a href="posts/examen-de-ingreso-ingenieria.html">Examen de ingreso a ingeniería</a> — 2016-05-16</li>
+</ul>
+</body></html>
