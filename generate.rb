@@ -1,3 +1,4 @@
+
 require 'json'
 require 'fileutils'
 
@@ -15,7 +16,6 @@ entries.each do |entry|
   title = entry["title"]["$t"]
   links = entry["link"]
 
-  # Buscar link rel="alternate"
   alt = links.find { |l| l["rel"] == "alternate" }
 
   if alt.nil?
@@ -24,15 +24,13 @@ entries.each do |entry|
     next
   end
 
-  # Extraer slug desde la URL
   slug = alt["href"].split("/").last
   slug = slug.gsub(/\.html$/, "") if slug
 
-  # Si el slug está vacío, generar uno automáticamente
   if slug.nil? || slug.strip.empty?
     auto = title.downcase
-                .gsub(/[^a-z0-9\s]/, '')   # eliminar símbolos
-                .gsub(/\s+/, '-')          # espacios → guiones
+                .gsub(/[^a-z0-9\s]/, '')
+                .gsub(/\s+/, '-')
                 .strip
 
     if auto.empty?
@@ -46,14 +44,12 @@ entries.each do |entry|
 
   filename = "posts/#{slug}.html"
 
-  # Detectar colisiones
   if File.exist?(filename)
     collisions << title
     puts "Colisión de slug (ya existe #{filename}): #{title}"
     next
   end
 
-  # Generar archivo HTML
   content = entry["content"]["$t"]
   File.write(filename, content)
 
@@ -61,9 +57,8 @@ entries.each do |entry|
   puts "Generado correctamente: #{title} → #{filename}"
 end
 
-# Resumen final
 puts "\n=== RESUMEN ==="
 puts "Generados: #{generated.count}"
-puts "Slugs generados automáticamente: #{auto_slugged.count}"
-puts "Descartados sin link alternativo: #{discarded_no_alternate.count}"
+puts "Slugs automáticos: #{auto_slugged.count}"
+puts "Sin link alternativo: #{discarded_no_alternate.count}"
 puts "Colisiones: #{collisions.count}"
