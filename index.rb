@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 require 'json'
 
+# ============================
+# CARGA DEL FEED
+# ============================
+
 begin
   feed = JSON.parse(File.read("feed.json"))
 rescue => e
@@ -14,6 +18,10 @@ if entries.nil? || entries.empty?
   puts "✖ ERROR: feed.json no contiene entradas válidas."
   exit(1)
 end
+
+# ============================
+# EXTRAER POSTS
+# ============================
 
 posts = entries.map do |entry|
   begin
@@ -38,11 +46,61 @@ if posts.empty?
   exit(1)
 end
 
-# Ordenar por fecha descendente
+# ============================
+# ORDENAR POR FECHA DESCENDENTE
+# ============================
+
 posts = posts.sort_by { |p| p[:date] }.reverse
 
+# ============================
+# SEO + IA: HEAD COMPLETO
+# ============================
+
+head_content = <<~HTML
+<head>
+  <meta charset="UTF-8">
+  <title>El Elefante Económico — Índice de artículos</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Índice completo de artículos publicados en El Elefante Económico.">
+  <meta name="author" content="Maxi Mozetic">
+  <meta name="keywords" content="economía, desarrollo, desigualdad, matemáticas, filosofía, modelos económicos, IA, análisis">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://elefante-economico.github.io/elefante-economico/">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="El Elefante Económico — Índice">
+  <meta property="og:description" content="Listado completo de artículos publicados.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/">
+  <meta property="og:site_name" content="El Elefante Económico">
+
+  <!-- JSON-LD WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "El Elefante Económico",
+    "url": "https://elefante-economico.github.io/elefante-economico/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "El Elefante Económico"
+    }
+  }
+  </script>
+</head>
+HTML
+
+# ============================
+# GENERAR HTML DEL ÍNDICE
+# ============================
+
 html = []
-html << "<html><body>"
+html << "<!DOCTYPE html>"
+html << "<html lang=\"es\">"
+html << head_content
+html << "<body>"
 html << "<h1>El Elefante Económico — Índice</h1>"
 html << "<ul>"
 
@@ -52,6 +110,10 @@ end
 
 html << "</ul>"
 html << "</body></html>"
+
+# ============================
+# GUARDAR ARCHIVO
+# ============================
 
 begin
   File.write("index.html", html.join("\n"))
