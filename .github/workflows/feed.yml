@@ -22,7 +22,7 @@ jobs:
           ruby-version: '3.2'
 
       - name: Generar páginas estáticas por artículo
-        run: ruby generate_posts.rb
+        run: ruby run_all.rb
 
       - name: Commit y push
         run: |
