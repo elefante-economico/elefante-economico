@@ -1,13 +1,15 @@
 name: Actualizar feed de Blogger
 on:
   schedule:
-    - cron: "0 */6 * * *"   # cada 6 horas
-  workflow_dispatch:        # ejecución manual
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write        # habilita permisos para hacer push
+      contents: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,14 +23,13 @@ jobs:
         with:
           ruby-version: '3.2'
 
-      - name: Generar páginas estáticas por artículo
+      - name: Ejecutar pipeline completo
         run: ruby run_all.rb
 
       - name: Commit y push
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add feed.json posts/ sitemap.xml
+          git add feed.json posts/ sitemap.xml index.html
           git commit -m "Actualización automática del feed y páginas estáticas" || echo "Sin cambios"
           git push origin HEAD:main
-
