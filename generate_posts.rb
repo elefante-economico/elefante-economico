@@ -11,11 +11,18 @@ entries = data.dig('feed', 'entry') || []
 sitemap_urls = []
 
 entries.each do |entry|
-  title = entry.dig('title', '$t') || 'Sin título'
+  # Definimos primero las variables básicas necesarias
   content = entry.dig('content', '$t') || ''
   published = entry.dig('published', '$t') || ''
   original_link = (entry['link'] || []).find { |l| l['rel'] == 'alternate' }&.dig('href') || ''
   categories = (entry['category'] || []).map { |c| c['term'] }.join(', ')
+
+  # Validación segura del título para posts individuales
+  title = entry.dig('title', '$t')
+  if title.nil? || title.strip.empty?
+    fecha_corta = published.split('T').first rescue 'sin-fecha'
+    title = "Artículo sin título (#{fecha_corta})"
+  end
 
   # Obtener slug base del link o del ID
   raw_slug = original_link.split('/').last&.sub('.html', '') || entry.dig('id', '$t').to_s
@@ -38,7 +45,7 @@ entries.each do |entry|
     published
   end
 
-  # Plantilla HTML individual para cada post (con los enlaces restaurados)
+  # Plantilla HTML individual para cada post
   html = <<~HTML
     ---
     ---
@@ -74,11 +81,16 @@ entries.each do |entry|
   sitemap_urls << "https://elefante-economico.github.io/elefante-economico/posts/#{slug}.html"
 end
 
-# Generación del índice principal que lista los posts
+# Generación del índice principal que lista los posts (aplicando la misma seguridad en el título)
 index_items = entries.map do |entry|
-  title = entry.dig('title', '$t') || 'Sin título'
   published = entry.dig('published', '$t') || ''
   original_link = (entry['link'] || []).find { |l| l['rel'] == 'alternate' }&.dig('href') || ''
+  
+  title = entry.dig('title', '$t')
+  if title.nil? || title.strip.empty?
+    fecha_corta = published.split('T').first rescue 'sin-fecha'
+    title = "Artículo sin título (#{fecha_corta})"
+  end
   
   raw_slug = original_link.split('/').last&.sub('.html', '') || entry.dig('id', '$t').to_s
   slug = raw_slug.to_s.encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
