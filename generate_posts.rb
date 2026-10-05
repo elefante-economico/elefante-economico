@@ -15,7 +15,7 @@ entries.each do |entry|
   original_link = (entry['link'] || []).find { |l| l['rel'] == 'alternate' }&.dig('href') || ''
   categories = (entry['category'] || []).map { |c| c['term'] }.join(', ')
 
-  slug = original_link.split('/').last&.sub('.html', '') || entry.dig('id', '$t').to_s
+ slug = slug.unicode_normalize(:nfd).gsub(/[\u0300-\u036f]/, '')
   slug = slug.gsub(/[^a-zA-Z0-9\-_]/, '')
   next if slug.empty?
 
