@@ -15,9 +15,20 @@ entries.each do |entry|
   original_link = (entry['link'] || []).find { |l| l['rel'] == 'alternate' }&.dig('href') || ''
   categories = (entry['category'] || []).map { |c| c['term'] }.join(', ')
 
- slug = slug.unicode_normalize(:nfd).gsub(/[\u0300-\u036f]/, '')
-  slug = slug.gsub(/[^a-zA-Z0-9\-_]/, '')
-  next if slug.empty?
+  # Obtener slug base del link o del ID
+  raw_slug = original_link.split('/').last&.sub('.html', '') || entry.dig('id', '$t').to_s
+
+  # Normalización segura de acentos y caracteres
+  slug = raw_slug.to_s.encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
+  slug = slug.unicode_normalize(:nfd).gsub(/\p{M}/, '')
+  slug = slug.downcase.strip.gsub(/[^a-z0-9\-_]/, '-')
+  slug = slug.gsub(/-+/, '-')
+
+  # RESPALDO DE SEGURIDAD: Si el slug queda vacío, usamos un identificador seguro basado en el ID o en el título recortado
+  if slug.empty? || slug == '-'
+    fallback_id = entry.dig('id', '$t').to_s.split('-').last
+    slug = "articulo-#{fallback_id}"
+  end
 
   fecha = begin
     Time.parse(published).strftime('%d de %B de %Y')
@@ -40,7 +51,7 @@ entries.each do |entry|
       <meta property="og:type" content="article">
       <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/#{slug}.html">
       <style>
-        body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; }
+        body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
         a { color: #0056b3; }
         .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
       </style>
@@ -60,6 +71,52 @@ entries.each do |entry|
   sitemap_urls << "https://elefante-economico.github.io/elefante-economico/posts/#{slug}.html"
 end
 
+# Generación del índice principal que lista los posts en el HTML
+index_items = entries.map do |entry|
+  title = entry.dig('title', '$t') || 'Sin título'
+  published = entry.dig('published', '$t') || ''
+  original_link = (entry['link'] || []).find { |l| l['rel'] == 'alternate' }&.dig('href') || ''
+  
+  raw_slug = original_link.split('/').last&.sub('.html', '') || entry.dig('id', '$t').to_s
+  slug = raw_slug.to_s.encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
+  slug = slug.unicode_normalize(:nfd).gsub(/\p{M}/, '')
+  slug = slug.downcase.strip.gsub(/[^a-z0-9\-_]/, '-')
+  slug = slug.gsub(/-+/, '-')
+  
+  if slug.empty? || slug == '-'
+    fallback_id = entry.dig('id', '$t').to_s.split('-').last
+    slug = "articulo-#{fallback_id}"
+  end
+
+  fecha_formateada = begin
+    Time.parse(published).strftime('%Y-%m-%d')
+  rescue
+    published
+  end
+
+  %{<li><a href="posts/#{slug}.html">#{title}</a> — #{fecha_formateada}</li>}
+end.join("\n")
+
+index_html = <<~HTML
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>El Elefante Económico — Índice de artículos</title>
+    <meta name="description" content="Índice completo de artículos publicados en El Elefante Económico.">
+    <meta name="author" content="Maxi Mozetic">
+    <link rel="canonical" href="https://elefante-economico.github.io/elefante-economico/">
+  </head>
+  <body>
+  <h1>El Elefante Económico — Índice</h1>
+  <ul>
+  #{index_items}
+  </ul>
+  </body></html>
+HTML
+
+File.write('index.html', index_html)
+
 # sitemap.xml
 sitemap = <<~XML
   <?xml version="1.0" encoding="UTF-8"?>
@@ -71,4 +128,4 @@ XML
 
 File.write('sitemap.xml', sitemap)
 
-puts "Generados #{entries.size} posts."
+puts "Generados #{entries.size} posts y actualizado el índice."
