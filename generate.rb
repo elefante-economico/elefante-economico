@@ -8,7 +8,14 @@ entries = feed["feed"]["entry"]
 FileUtils.mkdir_p("posts")
 
 def slugify(title)
-  title.downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '-')
+  title
+    .downcase
+    .tr(
+      "áéíóúüñ",
+      "aeiouun"
+    )
+    .gsub(/[^a-z0-9\s-]/, '')
+    .gsub(/\s+/, '-')
 end
 
 entries.each do |entry|
