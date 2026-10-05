@@ -1,0 +1,54 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <!DOCTYPE html>
+<html>
+<head>
+  <title>El Umbral de Saturación en Redes Logísticas</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1>El Umbral de Saturación en Redes Logísticas</h1>
+  <p>En sistemas de distribución, añadir más centros logísticos mejora la eficiencia hasta cierto punto. Más allá de ese umbral, el sistema se vuelve redundante y los costos marginales superan los beneficios. Este fenómeno puede modelarse como una <strong>singularidad de concentración</strong>.</p>
+
+  <h2>Modelo Matemático</h2>
+  <p>Sea \( N \) el número de centros logísticos, y \( C(N) \) el costo total del sistema, compuesto por:</p>
+  <ul>
+    <li>Costos fijos por centro: \( c_f \cdot N \)</li>
+    <li>Costos de transporte promedio: \( c_t(N) \), que decrecen con \( N \)</li>
+    <li>Costos de redundancia: \( c_r(N) \), que crecen con \( N \)</li>
+  </ul>
+
+  <p>Entonces:</p>
+  <p>
+    $$
+    C(N) = c_f \cdot N + c_t(N) + c_r(N)
+    $$
+  </p>
+
+  <p>Definimos el <strong>umbral de saturación</strong> como el punto donde la derivada del costo total respecto a \( N \) cambia de signo:</p>
+  <p>
+    $$
+    \frac{dC}{dN} = 0
+    $$
+  </p>
+
+  <p>Este umbral indica que el sistema ha alcanzado su eficiencia óptima. Añadir más nodos logísticos no reduce el costo total, sino que lo incrementa.</p>
+
+  <h2>Interpretación Dirac</h2>
+  <p>En el límite, si todos los recursos se concentran en un único nodo óptimo, el sistema se comporta como una distribución delta:</p>
+  <p>
+    $$
+    \lim_{N \to 1} C(N) \sim \delta(x - x_0)
+    $$
+  </p>
+
+  <p>Donde \( x_0 \) es la ubicación óptima del centro logístico único. Este modelo permite pensar la logística como un sistema de compresión espacial.</p>
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div>
+</body>
+</html>
