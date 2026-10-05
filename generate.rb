@@ -21,7 +21,8 @@ end
 entries.each do |entry|
   title = entry["title"]["$t"]
   content = entry["content"]["$t"]
-  slug = slugify(title)
+  link = entry["link"].find { |l| l["rel"] == "alternate" }["href"]
+slug = File.basename(link, ".html")
   path = "posts/#{slug}.html"
 
   File.write(path, <<~HTML)
