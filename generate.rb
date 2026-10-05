@@ -1,8 +1,9 @@
+# encoding: UTF-8
 #!/usr/bin/env ruby
 require 'json'
 require 'fileutils'
 
-feed = JSON.parse(File.read("feed.json"))
+feed = JSON.parse(File.read("feed.json", encoding: "UTF-8"))
 entries = feed["feed"]["entry"]
 
 FileUtils.mkdir_p("posts")
