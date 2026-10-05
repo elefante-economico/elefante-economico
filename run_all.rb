@@ -5,8 +5,6 @@ def run(name, cmd)
   system(cmd)
 end
 
-run("Generar posts", "ruby generate.rb")
-run("Generar sitemap", "ruby sitemap.rb")
-run("Generar índice", "ruby index.rb")
+run("Generar posts, índice y sitemap", "ruby generate_posts.rb")
 
 puts "\nPipeline completado."
