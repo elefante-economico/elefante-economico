@@ -1,7 +1,8 @@
 require 'json'
 require 'fileutils'
+require 'time'
 
-# Limpiamos y recreamos la carpeta posts para evitar nombres viejos o desincronizados
+# Limpiamos y recreamos la carpeta posts
 FileUtils.rm_rf('posts')
 FileUtils.mkdir_p('posts')
 
@@ -11,18 +12,27 @@ entries = data.dig('feed', 'entry') || []
 sitemap_urls = []
 
 entries.each do |entry|
-  # Definimos primero las variables básicas necesarias
   content = entry.dig('content', '$t') || ''
   published = entry.dig('published', '$t') || ''
   original_link = (entry['link'] || []).find { |l| l['rel'] == 'alternate' }&.dig('href') || ''
   categories = (entry['category'] || []).map { |c| c['term'] }.join(', ')
 
-  # Validación segura del título para posts individuales
+  # === INTELIGENCIA PARA TÍTULOS VACÍOS ===
   title = entry.dig('title', '$t')
   if title.nil? || title.strip.empty?
-    fecha_corta = published.split('T').first rescue 'sin-fecha'
-    title = "Artículo sin título (#{fecha_corta})"
+    # Limpiamos el HTML del contenido para extraer texto plano
+    texto_plano = content.gsub(/<\/?[^>]*>/, '').gsub(/\s+/, ' ').strip
+    if !texto_plano.empty?
+      # Tomamos los primeros 55 caracteres y cortamos en la última palabra completa
+      extracto = texto_plano[0...55]
+      extracto = extracto.rpartition(' ').first unless extracto.rpartition(' ').first.empty?
+      title = "#{extracto}..."
+    else
+      fecha_corta = published.split('T').first rescue 'sin-fecha'
+      title = "Artículo sin título (#{fecha_corta})"
+    end
   end
+  # ========================================
 
   # Obtener slug base del link o del ID
   raw_slug = original_link.split('/').last&.sub('.html', '') || entry.dig('id', '$t').to_s
@@ -33,7 +43,6 @@ entries.each do |entry|
   slug = slug.downcase.strip.gsub(/[^a-z0-9\-_]/, '-')
   slug = slug.gsub(/-+/, '-')
 
-  # RESPALDO DE SEGURIDAD: Si el slug queda vacío, usamos un identificador seguro
   if slug.empty? || slug == '-'
     fallback_id = entry.dig('id', '$t').to_s.split('-').last
     slug = "articulo-#{fallback_id}"
@@ -81,15 +90,23 @@ entries.each do |entry|
   sitemap_urls << "https://elefante-economico.github.io/elefante-economico/posts/#{slug}.html"
 end
 
-# Generación del índice principal que lista los posts (aplicando la misma seguridad en el título)
+# Generación del índice principal (aplicando exactamente la misma lógica)
 index_items = entries.map do |entry|
+  content = entry.dig('content', '$t') || ''
   published = entry.dig('published', '$t') || ''
   original_link = (entry['link'] || []).find { |l| l['rel'] == 'alternate' }&.dig('href') || ''
   
   title = entry.dig('title', '$t')
   if title.nil? || title.strip.empty?
-    fecha_corta = published.split('T').first rescue 'sin-fecha'
-    title = "Artículo sin título (#{fecha_corta})"
+    texto_plano = content.gsub(/<\/?[^>]*>/, '').gsub(/\s+/, ' ').strip
+    if !texto_plano.empty?
+      extracto = texto_plano[0...55]
+      extracto = extracto.rpartition(' ').first unless extracto.rpartition(' ').first.empty?
+      title = "#{extracto}..."
+    else
+      fecha_corta = published.split('T').first rescue 'sin-fecha'
+      title = "Artículo sin título (#{fecha_corta})"
+    end
   end
   
   raw_slug = original_link.split('/').last&.sub('.html', '') || entry.dig('id', '$t').to_s
@@ -143,4 +160,4 @@ XML
 
 File.write('sitemap.xml', sitemap)
 
-puts "Generados #{entries.size} posts y actualizado el índice correctamente."
+puts "Generados #{entries.size} posts y actualizado el índice correctamente con extractos inteligentes."
