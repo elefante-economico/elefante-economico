@@ -1,6 +1,8 @@
 require 'json'
 require 'fileutils'
 
+# Limpiamos y recreamos la carpeta posts para evitar nombres viejos o desincronizados
+FileUtils.rm_rf('posts')
 FileUtils.mkdir_p('posts')
 
 data = JSON.parse(File.read('feed.json'))
@@ -24,7 +26,7 @@ entries.each do |entry|
   slug = slug.downcase.strip.gsub(/[^a-z0-9\-_]/, '-')
   slug = slug.gsub(/-+/, '-')
 
-  # RESPALDO DE SEGURIDAD: Si el slug queda vacío, usamos un identificador seguro basado en el ID o en el título recortado
+  # RESPALDO DE SEGURIDAD: Si el slug queda vacío, usamos un identificador seguro
   if slug.empty? || slug == '-'
     fallback_id = entry.dig('id', '$t').to_s.split('-').last
     slug = "articulo-#{fallback_id}"
@@ -36,6 +38,7 @@ entries.each do |entry|
     published
   end
 
+  # Plantilla HTML individual para cada post (con los enlaces restaurados)
   html = <<~HTML
     ---
     ---
@@ -71,7 +74,7 @@ entries.each do |entry|
   sitemap_urls << "https://elefante-economico.github.io/elefante-economico/posts/#{slug}.html"
 end
 
-# Generación del índice principal que lista los posts en el HTML
+# Generación del índice principal que lista los posts
 index_items = entries.map do |entry|
   title = entry.dig('title', '$t') || 'Sin título'
   published = entry.dig('published', '$t') || ''
@@ -128,4 +131,4 @@ XML
 
 File.write('sitemap.xml', sitemap)
 
-puts "Generados #{entries.size} posts y actualizado el índice."
+puts "Generados #{entries.size} posts y actualizado el índice correctamente."
