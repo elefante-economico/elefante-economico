@@ -20,7 +20,7 @@ jobs:
 
       - name: Descargar feed JSON de Blogger
         run: |
-          curl -L "https://elelefanteeconomico.blogspot.com/feeds/posts/default?alt=json&max-results=500" -o feed.json
+          curl -L "https://elelefanteeconomico.blogspot.com/feeds/posts/default?alt=json&max-results=1000" -o feed.json
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
