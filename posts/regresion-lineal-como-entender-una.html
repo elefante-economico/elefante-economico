@@ -1,0 +1,496 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regresión lineal: cómo entender una relación entre variables (con simulador) — El Elefante Económico</title>
+  <meta name="description" content="Regresión lineal: cómo entender una relación entre variables (con simulador)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/regresion-lineal-como-entender-una.html">
+  <meta property="og:title" content="Regresión lineal: cómo entender una relación entre variables (con simulador)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/regresion-lineal-como-entender-una.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Regresión lineal: cómo entender una relación entre variables (con simulador)</h1>
+  <p class="meta">16 de November de 2026 · Modelos financieros, Regresiones</p>
+  <article><!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regresión lineal: cómo entender una relación entre variables (con simulador) | El Elefante Económico</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;color:#1f2937;max-width:780px;margin:0 auto;padding:20px 16px 48px;background:#fff}
+h1{font-size:1.9rem;line-height:1.25;margin:.4em 0 .2em}
+h2{font-size:1.3rem;margin:1.8em 0 .5em}
+.kicker{color:#6b7280;font-size:.95rem;margin:0 0 1.4em}
+code{background:#f3f4f6;padding:1px 5px;border-radius:4px;font-size:.92em}
+</style>
+</head>
+<body>
+<p class="kicker">El Elefante Económico</p>
+<meta charset="utf-8">
+<style>
+#rs-app{background:#fff;border:1px solid #cfd6df;border-radius:12px;padding:16px;margin:22px 0;color:#1f2937;font-size:15px;line-height:1.45;font-family:inherit;text-align:left}
+#rs-app *{box-sizing:border-box}
+#rs-app .rs-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:12px}
+#rs-app .rs-f{flex:1 1 150px;min-width:140px}
+#rs-app label{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:#374151}
+#rs-app .rs-checks label{display:inline-flex;gap:6px;align-items:center;font-weight:400;font-size:14px;margin:0 14px 6px 0}
+#rs-app select,#rs-app input[type=number]{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #9ca3af;border-radius:8px;background:#fff;color:#111827;width:100%}
+#rs-app button{font:inherit;font-size:14px;padding:7px 12px;border-radius:8px;border:1px solid #1d4ed8;background:#1d4ed8;color:#fff;cursor:pointer}
+#rs-app button.rs-sec{background:#fff;color:#1f2937;border-color:#9ca3af}
+#rs-app button:hover{filter:brightness(.95)}
+#rs-app button:focus-visible,#rs-app select:focus-visible,#rs-app input:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
+#rs-app input[type=range]{width:100%;margin:0}
+#rs-app .rs-val{font-variant-numeric:tabular-nums;font-weight:700;color:#111827}
+#rs-app svg.rs-svg{width:100%;height:auto;display:block;background:#fff;border:1px solid #e5e7eb;border-radius:8px}
+#rs-app .rs-h{font-size:16px;font-weight:700;margin:18px 0 6px;color:#111827}
+#rs-app .rs-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin:12px 0}
+#rs-app .rs-card{background:#f3f4f6;border-radius:8px;padding:8px 10px}
+#rs-app .rs-card b{display:block;font-size:20px;color:#111827;font-variant-numeric:tabular-nums}
+#rs-app .rs-card span{font-size:12px;color:#4b5563}
+#rs-app table.rs-t{width:100%;border-collapse:collapse;font-size:13.5px;display:block;overflow-x:auto;margin:6px 0}
+#rs-app table.rs-t th,#rs-app table.rs-t td{padding:5px 8px;border:0;border-bottom:1px solid #e5e7eb;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#rs-app table.rs-t th:first-child,#rs-app table.rs-t td:first-child{text-align:left}
+#rs-app table.rs-t th{background:#f9fafb;font-weight:600;color:#374151}
+#rs-app .rs-note{background:#eff6ff;border-left:4px solid #1d4ed8;padding:8px 12px;border-radius:4px;font-size:14px;margin-top:10px}
+#rs-app .rs-warn{background:#fef3c7;border-left-color:#b45309}
+#rs-app .rs-eq{font-size:17px;font-weight:700;margin:8px 0;color:#c2410c}
+#rs-app .rs-leg{font-size:13px;color:#4b5563;margin:6px 0 0}
+#rs-app .rs-leg i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:4px}
+#rs-app .rs-small{font-size:13px;color:#4b5563}
+</style>
+
+<div id="rs-wrap">
+
+<p>¿Cuánto más vendo si aumento el gasto en publicidad? ¿Cuánto me cuesta producir una unidad adicional? ¿Cuánto debería cobrar de alquiler por un local de 80 m²? Son preguntas sobre la <b>relación entre dos variables</b>, y la herramienta clásica para responderlas es la <b>regresión lineal</b>.</p>
+
+<p>En este post la entendemos jugando: más abajo hay un simulador donde podés arrastrar puntos, agregar datos atípicos, subir el ruido y ver en vivo cómo reaccionan la recta, el R² y los intervalos de confianza.</p>
+
+<h2>1. La idea: una recta que resume la nube de puntos</h2>
+
+<p>La regresión lineal simple ajusta una recta <b>ŷ = β₀ + β₁·x</b> a un conjunto de datos, donde:</p>
+<ul>
+<li><b>β₀ (ordenada al origen)</b> es el valor esperado de Y cuando X vale cero.</li>
+<li><b>β₁ (pendiente)</b> es cuánto cambia Y, en promedio, por cada unidad adicional de X.</li>
+</ul>
+<p>El método más usado es el de <b>mínimos cuadrados ordinarios (MCO)</b>: entre todas las rectas posibles, elige la que minimiza la suma de los cuadrados de los <b>residuos</b>, es decir, de las distancias verticales entre cada punto y la recta.</p>
+
+<h2>2. Simulador de regresión lineal</h2>
+
+<p>Probá estos experimentos:</p>
+<ol>
+<li>Empezá con «Publicidad y ventas»: mirá la recta, el R² y el p-valor de la pendiente.</li>
+<li>Arrastrá un punto lejos de la nube: ¿cuánto cambia la pendiente?</li>
+<li>Tocá «Agregar valor atípico»: un solo dato extremo puede torcer toda la recta.</li>
+<li>Subí el ruido: la relación real no cambia, pero el R² cae y los intervalos se ensanchan.</li>
+<li>Elegí «Sin relación» y tocá «Nueva muestra» varias veces: a veces aparece una pendiente que parece significativa solo por azar.</li>
+<li>Tocá «Simular 500 muestras» y mirá cuánto varía la pendiente de una muestra a otra.</li>
+</ol>
+
+<div id="rs-app">
+<noscript>Este simulador necesita JavaScript activado.</noscript>
+
+<div class="rs-row">
+  <div class="rs-f" style="flex:2 1 240px">
+    <label for="rs-scn">Escenario</label>
+    <select id="rs-scn">
+      <option value="publicidad">Publicidad y ventas</option>
+      <option value="costos">Costos de producción (fijo + variable)</option>
+      <option value="alquiler">Superficie y alquiler</option>
+      <option value="azar">Sin relación (ruido puro)</option>
+      <option value="libre">Dibujar mis propios datos</option>
+    </select>
+  </div>
+  <div class="rs-f" style="flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap">
+    <button type="button" id="rs-new">Nueva muestra</button>
+    <button type="button" id="rs-out" class="rs-sec">Agregar valor atípico</button>
+    <button type="button" id="rs-clr" class="rs-sec">Borrar puntos</button>
+  </div>
+</div>
+
+<div class="rs-row" id="rs-sliders">
+  <div class="rs-f">
+    <label for="rs-n">Cantidad de datos: <span class="rs-val" id="rs-nv"></span></label>
+    <input type="range" id="rs-n" min="5" max="100" step="1">
+  </div>
+  <div class="rs-f">
+    <label for="rs-b1">Pendiente real (β₁): <span class="rs-val" id="rs-b1v"></span></label>
+    <input type="range" id="rs-b1" min="0" max="1" step="0.01">
+  </div>
+  <div class="rs-f">
+    <label for="rs-sg">Ruido (desvío σ): <span class="rs-val" id="rs-sgv"></span></label>
+    <input type="range" id="rs-sg" min="0" max="1" step="0.01">
+  </div>
+</div>
+
+<div class="rs-checks">
+  <label><input type="checkbox" id="rs-edit"> Editar puntos (arrastrar, tocar para agregar, doble toque para borrar)</label>
+  <label><input type="checkbox" id="rs-res"> Residuos</label>
+  <label><input type="checkbox" id="rs-ci"> Banda de confianza 95% de la recta</label>
+  <label><input type="checkbox" id="rs-pi"> Banda de predicción 95%</label>
+  <label id="rs-trl"><input type="checkbox" id="rs-tr"> Recta verdadera</label>
+</div>
+
+<svg id="rs-main" class="rs-svg" viewBox="0 0 680 420" role="img" aria-label="Diagrama de dispersión con la recta de regresión"></svg>
+<div class="rs-leg" id="rs-leg"></div>
+<div class="rs-small" id="rs-edited"></div>
+
+<div class="rs-h">Resultados</div>
+<div id="rs-stats"></div>
+
+<div class="rs-h">Predicción</div>
+<div class="rs-row">
+  <div class="rs-f" style="flex:0 1 200px">
+    <label for="rs-x0">Valor de X a predecir</label>
+    <input type="number" id="rs-x0" step="any">
+  </div>
+</div>
+<div id="rs-pred"></div>
+
+<div class="rs-h">Residuos: ¿el modelo está bien especificado?</div>
+<svg id="rs-resid" class="rs-svg" viewBox="0 0 680 230" role="img" aria-label="Gráfico de residuos"></svg>
+<div class="rs-small">Los residuos deberían verse como una nube sin forma alrededor de cero. Un embudo (más dispersión a la derecha) o una curva indican que algún supuesto no se cumple.</div>
+
+<div class="rs-h">Experimento: ¿cuánto cambia la pendiente de una muestra a otra?</div>
+<div class="rs-row">
+  <div class="rs-f" style="flex:0 0 auto"><button type="button" id="rs-sim">Simular 500 muestras</button></div>
+</div>
+<svg id="rs-hist" class="rs-svg" viewBox="0 0 680 250" role="img" aria-label="Histograma de pendientes estimadas" style="display:none"></svg>
+<div id="rs-simtxt" class="rs-small"></div>
+</div>
+
+<h2>3. Cómo leer los resultados</h2>
+<ul>
+<li><b>Pendiente (β₁):</b> el efecto promedio de una unidad más de X sobre Y. Es el número que más suele interesar en la práctica.</li>
+<li><b>Error estándar:</b> cuánto variaría la estimación si repitiéramos el estudio con otra muestra. Cuanto menor, más precisa la estimación.</li>
+<li><b>Estadístico t y p-valor:</b> contrastan la hipótesis de que la pendiente real es cero. Un p-valor menor a 0,05 suele tomarse como evidencia de relación lineal, pero no mide su importancia práctica ni prueba causalidad.</li>
+<li><b>Intervalo de confianza 95%:</b> rango plausible para la pendiente real. Si incluye al cero, no se puede descartar que no haya relación.</li>
+<li><b>R²:</b> proporción de la variación de Y que explica el modelo. Un R² alto no garantiza un buen modelo, y uno bajo no implica que la relación no exista.</li>
+<li><b>Error estándar residual:</b> el desvío típico de los errores de predicción, en las unidades de Y.</li>
+<li><b>Banda de confianza vs. banda de predicción:</b> la primera acota dónde está la recta promedio; la segunda, dónde cae un dato individual nuevo, por eso es más ancha.</li>
+</ul>
+
+<h2>4. Supuestos y errores frecuentes</h2>
+<ul>
+<li><b>Linealidad:</b> la relación debe ser aproximadamente una recta. Si hay curvatura, el modelo miente.</li>
+<li><b>Homocedasticidad:</b> la dispersión de los errores debe ser parecida en todo el rango de X.</li>
+<li><b>Independencia de los errores:</b> especialmente delicada con series de tiempo, donde cada dato depende del anterior.</li>
+<li><b>Normalidad de los errores:</b> importa para los intervalos y p-valores cuando hay pocos datos.</li>
+<li><b>Valores atípicos:</b> un punto extremo, sobre todo en los bordes de X, puede cambiar la recta. Probalo en el simulador.</li>
+<li><b>Correlación no es causalidad:</b> una pendiente significativa no demuestra que X cause Y.</li>
+<li><b>Extrapolar:</b> predecir fuera del rango de X observado es riesgoso, porque nada garantiza que la relación siga siendo lineal.</li>
+</ul>
+
+<h2>5. Aplicaciones en la empresa</h2>
+<ul>
+<li><b>Costos mixtos:</b> en el escenario de costos, la ordenada estima el <b>costo fijo</b> y la pendiente el <b>costo variable por unidad</b>. Es una forma simple de separar ambos componentes a partir de datos históricos.</li>
+<li><b>Ventas y publicidad:</b> estimar cuánto se vende en promedio por cada unidad monetaria adicional invertida, con su margen de incertidumbre.</li>
+<li><b>Precios y tasaciones:</b> relacionar el precio con una característica, como la superficie.</li>
+<li><b>Pronósticos simples:</b> proyectar una variable en función de otra, siempre dentro del rango observado.</li>
+</ul>
+
+<h2>6. ¿Y en Excel?</h2>
+<p>Todo lo que mostró el simulador se puede calcular en Excel: <code>PENDIENTE</code>, <code>INTERSECCION.EJE</code>, <code>COEFICIENTE.R2</code>, <code>ERROR.TIPICO.XY</code> y <code>PRONOSTICO.LINEAL</code> dan los resultados básicos, y <code>ESTIMACION.LINEAL</code> con los dos últimos argumentos en VERDADERO devuelve también los errores estándar y otros estadísticos. Además, la herramienta «Análisis de datos → Regresión» produce una tabla completa con p-valores e intervalos de confianza.</p>
+
+<p><i>Este simulador tiene fines educativos. Los datos de los escenarios son ficticios y generados al azar; no constituyen asesoramiento. Con datos reales, revisá siempre los supuestos del modelo antes de decidir.</i></p>
+
+</div>
+
+<script>
+(function(){
+/*MATH_START*/
+function lgamma(x){var c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];var y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);var s=1.000000000190015;for(var j=0;j<6;j++){y+=1;s+=c[j]/y;}return -t+Math.log(2.5066282746310005*s/x);}
+function betacf(a,b,x){var FPMIN=1e-300,qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;var h=d;for(var m=1;m<=300;m++){var m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;var del=d*c;h*=del;if(Math.abs(del-1)<3e-14)break;}return h;}
+function betai(a,b,x){if(x<=0)return 0;if(x>=1)return 1;var bt=Math.exp(lgamma(a+b)-lgamma(a)-lgamma(b)+a*Math.log(x)+b*Math.log(1-x));if(x<(a+1)/(a+b+2))return bt*betacf(a,b,x)/a;return 1-bt*betacf(b,a,1-x)/b;}
+function tcdf(t,df){var p=0.5*betai(df/2,0.5,df/(df+t*t));return t>0?1-p:p;}
+function pTwo(t,df){return betai(df/2,0.5,df/(df+t*t));}
+var tcache={};
+function tcrit(df){if(tcache[df])return tcache[df];var lo=0,hi=10;while(tcdf(hi,df)<0.975)hi*=2;for(var i=0;i<100;i++){var mid=(lo+hi)/2;if(tcdf(mid,df)<0.975)lo=mid;else hi=mid;}return(tcache[df]=(lo+hi)/2);}
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function tstat(b,se){return se<1e-12?(Math.abs(b)<1e-12?0:(b>0?Infinity:-Infinity)):b/se;}
+function pval(t,df){return isFinite(t)?pTwo(t,df):0;}
+function fit(p){
+  var n=p.length;if(n<2)return null;var i,mx=0,my=0;
+  for(i=0;i<n;i++){mx+=p[i].x;my+=p[i].y;}mx/=n;my/=n;
+  var Sxx=0,Sxy=0,Syy=0;
+  for(i=0;i<n;i++){var dx=p[i].x-mx,dy=p[i].y-my;Sxx+=dx*dx;Sxy+=dx*dy;Syy+=dy*dy;}
+  if(Sxx<1e-12)return{n:n,degenerate:true};
+  var b1=Sxy/Sxx,b0=my-b1*mx,SSE=0;
+  for(i=0;i<n;i++){var e=p[i].y-(b0+b1*p[i].x);SSE+=e*e;}
+  var f={n:n,mx:mx,my:my,Sxx:Sxx,Syy:Syy,b0:b0,b1:b1,SSE:SSE,df:n-2};
+  f.r2=Syy>1e-12?Math.max(0,1-SSE/Syy):0;
+  f.r=Syy>1e-12?Sxy/Math.sqrt(Sxx*Syy):0;
+  if(f.df>=1){
+    f.s=Math.sqrt(SSE/f.df);f.se1=f.s/Math.sqrt(Sxx);f.se0=f.s*Math.sqrt(1/n+mx*mx/Sxx);
+    f.tc=tcrit(f.df);f.t1=tstat(b1,f.se1);f.t0=tstat(b0,f.se0);
+    f.p1=pval(f.t1,f.df);f.p0=pval(f.t0,f.df);f.r2adj=1-(1-f.r2)*(n-1)/f.df;
+  }
+  return f;
+}
+function bands(f,x){var h=1/f.n+(x-f.mx)*(x-f.mx)/f.Sxx,yh=f.b0+f.b1*x;return{yh:yh,ci:f.tc*f.s*Math.sqrt(h),pi:f.tc*f.s*Math.sqrt(1+h)};}
+/*MATH_END*/
+
+function $(id){return document.getElementById(id);}
+function fmt(v,d){if(v===undefined||v===null||!isFinite(v))return '—';return v.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmtP(p){return p<0.001?'< 0,001':fmt(p,3);}
+function r2d(v){return Math.round(v*100)/100;}
+function clamp(v,a,b){return Math.min(b,Math.max(a,v));}
+function ticks(lo,hi,target){
+  var span=hi-lo,raw=span/target,mag=Math.pow(10,Math.floor(Math.log10(raw))),nm=raw/mag;
+  var step=(nm<1.5?1:nm<3?2:nm<7?5:10)*mag,start=Math.ceil(lo/step-1e-9)*step,out=[];
+  for(var v=start;v<=hi+1e-9;v+=step)out.push(+v.toFixed(10));
+  return{vals:out,dec:step>=1?0:Math.min(3,Math.ceil(-Math.log10(step)))};
+}
+
+var SCN={
+ publicidad:{xl:'Gasto en publicidad (miles € / mes)',yl:'Ventas (miles € / mes)',xn:'gasto en publicidad',yn:'ventas',x0:0,x1:20,y0:0,y1:200,b0:40,b1:5,sg:15,n:18,seed:11},
+ costos:{xl:'Unidades producidas',yl:'Costo total (€)',xn:'unidades producidas',yn:'costo total',x0:0,x1:500,y0:0,y1:10000,b0:2000,b1:12,sg:400,n:20,seed:5},
+ alquiler:{xl:'Superficie (m²)',yl:'Alquiler (€ / mes)',xn:'superficie',yn:'alquiler',x0:30,x1:120,y0:0,y1:1800,b0:250,b1:11,sg:120,n:20,seed:7},
+ azar:{xl:'Horas de música en el local por día',yl:'Ventas diarias (€)',xn:'horas de música',yn:'ventas diarias',x0:0,x1:10,y0:0,y1:1000,b0:500,b1:0,sg:90,n:25,seed:3},
+ libre:{xl:'X',yl:'Y',xn:'X',yn:'Y',x0:0,x1:10,y0:0,y1:10,free:true}
+};
+var M={W:680,H:420,ml:64,mr:16,mt:14,mb:50};M.pw=M.W-M.ml-M.mr;M.ph=M.H-M.mt-M.mb;
+var S={key:'publicidad',n:18,b1:5,sg:15,seed:11,pts:[],edited:false};
+var svg=$('rs-main');
+
+function genBase(seed){
+  var r=mulberry32(seed),U=[],Z=[],i;
+  for(i=0;i<100;i++)U.push(r());
+  for(i=0;i<100;i++){var u1=r()||1e-9,u2=r();Z.push(Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2));}
+  return{U:U,Z:Z};
+}
+function regen(){
+  var c=SCN[S.key];S.edited=false;if(c.free)return;
+  var B=genBase(S.seed),i;S.pts=[];
+  for(i=0;i<S.n;i++){
+    var x=c.x0+(c.x1-c.x0)*B.U[i],y=clamp(c.b0+S.b1*x+S.sg*B.Z[i],c.y0,c.y1);
+    S.pts.push({x:r2d(x),y:r2d(y)});
+  }
+}
+function setScenario(key){
+  var c=SCN[key];S.key=key;
+  $('rs-sliders').style.display=c.free?'none':'flex';
+  $('rs-new').style.display=c.free?'none':'';
+  $('rs-sim').parentNode.style.display=c.free?'none':'';
+  $('rs-trl').style.display=c.free?'none':'';
+  $('rs-hist').style.display='none';$('rs-simtxt').innerHTML='';
+  if(c.free){S.pts=[];S.edited=false;$('rs-edit').checked=true;}
+  else{
+    S.n=c.n;S.b1=c.b1;S.sg=c.sg;S.seed=c.seed;
+    var bmin=(c.y0+0.05*(c.y1-c.y0)-c.b0)/c.x1,bmax=(c.y0+0.95*(c.y1-c.y0)-c.b0)/c.x1;
+    var nb=$('rs-b1');nb.min=bmin;nb.max=bmax;nb.step=(bmax-bmin)/200;nb.value=S.b1;
+    var sm=(c.y1-c.y0)/6,ns=$('rs-sg');ns.min=0;ns.max=sm;ns.step=sm/100;ns.value=S.sg;
+    $('rs-n').value=S.n;
+    regen();
+  }
+  render();
+}
+function syncLabels(){$('rs-nv').textContent=S.n;$('rs-b1v').textContent=fmt(S.b1,2);$('rs-sgv').textContent=fmt(S.sg,2);}
+
+function drawMain(f){
+  var c=SCN[S.key],o=[],i;
+  function X(v){return M.ml+(v-c.x0)/(c.x1-c.x0)*M.pw;}
+  function Y(v){return M.mt+M.ph-(v-c.y0)/(c.y1-c.y0)*M.ph;}
+  o.push('<defs><clipPath id="rs-clip"><rect x="'+M.ml+'" y="'+M.mt+'" width="'+M.pw+'" height="'+M.ph+'"/></clipPath></defs>');
+  var tx=ticks(c.x0,c.x1,6),ty=ticks(c.y0,c.y1,5);
+  tx.vals.forEach(function(v){o.push('<line x1="'+X(v)+'" x2="'+X(v)+'" y1="'+M.mt+'" y2="'+(M.mt+M.ph)+'" stroke="#eef0f3"/><text x="'+X(v)+'" y="'+(M.mt+M.ph+18)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(v,tx.dec)+'</text>');});
+  ty.vals.forEach(function(v){o.push('<line y1="'+Y(v)+'" y2="'+Y(v)+'" x1="'+M.ml+'" x2="'+(M.ml+M.pw)+'" stroke="#eef0f3"/><text x="'+(M.ml-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,ty.dec)+'</text>');});
+  o.push('<rect x="'+M.ml+'" y="'+M.mt+'" width="'+M.pw+'" height="'+M.ph+'" fill="none" stroke="#9ca3af"/>');
+  o.push('<text x="'+(M.ml+M.pw/2)+'" y="'+(M.H-8)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">'+c.xl+'</text>');
+  o.push('<text transform="rotate(-90)" x="'+(-(M.mt+M.ph/2))+'" y="16" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">'+c.yl+'</text>');
+  o.push('<g clip-path="url(#rs-clip)">');
+  var ok=f&&!f.degenerate;
+  if(ok&&f.df>=1){
+    [['rs-pi','pi','rgba(194,65,12,.08)'],['rs-ci','ci','rgba(194,65,12,.20)']].forEach(function(b){
+      if(!$(b[0]).checked)return;
+      var up=[],lo=[],k,N=60;
+      for(k=0;k<=N;k++){var x=c.x0+(c.x1-c.x0)*k/N,bd=bands(f,x);up.push(X(x)+','+Y(bd.yh+bd[b[1]]));lo.unshift(X(x)+','+Y(bd.yh-bd[b[1]]));}
+      o.push('<polygon points="'+up.concat(lo).join(' ')+'" fill="'+b[2]+'" stroke="none"/>');
+    });
+  }
+  if(ok&&$('rs-res').checked){
+    S.pts.forEach(function(p){var yh=f.b0+f.b1*p.x;o.push('<line x1="'+X(p.x)+'" x2="'+X(p.x)+'" y1="'+Y(p.y)+'" y2="'+Y(yh)+'" stroke="#ca8a04" stroke-width="1.6"/>');});
+  }
+  if(!c.free&&$('rs-tr').checked){
+    o.push('<line x1="'+X(c.x0)+'" y1="'+Y(c.b0+S.b1*c.x0)+'" x2="'+X(c.x1)+'" y2="'+Y(c.b0+S.b1*c.x1)+'" stroke="#15803d" stroke-width="2" stroke-dasharray="7 5"/>');
+  }
+  if(ok){
+    o.push('<line x1="'+X(c.x0)+'" y1="'+Y(f.b0+f.b1*c.x0)+'" x2="'+X(c.x1)+'" y2="'+Y(f.b0+f.b1*c.x1)+'" stroke="#c2410c" stroke-width="2.6"/>');
+  }
+  o.push('</g>');
+  for(i=0;i<S.pts.length;i++){
+    var p=S.pts[i];
+    o.push('<circle data-i="'+i+'" cx="'+X(p.x)+'" cy="'+Y(p.y)+'" r="5.5" fill="#1d4ed8" stroke="#fff" stroke-width="1.5" style="cursor:'+($('rs-edit').checked?'grab':'default')+'"/>');
+  }
+  svg.innerHTML=o.join('');
+  var leg='<i style="background:#1d4ed8;height:8px;width:8px;border-radius:50%"></i>Datos &nbsp; <i style="background:#c2410c"></i>Recta estimada';
+  if(!c.free&&$('rs-tr').checked)leg+=' &nbsp; <i style="background:#15803d"></i>Recta verdadera';
+  $('rs-leg').innerHTML=leg;
+  $('rs-edited').textContent=S.edited?'Modificaste los datos a mano. Si movés los controles de arriba o tocás «Nueva muestra», se vuelven a generar.':'';
+}
+
+function drawResid(f){
+  var el=$('rs-resid'),W=680,H=230,ml=64,mr=16,mt=12,mb=40,pw=W-ml-mr,ph=H-mt-mb,c=SCN[S.key],o=[];
+  if(!f||f.degenerate){el.innerHTML='';return;}
+  var res=S.pts.map(function(p){return p.y-(f.b0+f.b1*p.x);});
+  var m=1e-9;res.forEach(function(e){m=Math.max(m,Math.abs(e));});m*=1.15;
+  function X(v){return ml+(v-c.x0)/(c.x1-c.x0)*pw;}
+  function Y(v){return mt+ph/2-v/m*ph/2;}
+  var tx=ticks(c.x0,c.x1,6),ty=ticks(-m,m,4);
+  tx.vals.forEach(function(v){o.push('<text x="'+X(v)+'" y="'+(mt+ph+16)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(v,tx.dec)+'</text>');});
+  ty.vals.forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#eef0f3"/><text x="'+(ml-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,ty.dec)+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#c2410c" stroke-width="1.6"/>');
+  S.pts.forEach(function(p,i){o.push('<circle cx="'+X(p.x)+'" cy="'+Y(res[i])+'" r="4.5" fill="#475569" fill-opacity=".8"/>');});
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-4)+'" text-anchor="middle" font-size="12" font-weight="600" fill="#374151">'+c.xl+'</text>');
+  o.push('<text transform="rotate(-90)" x="'+(-(mt+ph/2))+'" y="14" text-anchor="middle" font-size="12" font-weight="600" fill="#374151">Residuo (Y − ŷ)</text>');
+  el.innerHTML=o.join('');
+}
+
+function ci(b,se,tc){return '['+fmt(b-tc*se,2)+' ; '+fmt(b+tc*se,2)+']';}
+function drawStats(f){
+  var c=SCN[S.key],el=$('rs-stats'),n=S.pts.length;
+  if(n<3){el.innerHTML='<div class="rs-note rs-warn">Hacen falta al menos 3 puntos para estimar una regresión con inferencia. Activá «Editar puntos» y tocá el gráfico para agregarlos.</div>';return;}
+  if(f.degenerate){el.innerHTML='<div class="rs-note rs-warn">Todos los puntos tienen el mismo valor de X: no se puede estimar una pendiente. Agregá puntos con valores de X distintos.</div>';return;}
+  var h='<div class="rs-cards">'
+   +'<div class="rs-card"><b>'+n+'</b><span>Observaciones</span></div>'
+   +'<div class="rs-card"><b>'+fmt(f.b1,2)+'</b><span>Pendiente (β₁)</span></div>'
+   +'<div class="rs-card"><b>'+fmt(f.r2,3)+'</b><span>R²</span></div>'
+   +'<div class="rs-card"><b>'+fmt(f.r2adj,3)+'</b><span>R² ajustado</span></div>'
+   +'<div class="rs-card"><b>'+fmt(f.r,3)+'</b><span>Correlación (r)</span></div>'
+   +'<div class="rs-card"><b>'+fmt(f.s,2)+'</b><span>Error estándar residual</span></div></div>';
+  h+='<div class="rs-eq">ŷ = '+fmt(f.b0,2)+(f.b1>=0?' + ':' − ')+fmt(Math.abs(f.b1),2)+' · x</div>';
+  h+='<table class="rs-t"><tr><th>Coeficiente</th><th>Estimación</th><th>Error estándar</th><th>Estadístico t</th><th>p-valor</th><th>IC 95%</th></tr>'
+   +'<tr><td>Ordenada (β₀)</td><td>'+fmt(f.b0,2)+'</td><td>'+fmt(f.se0,2)+'</td><td>'+fmt(f.t0,2)+'</td><td>'+fmtP(f.p0)+'</td><td>'+ci(f.b0,f.se0,f.tc)+'</td></tr>'
+   +'<tr><td>Pendiente (β₁)</td><td>'+fmt(f.b1,2)+'</td><td>'+fmt(f.se1,2)+'</td><td>'+fmt(f.t1,2)+'</td><td>'+fmtP(f.p1)+'</td><td>'+ci(f.b1,f.se1,f.tc)+'</td></tr></table>';
+  var sig=f.p1<0.05,t='<b>Cómo leerlo:</b> por cada unidad adicional en «'+c.xn+'», «'+c.yn+'» varía en promedio '+fmt(f.b1,2)+' unidades, con un intervalo de confianza del 95% de '+ci(f.b1,f.se1,f.tc)+'. ';
+  t+=sig?'El p-valor de la pendiente ('+fmtP(f.p1)+') es menor a 0,05: si en realidad no hubiera relación, sería poco común ver una pendiente así de marcada solo por azar. '
+        :'El p-valor de la pendiente ('+fmtP(f.p1)+') no es menor a 0,05: con estos datos no hay evidencia suficiente para descartar que la pendiente real sea cero. ';
+  t+='El modelo explica el '+fmt(f.r2*100,1)+'% de la variación de «'+c.yn+'».';
+  if(S.key==='costos')t+=' En un modelo de costos, la ordenada se interpreta como el costo fijo y la pendiente como el costo variable por unidad.';
+  t+=' Recordá que una relación estadística no prueba causalidad.';
+  h+='<div class="rs-note">'+t+'</div>';
+  if(f.df<5)h+='<div class="rs-note rs-warn">Con tan pocos datos los intervalos son muy anchos y las conclusiones, poco confiables.</div>';
+  el.innerHTML=h;
+}
+function drawPred(f){
+  var el=$('rs-pred'),c=SCN[S.key];
+  if(!f||f.degenerate||f.df<1){el.innerHTML='<div class="rs-small">Se necesitan al menos 3 puntos con valores de X distintos.</div>';return;}
+  var inp=$('rs-x0');
+  if(inp.value===''||isNaN(parseFloat(inp.value)))inp.value=r2d(f.mx);
+  var x0=parseFloat(inp.value),b=bands(f,x0);
+  var h='<div class="rs-cards"><div class="rs-card"><b>'+fmt(b.yh,2)+'</b><span>Predicción ŷ</span></div>'
+   +'<div class="rs-card"><b style="font-size:15px">['+fmt(b.yh-b.ci,2)+' ; '+fmt(b.yh+b.ci,2)+']</b><span>IC 95% del valor promedio</span></div>'
+   +'<div class="rs-card"><b style="font-size:15px">['+fmt(b.yh-b.pi,2)+' ; '+fmt(b.yh+b.pi,2)+']</b><span>Intervalo de predicción 95% (un dato nuevo)</span></div></div>';
+  var xs=S.pts.map(function(p){return p.x;}),mn=Math.min.apply(null,xs),mxx=Math.max.apply(null,xs);
+  if(x0<mn||x0>mxx)h+='<div class="rs-note rs-warn">Este valor está fuera del rango observado de X ('+fmt(mn,2)+' a '+fmt(mxx,2)+'): es una extrapolación y puede ser poco confiable.</div>';
+  el.innerHTML=h;
+}
+function render(){
+  syncLabels();
+  var f=S.pts.length>=2?fit(S.pts):null;
+  drawMain(f);drawResid(f);drawStats(f);drawPred(f);
+}
+
+/* Interacción con el gráfico */
+var drag=-1,lastTap={i:-1,t:0};
+function toData(e){
+  var c=SCN[S.key],r=svg.getBoundingClientRect(),k=M.W/(r.width||M.W);
+  var px=(e.clientX-r.left)*k,py=(e.clientY-r.top)*k;
+  return{x:c.x0+(px-M.ml)/M.pw*(c.x1-c.x0),y:c.y0+(M.ph-(py-M.mt))/M.ph*(c.y1-c.y0)};
+}
+svg.addEventListener('pointerdown',function(e){
+  if(!$('rs-edit').checked)return;
+  var c=SCN[S.key],a=e.target.getAttribute?e.target.getAttribute('data-i'):null;
+  if(a!==null){
+    var idx=+a,now=Date.now();
+    if(lastTap.i===idx&&now-lastTap.t<350){S.pts.splice(idx,1);S.edited=true;lastTap.i=-1;render();return;}
+    lastTap={i:idx,t:now};drag=idx;
+  }else{
+    var d=toData(e);
+    if(d.x<c.x0||d.x>c.x1||d.y<c.y0||d.y>c.y1)return;
+    S.pts.push({x:r2d(d.x),y:r2d(d.y)});S.edited=true;drag=S.pts.length-1;lastTap.i=-1;render();
+  }
+  try{svg.setPointerCapture(e.pointerId);}catch(err){}
+  e.preventDefault();
+});
+svg.addEventListener('pointermove',function(e){
+  if(drag<0||!S.pts[drag])return;
+  var c=SCN[S.key],d=toData(e);
+  S.pts[drag]={x:r2d(clamp(d.x,c.x0,c.x1)),y:r2d(clamp(d.y,c.y0,c.y1))};S.edited=true;render();
+});
+function endDrag(){drag=-1;}
+svg.addEventListener('pointerup',endDrag);svg.addEventListener('pointercancel',endDrag);
+function setTouch(){svg.style.touchAction=$('rs-edit').checked?'none':'auto';}
+$('rs-edit').addEventListener('change',function(){setTouch();render();});
+
+/* Controles */
+$('rs-scn').addEventListener('change',function(){setScenario(this.value);});
+$('rs-new').addEventListener('click',function(){S.seed=Math.floor(Math.random()*1e9);regen();render();});
+$('rs-clr').addEventListener('click',function(){S.pts=[];S.edited=true;render();});
+$('rs-out').addEventListener('click',function(){
+  var c=SCN[S.key];S.pts.push({x:r2d(c.x1-0.04*(c.x1-c.x0)),y:r2d(c.y0+0.08*(c.y1-c.y0))});S.edited=true;render();
+});
+$('rs-n').addEventListener('input',function(){S.n=+this.value;regen();render();});
+$('rs-b1').addEventListener('input',function(){S.b1=+this.value;regen();render();});
+$('rs-sg').addEventListener('input',function(){S.sg=+this.value;regen();render();});
+['rs-res','rs-ci','rs-pi','rs-tr'].forEach(function(id){$(id).addEventListener('change',render);});
+$('rs-x0').addEventListener('input',function(){drawPred(S.pts.length>=2?fit(S.pts):null);});
+
+/* Experimento de muestreo */
+function randn(){var u=Math.random()||1e-9,v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function runSim(){
+  var c=SCN[S.key];if(c.free||S.n<3)return;
+  var R=500,est=[],hit=0,sum=0,i,k;
+  for(i=0;i<R;i++){
+    var p=[];
+    for(k=0;k<S.n;k++){var x=c.x0+(c.x1-c.x0)*Math.random();p.push({x:x,y:clamp(c.b0+S.b1*x+S.sg*randn(),c.y0,c.y1)});}
+    var g=fit(p);if(g.degenerate)continue;
+    est.push(g.b1);sum+=g.b1;
+    if(Math.abs(g.b1-S.b1)<=g.tc*g.se1+1e-9)hit++;
+  }
+  var N=est.length,mean=sum/N,v=0;est.forEach(function(b){v+=(b-mean)*(b-mean);});var sd=Math.sqrt(v/(N-1));
+  var lo=Math.min.apply(null,est),hi=Math.max.apply(null,est);if(hi-lo<1e-9){lo-=0.5;hi+=0.5;}
+  var nb=24,bins=[],bw=(hi-lo)/nb;for(i=0;i<nb;i++)bins.push(0);
+  est.forEach(function(b){bins[Math.min(nb-1,Math.floor((b-lo)/bw))]++;});
+  var W=680,H=250,ml=40,mr=16,mt=12,mb=40,pw=W-ml-mr,ph=H-mt-mb,mx=Math.max.apply(null,bins),o=[];
+  function X(v){return ml+(v-lo)/(hi-lo)*pw;}
+  bins.forEach(function(cnt,j){var h=cnt/mx*ph;o.push('<rect x="'+(ml+j*pw/nb+1)+'" y="'+(mt+ph-h)+'" width="'+(pw/nb-2)+'" height="'+h+'" fill="#93a8d8"/>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  var tt=ticks(lo,hi,6);
+  tt.vals.forEach(function(v){o.push('<text x="'+X(v)+'" y="'+(mt+ph+16)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(v,Math.max(tt.dec,1))+'</text>');});
+  if(S.b1>=lo&&S.b1<=hi)o.push('<line x1="'+X(S.b1)+'" x2="'+X(S.b1)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#15803d" stroke-width="2.4"/>');
+  o.push('<line x1="'+X(mean)+'" x2="'+X(mean)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#1d4ed8" stroke-width="2" stroke-dasharray="6 4"/>');
+  var f=S.pts.length>=3?fit(S.pts):null;
+  if(f&&!f.degenerate&&f.b1>=lo&&f.b1<=hi)o.push('<line x1="'+X(f.b1)+'" x2="'+X(f.b1)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#c2410c" stroke-width="2.4"/>');
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-4)+'" text-anchor="middle" font-size="12" font-weight="600" fill="#374151">Pendiente estimada en cada muestra</text>');
+  var hs=$('rs-hist');hs.innerHTML=o.join('');hs.style.display='block';
+  var seT=S.sg/Math.sqrt(S.n*Math.pow(c.x1-c.x0,2)/12);
+  $('rs-simtxt').innerHTML='<div class="rs-leg"><i style="background:#15803d"></i>Pendiente verdadera ('+fmt(S.b1,2)+') &nbsp; <i style="background:#1d4ed8"></i>Promedio de las estimaciones ('+fmt(mean,2)+')'+(f&&!f.degenerate?' &nbsp; <i style="background:#c2410c"></i>Tu muestra actual ('+fmt(f.b1,2)+')':'')+'</div>'
+   +'<div class="rs-note">Cada muestra de '+S.n+' datos da una pendiente distinta. El desvío estándar entre las '+N+' estimaciones es '+fmt(sd,3)+', cercano al error estándar teórico de '+fmt(seT,3)+': eso es lo que mide el «error estándar» de la tabla. Además, el intervalo de confianza del 95% contuvo a la pendiente verdadera en el '+fmt(hit/N*100,1)+'% de las muestras.</div>';
+}
+$('rs-sim').addEventListener('click',runSim);
+
+setTouch();
+if(!(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches))$('rs-edit').checked=true;
+setTouch();
+setScenario('publicidad');
+})();
+</script>
+
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/regresion-lineal-como-entender-una.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
