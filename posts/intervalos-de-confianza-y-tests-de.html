@@ -1,0 +1,425 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intervalos de confianza y tests de hipótesis: cómo decidir con muestras (con simuladores) — El Elefante Económico</title>
+  <meta name="description" content="Intervalos de confianza y tests de hipótesis: cómo decidir con muestras (con simuladores)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/intervalos-de-confianza-y-tests-de.html">
+  <meta property="og:title" content="Intervalos de confianza y tests de hipótesis: cómo decidir con muestras (con simuladores)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/intervalos-de-confianza-y-tests-de.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Intervalos de confianza y tests de hipótesis: cómo decidir con muestras (con simuladores)</h1>
+  <p class="meta">17 de November de 2026 · Intervalos de Confianza, Tests de Hipótesis</p>
+  <article><!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intervalos de confianza y tests de hipótesis: cómo decidir con muestras (con simuladores) | El Elefante Económico</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;color:#1f2937;max-width:780px;margin:0 auto;padding:20px 16px 48px;background:#fff}
+h1{font-size:1.9rem;line-height:1.25;margin:.4em 0 .2em}
+h2{font-size:1.3rem;margin:1.8em 0 .5em}
+.kicker{color:#6b7280;font-size:.95rem;margin:0 0 1.4em}
+code{background:#f3f4f6;padding:1px 5px;border-radius:4px;font-size:.92em}
+</style>
+</head>
+<body>
+<p class="kicker">El Elefante Económico</p>
+<meta charset="utf-8">
+<style>
+#ht-app{background:#fff;border:1px solid #cfd6df;border-radius:12px;padding:16px;margin:22px 0;color:#1f2937;font-size:15px;line-height:1.45;font-family:inherit;text-align:left}
+#ht-app *{box-sizing:border-box}
+#ht-app .ht-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:12px}
+#ht-app .ht-f{flex:1 1 150px;min-width:140px}
+#ht-app label{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:#374151}
+#ht-app select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #9ca3af;border-radius:8px;background:#fff;color:#111827;width:100%}
+#ht-app button{font:inherit;font-size:14px;padding:7px 12px;border-radius:8px;border:1px solid #1d4ed8;background:#1d4ed8;color:#fff;cursor:pointer}
+#ht-app button.ht-sec{background:#fff;color:#1f2937;border-color:#9ca3af}
+#ht-app button:hover{filter:brightness(.95)}
+#ht-app button:focus-visible,#ht-app select:focus-visible,#ht-app input:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
+#ht-app input[type=range]{width:100%;margin:0}
+#ht-app .ht-val{font-variant-numeric:tabular-nums;font-weight:700;color:#111827}
+#ht-app svg.ht-svg{width:100%;height:auto;display:block;background:#fff;border:1px solid #e5e7eb;border-radius:8px}
+#ht-app .ht-h{font-size:17px;font-weight:700;margin:22px 0 4px;color:#111827;padding-top:14px;border-top:1px solid #e5e7eb}
+#ht-app .ht-h:first-of-type{border-top:0;padding-top:0;margin-top:4px}
+#ht-app .ht-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:12px 0}
+#ht-app .ht-card{background:#f3f4f6;border-radius:8px;padding:8px 10px}
+#ht-app .ht-card b{display:block;font-size:19px;color:#111827;font-variant-numeric:tabular-nums}
+#ht-app .ht-card span{font-size:12px;color:#4b5563}
+#ht-app .ht-note{background:#eff6ff;border-left:4px solid #1d4ed8;padding:8px 12px;border-radius:4px;font-size:14px;margin-top:10px}
+#ht-app .ht-warn{background:#fef3c7;border-left-color:#b45309}
+#ht-app .ht-ok{background:#ecfdf5;border-left-color:#15803d}
+#ht-app .ht-leg{font-size:13px;color:#4b5563;margin:6px 0 0}
+#ht-app .ht-leg i{display:inline-block;width:18px;height:4px;vertical-align:middle;margin-right:4px;border-radius:2px}
+#ht-app .ht-small{font-size:13px;color:#4b5563;margin-top:4px}
+#ht-app .ht-hyp{font-size:15px;margin:6px 0;font-weight:600;color:#1f2937}
+</style>
+
+<div id="ht-wrap">
+
+<p>¿El ticket promedio de tu negocio es realmente de 100 €? ¿Cuánto podés confiar en una encuesta de satisfacción respondida por 40 clientes? ¿El cambio de proveedor mejoró de verdad los tiempos de entrega, o fue casualidad? Casi todas las decisiones de una empresa se toman con <b>muestras</b>, no con la población completa, y la <b>inferencia estadística</b> es la disciplina que dice cuánto se puede confiar en lo que una muestra muestra.</p>
+
+<p>En este post trabajamos con las dos herramientas centrales de la inferencia: los <b>intervalos de confianza</b> y los <b>tests de hipótesis</b>. Y las entendemos con dos simuladores: uno donde se toman cientos de muestras y se ve cuántas veces el intervalo «acierta», y otro donde se pone a prueba una hipótesis y se descubre qué son realmente el p-valor, el error de tipo I y la potencia.</p>
+
+<h2>1. El problema: de la muestra a la población</h2>
+
+<p>Supongamos que una tienda quiere conocer su <b>ticket promedio de compra</b>. Revisar todas las ventas históricas puede ser inviable, así que se toma una muestra de, por ejemplo, 40 tickets y se calcula su promedio (x̄). Pero ese promedio cambiaría si se tomara otra muestra. La pregunta es: ¿qué se puede afirmar sobre el promedio real de la población (μ), que nunca se observa?</p>
+
+<h2>2. Intervalos de confianza</h2>
+
+<p>Un intervalo de confianza acompaña a la estimación con un margen de error:</p>
+<p><b>x̄ ± t* · s / √n</b></p>
+<p>donde s es el desvío estándar de la muestra, n su tamaño y t* un valor crítico de la distribución t de Student que depende del nivel de confianza elegido (por ejemplo 95%).</p>
+<p>La interpretación correcta es sutil: si se repitiera el procedimiento muchas veces, <b>el 95% de los intervalos construidos así contendría al valor real</b>. Para un intervalo concreto, ya calculado, el valor real está dentro o no lo está; no tiene sentido decir que «tiene 95% de probabilidad» de estar dentro. El simulador lo muestra con claridad.</p>
+
+<h2>3. Tests de hipótesis</h2>
+
+<p>Un test responde preguntas del tipo «¿los datos son compatibles con que el ticket promedio sea 100?». Se plantean dos hipótesis:</p>
+<ul>
+<li><b>H₀ (hipótesis nula):</b> la situación de referencia, por ejemplo μ = 100.</li>
+<li><b>H₁ (hipótesis alternativa):</b> lo que se quiere detectar, por ejemplo μ ≠ 100 (bilateral) o μ &gt; 100 (unilateral).</li>
+</ul>
+<p>Se calcula el estadístico <b>t = (x̄ − μ₀) / (s / √n)</b> y su <b>p-valor</b>: la probabilidad de obtener, solo por azar y si H₀ fuera cierta, un resultado al menos tan extremo como el observado. Si el p-valor es menor que el nivel de significación elegido (α, habitualmente 5%), se <b>rechaza H₀</b>.</p>
+<p>Como toda decisión bajo incertidumbre, un test puede equivocarse de dos maneras:</p>
+<ul>
+<li><b>Error de tipo I:</b> rechazar una H₀ verdadera (un falso positivo). Su probabilidad es α.</li>
+<li><b>Error de tipo II:</b> no rechazar una H₀ falsa (no detectar un efecto que existe). Su complemento es la <b>potencia</b> del test.</li>
+</ul>
+
+<h2>4. Simuladores</h2>
+
+<p>Probá estos experimentos. Para los primeros cuatro, usá la parte 1 del simulador:</p>
+<ol>
+<li>Tomá una muestra con 95% de confianza. En la vida real nunca sabrías si el intervalo contiene a μ; acá sí: azul si lo contiene, rojo si no.</li>
+<li>Simulá 100 muestras: alrededor de 95 intervalos deberían contener a μ y unos 5 fallar.</li>
+<li>Subí el nivel a 99%: fallan menos intervalos, pero son más anchos. Es el costo de tener más confianza.</li>
+<li>Bajá n a 5 y cambiá el método a «z con desvío muestral»: la cobertura cae por debajo del nivel. Con la distribución t se corrige.</li>
+</ol>
+<p>Para los siguientes, pasá a la parte 2:</p>
+<ol start="5">
+<li>Con μ real = 105 y μ₀ = 100, tomá varias muestras: a veces el test rechaza H₀ y a veces no, aunque H₀ sea falsa.</li>
+<li>Simulá 1000 tests: la proporción de rechazos es la <b>potencia</b>. Probá subir n y mirá cómo aumenta.</li>
+<li>Igualá μ₀ al μ real (H₀ verdadera) y simulá: la proporción de rechazos se acerca a α, ese es el <b>error de tipo I</b>, y los p-valores se reparten parejos entre 0 y 1.</li>
+</ol>
+
+<div id="ht-app">
+<noscript>Este simulador necesita JavaScript activado.</noscript>
+
+<div class="ht-h">Población y muestra</div>
+<div class="ht-small">Una tienda registra el ticket de cada compra. La población sigue una distribución normal; en el simulador se conoce el valor real, algo que en la práctica nunca se sabe.</div>
+<div class="ht-row" style="margin-top:10px">
+  <div class="ht-f">
+    <label for="ht-mu">Ticket promedio real, μ (€): <span class="ht-val" id="ht-muv"></span></label>
+    <input type="range" id="ht-mu" min="60" max="140" step="1" value="105">
+  </div>
+  <div class="ht-f">
+    <label for="ht-sg">Desvío de la población, σ (€): <span class="ht-val" id="ht-sgv"></span></label>
+    <input type="range" id="ht-sg" min="5" max="60" step="1" value="30">
+  </div>
+  <div class="ht-f">
+    <label for="ht-n">Tamaño de la muestra, n: <span class="ht-val" id="ht-nv"></span></label>
+    <input type="range" id="ht-n" min="5" max="200" step="1" value="40">
+  </div>
+</div>
+
+<div class="ht-h">Parte 1. Intervalos de confianza</div>
+<div class="ht-row">
+  <div class="ht-f">
+    <label for="ht-lv">Nivel de confianza</label>
+    <select id="ht-lv"><option value="80">80%</option><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select>
+  </div>
+  <div class="ht-f" style="flex:2 1 230px">
+    <label for="ht-me">Método</label>
+    <select id="ht-me"><option value="t">t de Student (σ desconocido)</option><option value="z">z con el desvío de la muestra</option></select>
+  </div>
+</div>
+<div class="ht-row">
+  <button type="button" id="ht-c1">Tomar 1 muestra</button>
+  <button type="button" id="ht-c10" class="ht-sec">Tomar 10</button>
+  <button type="button" id="ht-c100" class="ht-sec">Simular 100</button>
+  <button type="button" id="ht-cr" class="ht-sec">Reiniciar</button>
+</div>
+<svg id="ht-ci" class="ht-svg" viewBox="0 0 680 420" role="img" aria-label="Intervalos de confianza de muestras sucesivas"></svg>
+<div class="ht-leg"><i style="background:#1d4ed8"></i>Contiene a μ &nbsp; <i style="background:#dc2626"></i>No contiene a μ &nbsp; <i style="background:#15803d"></i>μ real. Cada fila es una muestra; el punto es su promedio.</div>
+<div id="ht-cires"></div>
+
+<div class="ht-h">Parte 2. Test de hipótesis sobre una media</div>
+<div class="ht-row">
+  <div class="ht-f">
+    <label for="ht-mu0">Valor de H₀, μ₀ (€): <span class="ht-val" id="ht-mu0v"></span></label>
+    <input type="range" id="ht-mu0" min="60" max="140" step="1" value="100">
+  </div>
+  <div class="ht-f">
+    <label for="ht-ty">Tipo de test</label>
+    <select id="ht-ty"><option value="two">Bilateral (μ ≠ μ₀)</option><option value="gt">Unilateral (μ &gt; μ₀)</option><option value="lt">Unilateral (μ &lt; μ₀)</option></select>
+  </div>
+  <div class="ht-f">
+    <label for="ht-al">Nivel de significación, α</label>
+    <select id="ht-al"><option value="1">1%</option><option value="5" selected>5%</option><option value="10">10%</option></select>
+  </div>
+</div>
+<div class="ht-hyp" id="ht-hyp"></div>
+<div class="ht-row">
+  <button type="button" id="ht-t1">Tomar una muestra y testear</button>
+  <button type="button" id="ht-t1000" class="ht-sec">Simular 1000 tests</button>
+</div>
+<svg id="ht-t" class="ht-svg" viewBox="0 0 680 280" role="img" aria-label="Distribución t bajo la hipótesis nula con zona de rechazo"></svg>
+<div class="ht-leg"><i style="background:#fca5a5"></i>Zona de rechazo (área α) &nbsp; <i style="background:#1d4ed8"></i>p-valor (área más extrema que el t observado) &nbsp; <i style="background:#111827"></i>t observado</div>
+<div id="ht-tres"></div>
+<svg id="ht-p" class="ht-svg" viewBox="0 0 680 230" role="img" aria-label="Histograma de p-valores" style="display:none;margin-top:12px"></svg>
+<div id="ht-sres"></div>
+</div>
+
+<h2>5. Intervalo y test: dos caras de la misma moneda</h2>
+<p>Para un test bilateral, ambos resultados coinciden: <b>si el intervalo de confianza del (1 − α) no contiene a μ₀, el test rechaza H₀ al nivel α</b>, y viceversa. El intervalo aporta más información, porque además de decir si se rechaza muestra el tamaño plausible del efecto. Es una buena razón para reportar siempre ambos.</p>
+
+<h2>6. Errores frecuentes</h2>
+<ul>
+<li><b>Confundir el p-valor con la probabilidad de que H₀ sea cierta.</b> El p-valor se calcula suponiendo que H₀ es cierta; no dice qué tan probable es que lo sea.</li>
+<li><b>Interpretar «no rechazar H₀» como «H₀ es verdadera».</b> Puede deberse simplemente a una muestra chica con poca potencia. Probalo en el simulador.</li>
+<li><b>Confundir significativo con importante.</b> Con muestras enormes, diferencias irrelevantes en la práctica resultan significativas.</li>
+<li><b>Decir que un intervalo «tiene 95% de probabilidad» de contener a μ.</b> La confianza se refiere al procedimiento, no a un intervalo ya calculado.</li>
+<li><b>Hacer muchos tests y mostrar solo los significativos.</b> Con α = 5%, uno de cada 20 tests saldrá «significativo» por puro azar aunque no haya ningún efecto.</li>
+<li><b>Olvidar los supuestos:</b> muestras aleatorias e independientes, y distribución aproximadamente normal (o muestras grandes). Con datos muy asimétricos o con valores extremos, los resultados pueden ser engañosos.</li>
+</ul>
+
+<h2>7. Aplicaciones en la empresa</h2>
+<ul>
+<li><b>Control de calidad:</b> verificar que el peso promedio de un envase coincide con lo declarado.</li>
+<li><b>Auditoría por muestreo:</b> estimar el valor promedio de un universo de facturas o saldos sin revisarlo completo.</li>
+<li><b>Pruebas A/B:</b> decidir si un cambio de precio o de diseño mejoró realmente las ventas o fue casualidad.</li>
+<li><b>Encuestas de clientes:</b> acompañar cada porcentaje o puntaje con su margen de error.</li>
+<li><b>Cumplimiento de acuerdos de servicio:</b> comprobar si el tiempo medio de entrega cumple con lo prometido.</li>
+</ul>
+
+<h2>8. ¿Y en Excel?</h2>
+<p>El intervalo de confianza para una media se obtiene con <code>INTERVALO.CONFIANZA.T(alfa; desv_estándar; tamaño)</code>, que devuelve el margen de error para sumar y restar al <code>PROMEDIO</code>. Para el test t de una muestra, calculá el estadístico como <code>(PROMEDIO(datos) − μ₀) / (DESVEST.M(datos) / RAIZ(n))</code>, el p-valor bilateral con <code>DISTR.T.2C(ABS(t); n − 1)</code> y el valor crítico con <code>INV.T.2C(alfa; n − 1)</code>. Para comparar dos grupos, la función <code>PRUEBA.T</code> devuelve directamente el p-valor.</p>
+
+<p><i>Este simulador tiene fines educativos. Los datos son ficticios y se generan al azar en tu navegador cada vez que se pulsa un botón, por eso los resultados varían. Con datos reales, revisá siempre los supuestos antes de decidir.</i></p>
+
+</div>
+
+<script>
+(function(){
+/*MATH_START*/
+function lgamma(x){var c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];var y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);var s=1.000000000190015;for(var j=0;j<6;j++){y+=1;s+=c[j]/y;}return -t+Math.log(2.5066282746310005*s/x);}
+function betacf(a,b,x){var FPMIN=1e-300,qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;var h=d;for(var m=1;m<=300;m++){var m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;var del=d*c;h*=del;if(Math.abs(del-1)<3e-14)break;}return h;}
+function betai(a,b,x){if(x<=0)return 0;if(x>=1)return 1;var bt=Math.exp(lgamma(a+b)-lgamma(a)-lgamma(b)+a*Math.log(x)+b*Math.log(1-x));if(x<(a+1)/(a+b+2))return bt*betacf(a,b,x)/a;return 1-bt*betacf(b,a,1-x)/b;}
+function tcdf(t,df){if(t===Infinity)return 1;if(t===-Infinity)return 0;var p=0.5*betai(df/2,0.5,df/(df+t*t));return t>0?1-p:p;}
+function pTwo(t,df){return betai(df/2,0.5,df/(df+t*t));}
+function tpdf(x,v){return Math.exp(lgamma((v+1)/2)-lgamma(v/2)-0.5*Math.log(v*Math.PI)-((v+1)/2)*Math.log(1+x*x/v));}
+var tqc={};
+function tq(p,df){var key=p+'|'+df;if(tqc[key]!==undefined)return tqc[key];var lo=0,hi=10;while(tcdf(hi,df)<p)hi*=2;for(var i=0;i<100;i++){var mid=(lo+hi)/2;if(tcdf(mid,df)<p)lo=mid;else hi=mid;}return(tqc[key]=(lo+hi)/2);}
+function randn(){var u=Math.random()||1e-12,v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function sampleStats(mu,sg,n){var m=0,M2=0,k,x,d;for(k=1;k<=n;k++){x=mu+sg*randn();d=x-m;m+=d/k;M2+=d*(x-m);}return{m:m,s:Math.sqrt(M2/(n-1))};}
+var ZC={80:1.2815515655,90:1.6448536270,95:1.9599639845,99:2.5758293035};
+function ciOf(st,n,L,meth){var crit=meth==='t'?tq(1-(1-L/100)/2,n-1):ZC[L];var h=crit*st.s/Math.sqrt(n);return{lo:st.m-h,hi:st.m+h,m:st.m,h:h};}
+function ttest(st,n,mu0,type){var df=n-1,t=(st.m-mu0)/(st.s/Math.sqrt(n)),p;if(type==='two')p=pTwo(t,df);else if(type==='gt')p=1-tcdf(t,df);else p=tcdf(t,df);return{t:t,p:p,df:df};}
+/*MATH_END*/
+
+function $(id){return document.getElementById(id);}
+function fmt(v,d){if(v===undefined||v===null||!isFinite(v))return '—';return v.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmtP(p){return p<0.001?'< 0,001':fmt(p,3);}
+function clamp(v,a,b){return Math.min(b,Math.max(a,v));}
+function ticks(lo,hi,target){
+  var span=hi-lo,raw=span/target,mag=Math.pow(10,Math.floor(Math.log10(raw))),nm=raw/mag;
+  var step=(nm<1.5?1:nm<3?2:nm<7?5:10)*mag,start=Math.ceil(lo/step-1e-9)*step,out=[];
+  for(var v=start;v<=hi+1e-9;v+=step)out.push(+v.toFixed(10));
+  return{vals:out,dec:step>=1?0:Math.min(3,Math.ceil(-Math.log10(step)))};
+}
+function pars(){return{mu:+$('ht-mu').value,sg:+$('ht-sg').value,n:+$('ht-n').value,mu0:+$('ht-mu0').value,L:+$('ht-lv').value,meth:$('ht-me').value,type:$('ht-ty').value,al:+$('ht-al').value/100};}
+
+var C={list:[],total:0,hits:0},T={last:null};
+
+/* ---------- Parte 1: intervalos ---------- */
+function addSamples(k){
+  var P=pars(),i;
+  for(i=0;i<k;i++){
+    var st=sampleStats(P.mu,P.sg,P.n),ci=ciOf(st,P.n,P.L,P.meth);
+    ci.hit=(ci.lo<=P.mu&&P.mu<=ci.hi);C.total++;if(ci.hit)C.hits++;
+    C.list.unshift(ci);
+  }
+  if(C.list.length>100)C.list.length=100;
+  drawCI();
+}
+function drawCI(){
+  var P=pars(),el=$('ht-ci'),W=680,H=420,ml=24,mr=16,mt=26,mb=40,pw=W-ml-mr,ph=H-mt-mb,o=[],i;
+  var R=5*P.sg/Math.sqrt(P.n),x0=P.mu-R,x1=P.mu+R;
+  function X(v){return ml+(v-x0)/(x1-x0)*pw;}
+  o.push('<defs><clipPath id="ht-clip"><rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'"/></clipPath></defs>');
+  var tk=ticks(x0,x1,7);
+  tk.vals.forEach(function(v){o.push('<line x1="'+X(v)+'" x2="'+X(v)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#eef0f3"/><text x="'+X(v)+'" y="'+(mt+ph+17)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(v,tk.dec)+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  var N=C.list.length,rowH=Math.min(16,ph/Math.max(N,12)),sw=rowH>9?3:2;
+  o.push('<g clip-path="url(#ht-clip)">');
+  for(i=0;i<N;i++){
+    var e=C.list[i],y=mt+(i+0.5)*rowH,col=e.hit?'#1d4ed8':'#dc2626';
+    o.push('<line x1="'+X(e.lo)+'" x2="'+X(e.hi)+'" y1="'+y+'" y2="'+y+'" stroke="'+col+'" stroke-width="'+(e.hit?sw:sw+0.8)+'" stroke-linecap="round"/>');
+    o.push('<circle cx="'+X(e.m)+'" cy="'+y+'" r="'+Math.max(1.6,Math.min(3.5,rowH/2.4))+'" fill="'+col+'"/>');
+  }
+  o.push('</g>');
+  o.push('<line x1="'+X(P.mu)+'" x2="'+X(P.mu)+'" y1="'+(mt-6)+'" y2="'+(mt+ph)+'" stroke="#15803d" stroke-width="2.2"/>');
+  o.push('<text x="'+X(P.mu)+'" y="'+(mt-10)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#15803d">μ real = '+fmt(P.mu,0)+' €</text>');
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Ticket promedio de venta (€)</text>');
+  if(N===0)o.push('<text x="'+(ml+pw/2)+'" y="'+(mt+ph/2)+'" text-anchor="middle" font-size="15" fill="#6b7280">Tomá una muestra para ver su intervalo de confianza</text>');
+  el.innerHTML=o.join('');
+  drawCIres();
+}
+function drawCIres(){
+  var P=pars(),el=$('ht-cires');
+  if(C.total===0){el.innerHTML='';return;}
+  var last=C.list[0],cov=C.hits/C.total*100,w=0;C.list.forEach(function(e){w+=e.hi-e.lo;});w/=C.list.length;
+  var h='<div class="ht-cards">'
+   +'<div class="ht-card"><b>'+C.total+'</b><span>Muestras tomadas</span></div>'
+   +'<div class="ht-card"><b>'+C.hits+'</b><span>Intervalos que contienen a μ</span></div>'
+   +'<div class="ht-card"><b>'+fmt(cov,1)+'%</b><span>Cobertura observada (nivel '+P.L+'%)</span></div>'
+   +'<div class="ht-card"><b>'+fmt(w,1)+' €</b><span>Ancho promedio del intervalo</span></div></div>';
+  h+='<div class="ht-note"><b>Última muestra:</b> x̄ = '+fmt(last.m,1)+' €, intervalo de confianza del '+P.L+'% = ['+fmt(last.lo,1)+' ; '+fmt(last.hi,1)+'] €, que '+(last.hit?'<b>sí</b>':'<b>no</b>')+' contiene al valor real. ';
+  if(C.total<30)h+='Con pocas muestras, la cobertura observada puede alejarse del nivel por simple azar: tomá más muestras.';
+  else h+='A la larga, la cobertura debería acercarse a '+P.L+'%.';
+  h+='</div>';
+  if(P.meth==='z'&&P.n<30)h+='<div class="ht-note ht-warn">Con n = '+P.n+' y el método z con el desvío de la muestra, los intervalos quedan demasiado angostos y la cobertura cae por debajo del nivel. La distribución t corrige este problema.</div>';
+  el.innerHTML=h;
+}
+
+/* ---------- Parte 2: test de hipótesis ---------- */
+function hypText(P){
+  var m=fmt(P.mu0,0);
+  if(P.type==='two')return 'H₀: μ = '+m+' € &nbsp;contra&nbsp; H₁: μ ≠ '+m+' €';
+  if(P.type==='gt')return 'H₀: μ ≤ '+m+' € &nbsp;contra&nbsp; H₁: μ &gt; '+m+' €';
+  return 'H₀: μ ≥ '+m+' € &nbsp;contra&nbsp; H₁: μ &lt; '+m+' €';
+}
+function h1true(P){
+  if(P.type==='two')return Math.abs(P.mu-P.mu0)>1e-9;
+  if(P.type==='gt')return P.mu>P.mu0+1e-9;
+  return P.mu<P.mu0-1e-9;
+}
+function drawT(){
+  var P=pars(),r=T.last,el=$('ht-t'),W=680,H=280,ml=24,mr=24,mt=14,mb=44,pw=W-ml-mr,ph=H-mt-mb,o=[],df=P.n-1,i;
+  var R=5;if(r)R=clamp(Math.ceil(Math.abs(r.t)+1),5,8);
+  var ymax=tpdf(0,df)*1.12;
+  function X(v){return ml+(v+R)/(2*R)*pw;}
+  function Y(v){return mt+ph-v/ymax*ph;}
+  function region(a,b,fill){
+    var pts=[X(a)+','+Y(0)],k,N=80;
+    for(k=0;k<=N;k++){var x=a+(b-a)*k/N;pts.push(X(x)+','+Y(tpdf(x,df)));}
+    pts.push(X(b)+','+Y(0));
+    o.push('<polygon points="'+pts.join(' ')+'" fill="'+fill+'" stroke="none"/>');
+  }
+  var crit=P.type==='two'?tq(1-P.al/2,df):tq(1-P.al,df);
+  if(P.type==='two'){region(crit,R,'#fca5a5');region(-R,-crit,'#fca5a5');}
+  else if(P.type==='gt')region(crit,R,'#fca5a5');
+  else region(-R,-crit,'#fca5a5');
+  if(r){
+    var tt=clamp(r.t,-R,R);
+    if(P.type==='two'){var a=Math.abs(tt);region(a,R,'rgba(29,78,216,.45)');region(-R,-a,'rgba(29,78,216,.45)');}
+    else if(P.type==='gt')region(tt,R,'rgba(29,78,216,.45)');
+    else region(-R,tt,'rgba(29,78,216,.45)');
+  }
+  var pts=[],k,N=240;
+  for(k=0;k<=N;k++){var x=-R+2*R*k/N;pts.push(X(x)+','+Y(tpdf(x,df)));}
+  o.push('<polyline points="'+pts.join(' ')+'" fill="none" stroke="#1f2937" stroke-width="2"/>');
+  o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#9ca3af"/>');
+  for(i=-R;i<=R;i++)o.push('<line x1="'+X(i)+'" x2="'+X(i)+'" y1="'+Y(0)+'" y2="'+(Y(0)+4)+'" stroke="#9ca3af"/><text x="'+X(i)+'" y="'+(Y(0)+17)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+i+'</text>');
+  var cs=P.type==='two'?[-crit,crit]:(P.type==='gt'?[crit]:[-crit]);
+  cs.forEach(function(c){o.push('<line x1="'+X(c)+'" x2="'+X(c)+'" y1="'+Y(tpdf(c,df))+'" y2="'+Y(0)+'" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="4 3"/><text x="'+X(c)+'" y="'+(Y(0)+31)+'" text-anchor="middle" font-size="11" fill="#b91c1c">'+fmt(c,2)+'</text>');});
+  if(r){
+    var tx=X(clamp(r.t,-R,R));
+    o.push('<line x1="'+tx+'" x2="'+tx+'" y1="'+(mt+4)+'" y2="'+Y(0)+'" stroke="#111827" stroke-width="2.4"/>');
+    o.push('<text x="'+tx+'" y="'+(mt+2)+'" text-anchor="'+(tx>W-90?'end':(tx<90?'start':'middle'))+'" font-size="12" font-weight="700" fill="#111827">t = '+fmt(r.t,2)+(Math.abs(r.t)>R?' (fuera de escala)':'')+'</text>');
+  }
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-4)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Estadístico t bajo H₀ ('+df+' grados de libertad)</text>');
+  el.innerHTML=o.join('');
+}
+function drawTres(){
+  var P=pars(),r=T.last,el=$('ht-tres');
+  $('ht-hyp').innerHTML=hypText(P);
+  if(!r){el.innerHTML='<div class="ht-small">Tomá una muestra para ver el estadístico t, el p-valor y la decisión.</div>';return;}
+  var rej=r.p<P.al,h1=h1true(P);
+  var h='<div class="ht-cards">'
+   +'<div class="ht-card"><b>'+fmt(r.m,1)+'</b><span>Promedio muestral x̄ (€)</span></div>'
+   +'<div class="ht-card"><b>'+fmt(r.s,1)+'</b><span>Desvío muestral s (€)</span></div>'
+   +'<div class="ht-card"><b>'+fmt(r.t,2)+'</b><span>Estadístico t</span></div>'
+   +'<div class="ht-card"><b>'+fmtP(r.p)+'</b><span>p-valor</span></div></div>';
+  h+='<div class="ht-note"><b>Decisión:</b> '+(rej?'como el p-valor ('+fmtP(r.p)+') es menor que α ('+fmt(P.al,2)+'), <b>se rechaza H₀</b>; el t observado cae en la zona de rechazo.':'como el p-valor ('+fmtP(r.p)+') no es menor que α ('+fmt(P.al,2)+'), <b>no se rechaza H₀</b>; el t observado no cae en la zona de rechazo.')+'</div>';
+  if(P.type==='two'){
+    var ci=ciOf({m:r.m,s:r.s},P.n,Math.round((1-P.al)*100),'t'),inside=(ci.lo<=P.mu0&&P.mu0<=ci.hi);
+    h+='<div class="ht-note">El intervalo de confianza del '+Math.round((1-P.al)*100)+'% para μ es ['+fmt(ci.lo,1)+' ; '+fmt(ci.hi,1)+'] €. Como '+(inside?'incluye':'no incluye')+' a μ₀ = '+fmt(P.mu0,0)+' €, '+(inside?'no se rechaza':'se rechaza')+' H₀: ambos métodos coinciden.</div>';
+  }
+  var cls,msg;
+  if(h1&&rej){cls='ht-ok';msg='<b>Decisión correcta:</b> en el simulador sabemos que H₀ es falsa (μ real = '+fmt(P.mu,0)+' €) y el test lo detectó.';}
+  else if(h1&&!rej){cls='ht-warn';msg='<b>Error de tipo II:</b> H₀ es falsa (μ real = '+fmt(P.mu,0)+' €), pero esta muestra no alcanzó para detectarlo. Con más datos o un efecto mayor sería más fácil.';}
+  else if(!h1&&rej){cls='ht-warn';msg='<b>Error de tipo I:</b> H₀ es verdadera (μ real = '+fmt(P.mu,0)+' €), pero el test la rechazó igual: un falso positivo por azar.';}
+  else{cls='ht-ok';msg='<b>Decisión correcta:</b> H₀ es verdadera (μ real = '+fmt(P.mu,0)+' €) y no se rechazó.';}
+  h+='<div class="ht-note '+cls+'">'+msg+' <span class="ht-small">En la vida real nunca se conoce el valor verdadero; el simulador lo muestra solo para enseñar.</span></div>';
+  el.innerHTML=h;
+}
+function runOne(){
+  var P=pars(),st=sampleStats(P.mu,P.sg,P.n),r=ttest(st,P.n,P.mu0,P.type);
+  T.last={m:st.m,s:st.s,t:r.t,p:r.p};
+  drawT();drawTres();
+}
+function runMany(){
+  var P=pars(),N=1000,rej=0,bins=[0,0,0,0,0,0,0,0,0,0],i,st,r;
+  for(i=0;i<N;i++){
+    st=sampleStats(P.mu,P.sg,P.n);r=ttest(st,P.n,P.mu0,P.type);
+    if(r.p<P.al)rej++;
+    bins[Math.min(9,Math.floor(r.p*10))]++;
+  }
+  var W=680,H=230,ml=40,mr=16,mt=12,mb=44,pw=W-ml-mr,ph=H-mt-mb,mx=Math.max.apply(null,bins),o=[];
+  bins.forEach(function(c,j){var h=c/mx*ph;o.push('<rect x="'+(ml+j*pw/10+2)+'" y="'+(mt+ph-h)+'" width="'+(pw/10-4)+'" height="'+h+'" fill="#93a8d8"/><text x="'+(ml+j*pw/10+pw/20)+'" y="'+(mt+ph-h-4)+'" text-anchor="middle" font-size="11" fill="#374151">'+c+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  for(i=0;i<=10;i++)o.push('<text x="'+(ml+i*pw/10)+'" y="'+(mt+ph+16)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(i/10,1)+'</text>');
+  var ax=ml+P.al*pw;
+  o.push('<line x1="'+ax+'" x2="'+ax+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>');
+  o.push('<text x="'+(ax+5)+'" y="'+(mt+14)+'" font-size="12" font-weight="700" fill="#b91c1c">α = '+fmt(P.al,2)+'</text>');
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-4)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">p-valor de cada uno de los 1000 tests</text>');
+  var hs=$('ht-p');hs.innerHTML=o.join('');hs.style.display='block';
+  var rate=rej/N*100,h1=h1true(P),h;
+  if(h1)h='<div class="ht-note"><b>H₀ es falsa en esta población.</b> El test la rechazó en el <b>'+fmt(rate,1)+'%</b> de las 1000 muestras: esa es la <b>potencia</b>. En el '+fmt(100-rate,1)+'% restante cometió un error de tipo II. Los p-valores se amontonan cerca de cero. Para subir la potencia, aumentá n o trabajá con diferencias mayores.</div>';
+  else{
+    var edge=Math.abs(P.mu-P.mu0)<1e-9,pct=fmt(P.al*100,0);
+    h='<div class="ht-note"><b>H₀ es verdadera en esta población.</b> El test la rechazó en el <b>'+fmt(rate,1)+'%</b> de las 1000 muestras: son falsos positivos, el <b>error de tipo I</b>'
+      +(edge?', que debería rondar α = '+pct+'%. Los p-valores se reparten de forma pareja entre 0 y 1.'
+            :'. Como la media real queda del lado de H₀ con holgura, el test rechaza menos que α = '+pct+'% y los p-valores tienden a ser altos.')+'</div>';
+  }
+  $('ht-sres').innerHTML=h;
+}
+
+/* ---------- Controles ---------- */
+function labels(){var P=pars();$('ht-muv').textContent=fmt(P.mu,0);$('ht-sgv').textContent=fmt(P.sg,0);$('ht-nv').textContent=P.n;$('ht-mu0v').textContent=fmt(P.mu0,0);}
+function resetAll(){
+  C={list:[],total:0,hits:0};T={last:null};
+  $('ht-p').style.display='none';$('ht-sres').innerHTML='';
+  labels();drawCI();drawT();drawTres();
+}
+['ht-mu','ht-sg','ht-n','ht-mu0'].forEach(function(id){$(id).addEventListener('input',resetAll);});
+['ht-lv','ht-me','ht-ty','ht-al'].forEach(function(id){$(id).addEventListener('change',resetAll);});
+$('ht-c1').addEventListener('click',function(){addSamples(1);});
+$('ht-c10').addEventListener('click',function(){addSamples(10);});
+$('ht-c100').addEventListener('click',function(){addSamples(100);});
+$('ht-cr').addEventListener('click',resetAll);
+$('ht-t1').addEventListener('click',runOne);
+$('ht-t1000').addEventListener('click',runMany);
+resetAll();
+})();
+</script>
+
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/intervalos-de-confianza-y-tests-de.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
