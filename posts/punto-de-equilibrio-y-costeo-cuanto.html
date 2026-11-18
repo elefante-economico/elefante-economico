@@ -1,0 +1,330 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punto de equilibrio y costeo: cuánto vender y qué productos conviene (con simuladores) — El Elefante Económico</title>
+  <meta name="description" content="Punto de equilibrio y costeo: cuánto vender y qué productos conviene (con simuladores)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/punto-de-equilibrio-y-costeo-cuanto.html">
+  <meta property="og:title" content="Punto de equilibrio y costeo: cuánto vender y qué productos conviene (con simuladores)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/punto-de-equilibrio-y-costeo-cuanto.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Punto de equilibrio y costeo: cuánto vender y qué productos conviene (con simuladores)</h1>
+  <p class="meta">17 de November de 2026 · Costes, Punto de Equilibrio</p>
+  <article><meta charset="utf-8">
+<style>
+#pe-app{background:#fff;border:1px solid #cfd6df;border-radius:12px;padding:16px;margin:22px 0;color:#1f2937;font-size:15px;line-height:1.45;font-family:inherit;text-align:left}
+#pe-app *{box-sizing:border-box}
+#pe-app .pe-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:12px}
+#pe-app .pe-f{flex:1 1 150px;min-width:140px}
+#pe-app label{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:#374151}
+#pe-app select,#pe-app input[type=number]{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #9ca3af;border-radius:8px;background:#fff;color:#111827;width:100%}
+#pe-app input:focus-visible,#pe-app select:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
+#pe-app input[type=range]{width:100%;margin:0}
+#pe-app .pe-val{font-variant-numeric:tabular-nums;font-weight:700;color:#111827}
+#pe-app svg.pe-svg{width:100%;height:auto;display:block;background:#fff;border:1px solid #e5e7eb;border-radius:8px}
+#pe-app .pe-h{font-size:17px;font-weight:700;margin:22px 0 4px;color:#111827;padding-top:14px;border-top:1px solid #e5e7eb}
+#pe-app .pe-h.pe-first{border-top:0;padding-top:0;margin-top:4px}
+#pe-app .pe-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:12px 0}
+#pe-app .pe-card{background:#f3f4f6;border-radius:8px;padding:8px 10px}
+#pe-app .pe-card b{display:block;font-size:19px;color:#111827;font-variant-numeric:tabular-nums}
+#pe-app .pe-card span{font-size:12px;color:#4b5563}
+#pe-app .pe-note{background:#eff6ff;border-left:4px solid #1d4ed8;padding:8px 12px;border-radius:4px;font-size:14px;margin-top:10px}
+#pe-app .pe-warn{background:#fef3c7;border-left-color:#b45309}
+#pe-app .pe-ok{background:#ecfdf5;border-left-color:#15803d}
+#pe-app .pe-leg{font-size:13px;color:#4b5563;margin:6px 0 0}
+#pe-app .pe-leg i{display:inline-block;width:18px;height:4px;vertical-align:middle;margin-right:4px;border-radius:2px}
+#pe-app .pe-small{font-size:13px;color:#4b5563;margin-top:4px}
+#pe-app .pe-wrap{overflow-x:auto}
+#pe-app table.pe-t{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+#pe-app table.pe-t th,#pe-app table.pe-t td{padding:5px 8px;border:0;border-bottom:1px solid #e5e7eb;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#pe-app table.pe-t th:first-child,#pe-app table.pe-t td:first-child{text-align:left}
+#pe-app table.pe-t th{background:#f9fafb;font-weight:600;color:#374151;white-space:normal;vertical-align:bottom}
+#pe-app table.pe-t input{width:84px;padding:4px 6px;text-align:right}
+#pe-app .pe-neg{color:#b91c1c;font-weight:700}
+#pe-app .pe-pos{color:#15803d;font-weight:700}
+</style>
+
+<div id="pe-wrap">
+
+<p>¿Cuánto tengo que vender para no perder plata? ¿Qué productos son los que realmente me dejan ganancia? ¿Me conviene dejar de vender el que «da pérdida»? Son preguntas de todos los días en una PyME, y se responden con dos herramientas que se complementan: el <b>punto de equilibrio</b> y el <b>costeo</b>.</p>
+
+<p>En este post las vemos con dos mini simuladores y un Excel descargable con un caso completo de una panadería-cafetería.</p>
+
+<h2>1. Costos fijos y variables</h2>
+
+<p>Todo parte de clasificar los costos según cómo reaccionan ante el volumen de ventas:</p>
+<ul>
+<li><b>Costos variables:</b> cambian en proporción a lo que se vende. Materia prima, mano de obra directa por unidad, envases, comisiones de tarjeta.</li>
+<li><b>Costos fijos:</b> no cambian con el volumen, al menos dentro de cierto rango. Alquiler, sueldos de estructura, servicios, amortizaciones.</li>
+</ul>
+<p>Hay costos «mixtos», con una parte fija y otra variable, que conviene separar. Y ningún costo es fijo para siempre: si las ventas se duplican, probablemente haya que alquilar un local más grande. Por eso el análisis es válido dentro de un <b>rango relevante</b> de actividad.</p>
+
+<h2>2. El margen de contribución</h2>
+
+<p>El <b>margen de contribución unitario</b> es lo que queda de cada unidad vendida después de pagar sus costos variables:</p>
+<p><b>Margen de contribución = precio − costo variable unitario</b></p>
+<p>Es el aporte de cada unidad para cubrir los costos fijos y, una vez cubiertos, para generar utilidad. Expresado como porcentaje del precio se llama <b>margen de contribución %</b>.</p>
+
+<h2>3. El punto de equilibrio</h2>
+
+<p>Es el volumen de ventas en el que los ingresos igualan a los costos totales: ni ganancia ni pérdida. Se obtiene dividiendo los costos fijos por lo que aporta cada unidad:</p>
+<ul>
+<li><b>En unidades:</b> costos fijos / margen de contribución unitario.</li>
+<li><b>En ventas:</b> costos fijos / margen de contribución %.</li>
+<li><b>Para una utilidad objetivo:</b> (costos fijos + utilidad objetivo) / margen de contribución unitario.</li>
+</ul>
+<p>Dos indicadores complementarios ayudan a leer el resultado:</p>
+<ul>
+<li><b>Margen de seguridad:</b> cuánto pueden caer las ventas antes de entrar en pérdida.</li>
+<li><b>Grado de apalancamiento operativo:</b> margen de contribución total / utilidad operativa. Indica cuántas veces se magnifica un cambio en las ventas sobre la utilidad: cuanto más pesan los costos fijos, más riesgo y más potencial.</li>
+</ul>
+
+<h2>4. Simulador 1: punto de equilibrio</h2>
+
+<p>Probá estos experimentos con un producto único:</p>
+<ol>
+<li>Subí el precio y mirá cómo se corre el punto de equilibrio hacia la izquierda.</li>
+<li>Subí los costos fijos: el equilibrio se aleja, pero la pendiente de las rectas no cambia.</li>
+<li>Bajá el costo variable: cada unidad aporta más y el equilibrio se acerca.</li>
+<li>Llevá las unidades vendidas muy cerca del equilibrio y mirá el apalancamiento operativo: pequeños cambios en ventas producen cambios enormes en la utilidad.</li>
+<li>Poné un costo variable igual al precio: sin margen de contribución no hay punto de equilibrio posible, vendiendo más solo se agrandan las pérdidas.</li>
+</ol>
+
+<div id="pe-app">
+<noscript>Este simulador necesita JavaScript activado.</noscript>
+
+<div class="pe-h pe-first">Simulador 1. ¿Cuánto tengo que vender?</div>
+<div class="pe-row" style="margin-top:8px">
+  <div class="pe-f"><label for="pe-p">Precio de venta unitario: <span class="pe-val" id="pe-pv"></span></label><input type="range" id="pe-p" min="10" max="100" step="1" value="40"></div>
+  <div class="pe-f"><label for="pe-v">Costo variable unitario: <span class="pe-val" id="pe-vv"></span></label><input type="range" id="pe-v" min="0" max="100" step="1" value="22"></div>
+</div>
+<div class="pe-row">
+  <div class="pe-f"><label for="pe-cf">Costos fijos mensuales: <span class="pe-val" id="pe-cfv"></span></label><input type="range" id="pe-cf" min="2000" max="40000" step="500" value="12000"></div>
+  <div class="pe-f"><label for="pe-q">Unidades vendidas por mes: <span class="pe-val" id="pe-qv"></span></label><input type="range" id="pe-q" min="0" max="3000" step="25" value="900"></div>
+  <div class="pe-f" style="flex:0 1 200px"><label for="pe-obj">Utilidad objetivo mensual</label><input type="number" id="pe-obj" value="6000" min="0" step="500"></div>
+</div>
+<svg id="pe-svg" class="pe-svg" viewBox="0 0 680 380" role="img" aria-label="Gráfico de punto de equilibrio con ingresos, costos totales y costos fijos"></svg>
+<div class="pe-leg"><i style="background:#1d4ed8"></i>Ingresos &nbsp; <i style="background:#c2410c"></i>Costos totales &nbsp; <i style="background:#6b7280"></i>Costos fijos &nbsp; <i style="background:#fca5a5"></i>Zona de pérdida &nbsp; <i style="background:#86efac"></i>Zona de ganancia</div>
+<div id="pe-res"></div>
+
+<div class="pe-h">Simulador 2. ¿Este producto gana o pierde?</div>
+<div class="pe-small">Tres productos comparten los mismos costos fijos. Editá los valores (el ejemplo es el del Excel) y cambiá el criterio de reparto.</div>
+<div class="pe-row" style="margin-top:8px">
+  <div class="pe-f" style="flex:0 1 220px"><label for="pe-fx">Costos fijos mensuales (total)</label><input type="number" id="pe-fx" value="10800" min="0" step="100"></div>
+  <div class="pe-f" style="flex:0 1 260px"><label for="pe-cr">Criterio para repartir los costos fijos</label><select id="pe-cr"><option value="u">Por unidades vendidas</option><option value="v">Por ventas en dinero</option></select></div>
+</div>
+<div class="pe-wrap">
+<table class="pe-t">
+<tr><th>Producto</th><th>Precio</th><th>Costo variable unitario</th><th>Unidades por mes</th><th>Margen de contribución unitario</th><th>Costos fijos asignados por unidad</th><th>Costo por absorción unitario</th><th>Resultado por absorción unitario</th><th>Contribución mensual</th><th>Resultado mensual (absorción)</th></tr>
+<tr><td>Pan artesanal (kg)</td><td><input type="number" id="pe-a0" value="5" step="0.01" min="0"></td><td><input type="number" id="pe-b0" value="2.875" step="0.01" min="0"></td><td><input type="number" id="pe-c0" value="3000" step="10" min="0"></td><td id="pe-d0"></td><td id="pe-e0"></td><td id="pe-f0"></td><td id="pe-g0"></td><td id="pe-h0"></td><td id="pe-i0"></td></tr>
+<tr><td>Medialunas (docena)</td><td><input type="number" id="pe-a1" value="9" step="0.01" min="0"></td><td><input type="number" id="pe-b1" value="5.235" step="0.01" min="0"></td><td><input type="number" id="pe-c1" value="1500" step="10" min="0"></td><td id="pe-d1"></td><td id="pe-e1"></td><td id="pe-f1"></td><td id="pe-g1"></td><td id="pe-h1"></td><td id="pe-i1"></td></tr>
+<tr><td>Tortas (unidad)</td><td><input type="number" id="pe-a2" value="24" step="0.01" min="0"></td><td><input type="number" id="pe-b2" value="15.86" step="0.01" min="0"></td><td><input type="number" id="pe-c2" value="300" step="10" min="0"></td><td id="pe-d2"></td><td id="pe-e2"></td><td id="pe-f2"></td><td id="pe-g2"></td><td id="pe-h2"></td><td id="pe-i2"></td></tr>
+<tr style="font-weight:700;background:#f9fafb"><td>Total</td><td></td><td></td><td id="pe-tq"></td><td></td><td></td><td></td><td></td><td id="pe-th"></td><td id="pe-ti"></td></tr>
+</table>
+</div>
+<div id="pe-res2"></div>
+</div>
+
+<h2>5. Varios productos: el efecto de la mezcla</h2>
+
+<p>Cuando se venden varios productos, el punto de equilibrio se calcula con el <b>margen de contribución unitario ponderado</b> por la mezcla de ventas (el «mix»). En el ejemplo del Excel, con 3.000 kg de pan, 1.500 docenas de medialunas y 300 tortas por mes, el margen de contribución total es de 14.465 y los costos fijos suman 10.800. El resultado:</p>
+<ul>
+<li><b>Utilidad operativa:</b> 3.665 por mes.</li>
+<li><b>Punto de equilibrio:</b> unas 3.584 unidades, o 26.656 en ventas (con ventas actuales de 35.700).</li>
+<li><b>Margen de seguridad:</b> 25,3%.</li>
+<li><b>Apalancamiento operativo:</b> 3,9 veces. Una caída del 10% en las ventas reduciría la utilidad en casi un 40%.</li>
+</ul>
+<p>Si el mix cambia hacia productos de menor margen de contribución, el punto de equilibrio sube aunque las unidades totales no cambien. Por eso el supuesto de mezcla constante es una de las limitaciones del modelo.</p>
+
+<h2>6. Costeo: variable vs. absorción</h2>
+
+<p>Hay dos formas de calcular cuánto cuesta un producto:</p>
+<ul>
+<li><b>Costeo variable (o directo):</b> solo considera los costos variables. Muestra el <b>margen de contribución</b> de cada producto y es ideal para decisiones de corto plazo: qué producto empujar, si aceptar un pedido especial, qué pasa si se discontinúa algo.</li>
+<li><b>Costeo por absorción:</b> reparte también los costos fijos entre los productos. Es el que exigen las normas contables para valuar inventarios y sirve para fijar precios de largo plazo, pero depende de un criterio de reparto que es, en buena medida, arbitrario.</li>
+</ul>
+<p>El Simulador 2 lo muestra con claridad: con el reparto por unidades, el <b>pan</b> parece perder dinero (resultado por absorción negativo), pero en realidad aporta más de 6.000 por mes para cubrir los costos fijos. Si se lo eliminara, los costos fijos seguirían ahí y la utilidad total <b>bajaría</b>. Si cambiás el criterio a «por ventas», el mismo pan pasa a mostrar ganancia, sin que haya cambiado nada en la realidad. Para decidir, lo que importa es la contribución.</p>
+
+<h2>7. Limitaciones y errores frecuentes</h2>
+<ul>
+<li><b>Suponer que todo es lineal.</b> En la práctica hay descuentos por volumen, costos escalonados (un turno más, otro local) y precios que cambian.</li>
+<li><b>Ignorar la mezcla de productos.</b> Un punto de equilibrio calculado con una mezcla deja de valer si esta cambia.</li>
+<li><b>Confundir equilibrio contable con equilibrio de caja.</b> Las amortizaciones son costos fijos contables pero no salidas de dinero; en cambio, las cuotas de un préstamo sí lo son y no están en este modelo.</li>
+<li><b>Dejar de vender un producto por mirar solo el costeo por absorción.</b> Hay que mirar la contribución y qué pasaría con los costos fijos.</li>
+<li><b>Tomar el punto de equilibrio como una meta.</b> Es un piso: la empresa necesita una utilidad que remunere el capital y el trabajo del dueño.</li>
+<li><b>No actualizar los costos.</b> Con inflación o cambios de proveedores, el equilibrio de hace seis meses puede estar desactualizado.</li>
+</ul>
+
+<h2>8. Descargá el modelo en Excel</h2>
+<p>El archivo trae el caso completo de la panadería-cafetería, listo para cargar los datos de tu negocio:</p>
+<ul>
+<li><b>Supuestos:</b> hasta cinco productos con sus costos variables, los costos fijos y el criterio de asignación (las únicas celdas a completar).</li>
+<li><b>Costeo:</b> margen de contribución y resultado por absorción de cada producto, con un control de que cierra con la utilidad total.</li>
+<li><b>Punto_Equilibrio:</b> equilibrio por producto con el mix actual, margen de seguridad, apalancamiento operativo, ventas necesarias para una utilidad objetivo y el gráfico clásico.</li>
+<li><b>Escenarios:</b> siete escenarios editables (precio, costos, volumen) para ver qué variable pesa más en la utilidad.</li>
+</ul>
+<p><b>[Descargar el modelo de Excel]</b> <i> <a href="https://docs.google.com/spreadsheets/d/1QhakASvstkKP7goYQT5wF7BcIE4_U44J/edit?usp=drive_link&amp;ouid=105349212690548031888&amp;rtpof=true&amp;sd=true" target="_blank" rel="nofollow">Modelo en Excel</a>
+
+
+
+<p><i>Los simuladores y el Excel tienen fines educativos y trabajan con datos ficticios y supuestos simplificados. No constituyen asesoramiento contable ni financiero: validá los supuestos con la información real de tu negocio.</i></p>
+
+</div>
+
+<script>
+(function(){
+/*MATH_START*/
+function be(p,v,cf,q,obj){
+  var mc=p-v,r={mc:mc,mcp:p>0?mc/p:0,pe:null,pev:null,util:q*mc-cf,seg:null,gao:null,tu:null};
+  if(mc>0){r.pe=cf/mc;r.pev=r.pe*p;r.tu=(cf+obj)/mc;if(q>0)r.seg=(q-r.pe)/q;}
+  if(r.util>0)r.gao=q*mc/r.util;
+  return r;
+}
+function costeo(rows,cf,crit){
+  var Q=0,V=0,i,out=[],tc=0,tr=0;
+  for(i=0;i<rows.length;i++){Q+=rows[i].q;V+=rows[i].p*rows[i].q;}
+  for(i=0;i<rows.length;i++){
+    var p=rows[i].p,v=rows[i].v,q=rows[i].q,mc=p-v,fu=0;
+    if(q>0){fu=crit==='u'?(Q>0?cf/Q:0):(V>0?cf*p/V:0);}
+    var abs=p-v-fu,contrib=mc*q,res=q>0?abs*q:0;
+    tc+=contrib;tr+=res;
+    out.push({mc:mc,fu:fu,cabs:v+fu,rabs:abs,contrib:contrib,res:res});
+  }
+  tc=Math.round(tc*1e6)/1e6;tr=Math.round(tr*1e6)/1e6;
+  return{rows:out,contrib:tc,res:tr,util:Math.round((tc-cf)*1e6)/1e6};
+}
+/*MATH_END*/
+
+function $(id){return document.getElementById(id);}
+function fmt(v,d){
+  if(v===undefined||v===null||!isFinite(v))return '—';
+  var s=Math.abs(v).toFixed(d),p=s.split('.');
+  p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  var out=p.join(',');
+  return(v<0&&+s!==0)?'-'+out:out;
+}
+function num(id){var x=parseFloat($(id).value);return isNaN(x)?0:x;}
+function niceMax(v,min){
+  var e=Math.pow(10,Math.floor(Math.log10(v))),n=v/e,s=[1,1.5,2,3,4,5,6,8,10],k=0;
+  while(k<s.length&&s[k]<n)k++;
+  return Math.max(min,s[Math.min(k,s.length-1)]*e);
+}
+function ticks(lo,hi,target){
+  var span=hi-lo,raw=span/target,mag=Math.pow(10,Math.floor(Math.log10(raw))),nm=raw/mag;
+  var step=(nm<1.5?1:nm<3?2:nm<7?5:10)*mag,start=Math.ceil(lo/step-1e-9)*step,out=[];
+  for(var v=start;v<=hi+1e-9;v+=step)out.push(+v.toFixed(10));
+  return out;
+}
+function cls(v){return v<0?'pe-neg':'pe-pos';}
+
+/* ---------- Simulador 1 ---------- */
+function readBE(){return{p:num('pe-p'),v:num('pe-v'),cf:num('pe-cf'),q:num('pe-q'),obj:Math.max(0,num('pe-obj'))};}
+function drawBE(){
+  var d=readBE(),r=be(d.p,d.v,d.cf,d.q,d.obj),W=680,H=380,ml=74,mr=22,mt=18,mb=46,pw=W-ml-mr,ph=H-mt-mb,o=[];
+  $('pe-pv').textContent=fmt(d.p,0);$('pe-vv').textContent=fmt(d.v,0);$('pe-cfv').textContent=fmt(d.cf,0);$('pe-qv').textContent=fmt(d.q,0);
+  var xm=niceMax(Math.max(d.q,r.pe||0)*1.5,100);
+  var ytop=Math.max(d.p*xm,d.cf+d.v*xm)*1.05;
+  function X(x){return ml+x/xm*pw;}
+  function Y(y){return mt+ph-y/ytop*ph;}
+  function rev(x){return d.p*x;}
+  function cost(x){return d.cf+d.v*x;}
+  var tx=ticks(0,xm,6),ty=ticks(0,ytop,5);
+  tx.forEach(function(v){o.push('<line x1="'+X(v)+'" x2="'+X(v)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#eef0f3"/><text x="'+X(v)+'" y="'+(mt+ph+17)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(v,0)+'</text>');});
+  ty.forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#eef0f3"/><text x="'+(ml-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,0)+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  function quad(a,b,fill){o.push('<polygon points="'+X(a)+','+Y(rev(a))+' '+X(b)+','+Y(rev(b))+' '+X(b)+','+Y(cost(b))+' '+X(a)+','+Y(cost(a))+'" fill="'+fill+'"/>');}
+  if(r.pe===null){quad(0,xm,'rgba(252,165,165,.55)');}
+  else{var pe=Math.min(r.pe,xm);quad(0,pe,'rgba(252,165,165,.55)');if(r.pe<xm)quad(pe,xm,'rgba(134,239,172,.5)');}
+  o.push('<line x1="'+X(0)+'" x2="'+X(xm)+'" y1="'+Y(d.cf)+'" y2="'+Y(d.cf)+'" stroke="#6b7280" stroke-width="2" stroke-dasharray="6 4"/>');
+  o.push('<line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(xm)+'" y2="'+Y(rev(xm))+'" stroke="#1d4ed8" stroke-width="2.6"/>');
+  o.push('<line x1="'+X(0)+'" y1="'+Y(cost(0))+'" x2="'+X(xm)+'" y2="'+Y(cost(xm))+'" stroke="#c2410c" stroke-width="2.6"/>');
+  if(r.pe!==null&&r.pe<=xm){
+    o.push('<circle cx="'+X(r.pe)+'" cy="'+Y(rev(r.pe))+'" r="6.5" fill="#fff" stroke="#111827" stroke-width="2.4"/>');
+    o.push('<text x="'+(X(r.pe)+10)+'" y="'+(Y(rev(r.pe))+18)+'" font-size="12" font-weight="700" fill="#111827">Equilibrio: '+fmt(r.pe,0)+' u.</text>');
+  }
+  if(d.q>0){
+    var qx=X(d.q);
+    o.push('<line x1="'+qx+'" x2="'+qx+'" y1="'+(mt+14)+'" y2="'+Y(0)+'" stroke="#111827" stroke-width="1.6" stroke-dasharray="3 3"/>');
+    o.push('<circle cx="'+qx+'" cy="'+Y(rev(d.q))+'" r="4.5" fill="#1d4ed8"/><circle cx="'+qx+'" cy="'+Y(cost(d.q))+'" r="4.5" fill="#c2410c"/>');
+    o.push('<text x="'+qx+'" y="'+(mt+10)+'" text-anchor="'+(qx>W-150?'end':'middle')+'" font-size="12" font-weight="700" fill="#111827">Hoy: '+fmt(d.q,0)+' u. · '+(r.util>=0?'ganancia ':'pérdida ')+fmt(Math.abs(r.util),0)+'</text>');
+  }
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Unidades vendidas por mes</text>');
+  o.push('<text transform="rotate(-90)" x="'+(-(mt+ph/2))+'" y="16" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Importe mensual</text>');
+  $('pe-svg').innerHTML=o.join('');
+  var h='<div class="pe-cards">'
+   +'<div class="pe-card"><b>'+fmt(r.mc,2)+'</b><span>Margen de contribución unitario</span></div>'
+   +'<div class="pe-card"><b>'+fmt(r.mcp*100,1)+'%</b><span>Margen de contribución %</span></div>'
+   +'<div class="pe-card"><b>'+(r.pe===null?'—':fmt(r.pe,0))+'</b><span>Punto de equilibrio (unidades)</span></div>'
+   +'<div class="pe-card"><b>'+(r.pev===null?'—':fmt(r.pev,0))+'</b><span>Punto de equilibrio (ventas)</span></div>'
+   +'<div class="pe-card"><b class="'+cls(r.util)+'">'+fmt(r.util,0)+'</b><span>Utilidad mensual actual</span></div>'
+   +'<div class="pe-card"><b>'+((r.seg===null||r.util<0)?'—':fmt(r.seg*100,1)+'%')+'</b><span>Margen de seguridad</span></div>'
+   +'<div class="pe-card"><b>'+(r.gao===null?'—':fmt(r.gao,1)+'x')+'</b><span>Apalancamiento operativo</span></div></div>';
+  if(r.mc<=0)h+='<div class="pe-note pe-warn"><b>No hay punto de equilibrio.</b> El costo variable es igual o mayor que el precio: cada unidad vendida agrega pérdida en lugar de ayudar a cubrir los costos fijos. Hay que subir el precio o bajar el costo variable.</div>';
+  else{
+    if(r.util<0)h+='<div class="pe-note pe-warn"><b>Estás por debajo del equilibrio:</b> faltan '+fmt(r.pe-d.q,0)+' unidades por mes (unos '+fmt((r.pe-d.q)*d.p,0)+' en ventas) para empezar a ganar.</div>';
+    else if(r.gao!==null)h+='<div class="pe-note pe-ok"><b>Estás por encima del equilibrio.</b> Las ventas pueden caer '+fmt(r.seg*100,1)+'% antes de entrar en pérdida. Por el apalancamiento operativo, una caída del 10% en las ventas reduciría la utilidad en alrededor de '+fmt(r.gao*10,0)+'%.</div>';
+    else h+='<div class="pe-note"><b>Estás justo en el punto de equilibrio:</b> la utilidad es nula.</div>';
+    h+='<div class="pe-note">Para ganar <b>'+fmt(d.obj,0)+'</b> por mes necesitás vender <b>'+fmt(r.tu,0)+'</b> unidades (unos '+fmt(r.tu*d.p,0)+' en ventas).'+(r.tu>3000?' Es más de lo que permite el control deslizante de unidades.':'')+'</div>';
+  }
+  $('pe-res').innerHTML=h;
+}
+['pe-p','pe-v','pe-cf','pe-q'].forEach(function(id){$(id).addEventListener('input',drawBE);});
+$('pe-obj').addEventListener('input',drawBE);
+
+/* ---------- Simulador 2 ---------- */
+var NAMES=['Pan artesanal','Medialunas','Tortas'];
+function drawCO(){
+  var rows=[],i,cf=Math.max(0,num('pe-fx')),crit=$('pe-cr').value;
+  for(i=0;i<3;i++)rows.push({p:num('pe-a'+i),v:num('pe-b'+i),q:num('pe-c'+i)});
+  var c=costeo(rows,cf,crit),Q=0;
+  for(i=0;i<3;i++){
+    var x=c.rows[i];Q+=rows[i].q;
+    $('pe-d'+i).textContent=fmt(x.mc,2);
+    $('pe-e'+i).textContent=fmt(x.fu,2);
+    $('pe-f'+i).textContent=fmt(x.cabs,2);
+    $('pe-g'+i).innerHTML='<span class="'+cls(x.rabs)+'">'+fmt(x.rabs,2)+'</span>';
+    $('pe-h'+i).textContent=fmt(x.contrib,0);
+    $('pe-i'+i).innerHTML='<span class="'+cls(x.res)+'">'+fmt(x.res,0)+'</span>';
+  }
+  $('pe-tq').textContent=fmt(Q,0);$('pe-th').textContent=fmt(c.contrib,0);$('pe-ti').textContent=fmt(c.res,0);
+  var h='<div class="pe-cards">'
+   +'<div class="pe-card"><b>'+fmt(c.contrib,0)+'</b><span>Contribución total</span></div>'
+   +'<div class="pe-card"><b>'+fmt(cf,0)+'</b><span>Costos fijos</span></div>'
+   +'<div class="pe-card"><b class="'+cls(c.util)+'">'+fmt(c.util,0)+'</b><span>Utilidad operativa (igual con cualquier criterio)</span></div></div>';
+  var shown=false;
+  for(i=0;i<3;i++){
+    var y=c.rows[i];
+    if(rows[i].q>0&&y.res<0&&y.contrib>0){
+      shown=true;
+      h+='<div class="pe-note pe-warn"><b>'+NAMES[i]+':</b> por absorción parece perder '+fmt(-y.rabs,2)+' por unidad ('+fmt(-y.res,0)+' por mes), pero aporta <b>'+fmt(y.contrib,0)+'</b> por mes a cubrir los costos fijos. Si lo eliminaras, los costos fijos seguirían y la utilidad total bajaría de '+fmt(c.util,0)+' a <b>'+fmt(c.util-y.contrib,0)+'</b>.</div>';
+    }
+    if(rows[i].q>0&&y.contrib<0){
+      shown=true;
+      h+='<div class="pe-note pe-warn"><b>'+NAMES[i]+':</b> su contribución es negativa ('+fmt(y.contrib,0)+' por mes): cada unidad vendida cuesta más que su precio solo en costos variables. Revisá precio o costos.</div>';
+    }
+  }
+  if(!shown)h+='<div class="pe-note">Ningún producto aparece con pérdida por absorción y contribución positiva a la vez. Probá cambiar el criterio de reparto de los costos fijos o subir los costos fijos para ver cómo cambia la lectura de cada producto, mientras la utilidad total no se mueve.</div>';
+  h+='<div class="pe-note">El reparto de costos fijos es un criterio, no una medida «verdadera»: cambiá entre unidades y ventas y verás que el resultado de cada producto se mueve, pero la utilidad total no.</div>';
+  $('pe-res2').innerHTML=h;
+}
+['pe-fx','pe-a0','pe-b0','pe-c0','pe-a1','pe-b1','pe-c1','pe-a2','pe-b2','pe-c2'].forEach(function(id){$(id).addEventListener('input',drawCO);});
+$('pe-cr').addEventListener('change',drawCO);
+
+drawBE();drawCO();
+})();
+</script><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/punto-de-equilibrio-y-costeo-cuanto.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
