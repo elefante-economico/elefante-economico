@@ -1,0 +1,325 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WACC y tasa de descuento: qué tasa usar en una PyME (con calculadora) — El Elefante Económico</title>
+  <meta name="description" content="WACC y tasa de descuento: qué tasa usar en una PyME (con calculadora)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/wacc-y-tasa-de-descuento-que-tasa-usar.html">
+  <meta property="og:title" content="WACC y tasa de descuento: qué tasa usar en una PyME (con calculadora)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/wacc-y-tasa-de-descuento-que-tasa-usar.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>WACC y tasa de descuento: qué tasa usar en una PyME (con calculadora)</h1>
+  <p class="meta">18 de November de 2026 · tasa de descuento, WACC</p>
+  <article><meta charset="utf-8">
+<style>
+#wc-app{background:#fff;border:1px solid #cfd6df;border-radius:12px;padding:16px;margin:22px 0;color:#1f2937;font-size:15px;line-height:1.45;font-family:inherit;text-align:left}
+#wc-app *{box-sizing:border-box}
+#wc-app .wc-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:12px}
+#wc-app .wc-f{flex:1 1 170px;min-width:150px}
+#wc-app label{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:#374151}
+#wc-app select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #9ca3af;border-radius:8px;background:#fff;color:#111827;width:100%}
+#wc-app input:focus-visible,#wc-app select:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
+#wc-app input[type=range]{width:100%;margin:0}
+#wc-app .wc-val{font-variant-numeric:tabular-nums;font-weight:700;color:#111827}
+#wc-app svg.wc-svg{width:100%;height:auto;display:block;background:#fff;border:1px solid #e5e7eb;border-radius:8px}
+#wc-app .wc-h{font-size:17px;font-weight:700;margin:22px 0 4px;color:#111827;padding-top:14px;border-top:1px solid #e5e7eb}
+#wc-app .wc-h.wc-first{border-top:0;padding-top:0;margin-top:4px}
+#wc-app .wc-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0}
+#wc-app .wc-card{background:#f3f4f6;border-radius:8px;padding:8px 10px}
+#wc-app .wc-card b{display:block;font-size:20px;color:#111827;font-variant-numeric:tabular-nums}
+#wc-app .wc-card span{font-size:12px;color:#4b5563}
+#wc-app .wc-card.wc-main{background:#fff7ed;border:1px solid #fdba74}
+#wc-app .wc-card.wc-main b{color:#c2410c;font-size:24px}
+#wc-app .wc-note{background:#eff6ff;border-left:4px solid #1d4ed8;padding:8px 12px;border-radius:4px;font-size:14px;margin-top:10px}
+#wc-app .wc-warn{background:#fef3c7;border-left-color:#b45309}
+#wc-app .wc-ok{background:#ecfdf5;border-left-color:#15803d}
+#wc-app .wc-small{font-size:13px;color:#4b5563;margin-top:4px}
+#wc-app .wc-bar{display:flex;height:30px;border-radius:6px;overflow:hidden;background:#e5e7eb;margin:6px 0 4px}
+#wc-app .wc-bar div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden}
+#wc-app .wc-leg{font-size:13px;color:#4b5563;margin:2px 0 8px}
+#wc-app .wc-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin:0 4px 0 10px}
+#wc-app .wc-leg i:first-child{margin-left:0}
+#wc-app .wc-wrap{overflow-x:auto}
+#wc-app table.wc-t{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+#wc-app table.wc-t th,#wc-app table.wc-t td{padding:5px 8px;border:0;border-bottom:1px solid #e5e7eb;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#wc-app table.wc-t th:first-child,#wc-app table.wc-t td:first-child{text-align:left}
+#wc-app table.wc-t th{background:#f9fafb;font-weight:600;color:#374151}
+#wc-app .wc-neg{color:#b91c1c;font-weight:700}
+#wc-app .wc-pos{color:#15803d;font-weight:700}
+</style>
+
+<div id="wc-wrap">
+
+<p>En el <a href="https://elelefanteeconomico.blogspot.com/2026/11/van-tir-y-payback-como-saber-si-un.html" target="_blank" rel="noopener noreferrer">post sobre VAN, TIR y payback</a> vimos que el valor actual neto depende de una tasa de descuento. Ahí quedó una pregunta incómoda, que es también la que más dudas genera en las PyMEs: <b>¿de dónde sale esa tasa?</b></p>
+
+<p>No es un detalle menor. El mismo proyecto, con los mismos flujos, puede resultar conveniente con una tasa del 12% y rechazable con una del 20%. En este post vemos qué representa la tasa de descuento, cómo se calcula el famoso <b>WACC</b> (costo promedio ponderado del capital) y qué hacer cuando la empresa no cotiza en bolsa, no tiene datos de mercado y el único «inversor» es el dueño.</p>
+
+<h2>1. Qué es la tasa de descuento</h2>
+
+<p>La tasa de descuento es el <b>costo de oportunidad</b> del capital: el rendimiento que se podría obtener invirtiendo ese dinero en otra alternativa de riesgo comparable. Un proyecto crea valor si rinde más que eso.</p>
+<p>Por eso la tasa tiene que reflejar dos cosas: el <b>valor del dinero en el tiempo</b> (cobrar mañana vale menos que cobrar hoy) y el <b>riesgo del proyecto</b> (un flujo incierto vale menos que uno seguro). Y de esto se desprende una idea clave: la tasa correcta depende del <b>riesgo del proyecto</b>, no de quién lo financia ni de cuánto costó el último préstamo.</p>
+
+<h2>2. El WACC</h2>
+
+<p>Los proyectos se financian con una mezcla de capital propio (los dueños) y deuda (bancos, proveedores financieros). Cada fuente tiene un costo, y el <b>WACC</b> es el promedio ponderado de ambos:</p>
+<p><b>WACC = E/(D+E) · Ke + D/(D+E) · Kd · (1 − t)</b></p>
+<ul>
+<li><b>Ke:</b> costo del capital propio, lo que exigen los dueños por asumir el riesgo.</li>
+<li><b>Kd:</b> costo de la deuda, la tasa que se paga a los acreedores. Se multiplica por (1 − t) porque los intereses reducen el impuesto a las ganancias.</li>
+<li><b>E/(D+E) y D/(D+E):</b> los pesos del capital propio y de la deuda en la financiación.</li>
+</ul>
+<p>El WACC es la tasa adecuada para descontar el <b>flujo de fondos libre del proyecto</b>, que es el que armamos en el modelo del primer post (antes de financiamiento). Si en cambio se descuentan los flujos que quedan para el accionista, después de pagar la deuda, corresponde usar directamente Ke.</p>
+
+<h2>3. Cómo estimar cada componente</h2>
+
+<p><b>Tasa libre de riesgo (Rf).</b> Es el rendimiento de un activo sin riesgo de default, en la misma moneda que los flujos. En España se toma habitualmente la Obligación del Estado a 10 años, que a mediados de noviembre de 2026 rondaba el 3,9%. Es un dato de mercado que cambia: hay que actualizarlo cada vez que se evalúa un proyecto.</p>
+
+<p><b>Prima de riesgo de mercado (ERP).</b> Es el rendimiento adicional que exige el mercado accionario sobre el activo libre de riesgo. No se observa: se estima, y las estimaciones varían mucho según la fuente y el método (los libros de texto recomiendan valores que van de 3% a 10%). Conviene usar una fuente reconocida y actualizada, como las estimaciones de Damodaran o la encuesta anual de Pablo Fernández (IESE), y mostrar el resultado como un rango.</p>
+
+<p><b>Beta.</b> Mide cuánto se mueve un negocio respecto del mercado: más de 1 significa más sensible que el promedio. Una PyME no cotiza, así que no tiene beta propia. El procedimiento habitual es tomar la <b>beta desapalancada</b> de empresas comparables del mismo sector y volver a «apalancarla» con la estructura de capital de la empresa: <b>β apalancada = β desapalancada · [1 + (1 − t) · D/E]</b>. A más deuda, mayor riesgo para el accionista y mayor beta.</p>
+
+<p><b>Primas por tamaño y por riesgo específico.</b> El CAPM puro supone un inversor diversificado. En una PyME, el dueño suele tener buena parte de su patrimonio en un solo negocio, con poca liquidez, dependencia de pocos clientes o de su propio trabajo. Por eso, en la práctica se suman primas al Ke (el llamado método de «suma de primas» o <i>build-up</i>): una por tamaño e iliquidez y otra por riesgo específico del negocio o proyecto. Son juicios razonados, no datos objetivos, y deben documentarse.</p>
+
+<p><b>Costo de la deuda (Kd).</b> Es la tasa efectiva que pagaría hoy la empresa por un préstamo nuevo, incluyendo comisiones y gastos (la TAE), no la tasa de un crédito antiguo. Se ajusta por el efecto impositivo: Kd · (1 − t).</p>
+
+<p><b>Pesos del capital.</b> Se usan valores de mercado y la estructura de financiación <b>objetivo</b> o típica del sector, no necesariamente la del momento. Muchas PyMEs familiares se financian casi enteramente con capital propio; en ese caso, WACC = Ke.</p>
+
+<h2>4. Calculadora: ¿qué tasa me da?</h2>
+
+<p>Elegí un perfil de ejemplo o ajustá cada parámetro. La calculadora arma el WACC y lo aplica al proyecto del primer post, con inversión de 100.000 y flujos a cinco años, para ver cómo cambia la decisión.</p>
+<p>Experimentos para probar:</p>
+<ol>
+<li>Compará los cuatro perfiles: el mismo negocio puede tener tasas muy distintas según el riesgo del proyecto y la financiación.</li>
+<li>Subí la prima por riesgo específico: cada punto adicional de prima sube el WACC en torno a un punto y achica el margen del proyecto.</li>
+<li>Subí el peso de la deuda: el WACC baja, pero fijate cómo sube la beta y el Ke. Más deuda abarata el promedio, no elimina el riesgo.</li>
+<li>Bajá el ajuste de los flujos a −25%: la TIR del proyecto cae a unos 12,6% y la decisión pasa a depender de qué tasa uses. Esa es la zona donde la elección de la tasa importa de verdad.</li>
+</ol>
+
+<div id="wc-app">
+<noscript>Esta calculadora necesita JavaScript activado.</noscript>
+
+<div class="wc-h wc-first">Parámetros</div>
+<div class="wc-row" style="margin-top:8px">
+  <div class="wc-f" style="flex:2 1 280px">
+    <label for="wc-pre">Perfil de ejemplo</label>
+    <select id="wc-pre">
+      <option value="fam">PyME familiar financiada con capital propio</option>
+      <option value="pre">PyME con préstamo bancario (40% de deuda)</option>
+      <option value="exp">Expansión de bajo riesgo (más de lo mismo)</option>
+      <option value="nue">Proyecto de mayor riesgo (nuevo negocio)</option>
+      <option value="cus" disabled>Personalizado</option>
+    </select>
+  </div>
+</div>
+<div class="wc-row">
+  <div class="wc-f"><label for="wc-rf">Tasa libre de riesgo, Rf: <span class="wc-val" id="wc-rfv"></span></label><input type="range" id="wc-rf" min="0" max="8" step="0.1" value="3.9"></div>
+  <div class="wc-f"><label for="wc-erp">Prima de riesgo de mercado: <span class="wc-val" id="wc-erpv"></span></label><input type="range" id="wc-erp" min="3" max="9" step="0.1" value="5.5"></div>
+  <div class="wc-f"><label for="wc-bu">Beta desapalancada del sector: <span class="wc-val" id="wc-buv"></span></label><input type="range" id="wc-bu" min="0.3" max="1.8" step="0.05" value="0.9"></div>
+</div>
+<div class="wc-row">
+  <div class="wc-f"><label for="wc-sz">Prima por tamaño e iliquidez: <span class="wc-val" id="wc-szv"></span></label><input type="range" id="wc-sz" min="0" max="8" step="0.5" value="3"></div>
+  <div class="wc-f"><label for="wc-sp">Prima por riesgo específico: <span class="wc-val" id="wc-spv"></span></label><input type="range" id="wc-sp" min="0" max="10" step="0.5" value="3"></div>
+  <div class="wc-f"><label for="wc-wd">Peso de la deuda, D/(D+E): <span class="wc-val" id="wc-wdv"></span></label><input type="range" id="wc-wd" min="0" max="80" step="5" value="0"></div>
+</div>
+<div class="wc-row">
+  <div class="wc-f"><label for="wc-kd">Costo de la deuda antes de impuestos, Kd: <span class="wc-val" id="wc-kdv"></span></label><input type="range" id="wc-kd" min="2" max="15" step="0.1" value="6"></div>
+  <div class="wc-f"><label for="wc-tx">Tasa de impuesto, t: <span class="wc-val" id="wc-txv"></span></label><input type="range" id="wc-tx" min="0" max="40" step="1" value="25"></div>
+  <div class="wc-f"><label for="wc-adj">Ajuste de los flujos del proyecto: <span class="wc-val" id="wc-adjv"></span></label><input type="range" id="wc-adj" min="-50" max="20" step="5" value="0"></div>
+</div>
+<div class="wc-small">Los valores iniciales son ilustrativos: la tasa libre de riesgo refleja el bono español a 10 años de mediados de noviembre de 2026; el resto son supuestos de ejemplo.</div>
+
+<div class="wc-h">Resultado</div>
+<div class="wc-cards" id="wc-cards"></div>
+<div class="wc-small"><b>De dónde sale el costo del capital propio (Ke)</b></div>
+<div class="wc-bar" id="wc-bke"></div>
+<div class="wc-leg" id="wc-lke"></div>
+<div class="wc-small"><b>Cómo se compone el WACC</b></div>
+<div class="wc-bar" id="wc-bw"></div>
+<div class="wc-leg" id="wc-lw"></div>
+
+<div class="wc-h">Aplicación al proyecto: perfil del VAN</div>
+<svg id="wc-svg" class="wc-svg" viewBox="0 0 680 340" role="img" aria-label="VAN del proyecto en función de la tasa de descuento, con el WACC y la TIR marcados"></svg>
+<div class="wc-leg"><i style="background:#1d4ed8"></i>VAN según la tasa &nbsp; <i style="background:#c2410c"></i>WACC calculado &nbsp; <i style="background:#15803d"></i>TIR del proyecto</div>
+<div class="wc-wrap">
+<table class="wc-t" id="wc-tab"></table>
+</div>
+<div id="wc-dec"></div>
+</div>
+
+<h2>5. Atajos prácticos cuando faltan datos</h2>
+
+<p>Muchas PyMEs no pueden estimar betas ni primas de mercado con rigor. Tres atajos razonables, siempre que se expliciten como supuestos:</p>
+<ul>
+<li><b>Tasa mínima exigida por el dueño:</b> lo que ganaría en la mejor alternativa de riesgo parecido (otro negocio, una inversión financiera), más una prima por el riesgo y la falta de liquidez de este proyecto.</li>
+<li><b>Costo de la deuda más una prima:</b> el capital propio debe costar más que la deuda, porque los dueños cobran después de los bancos y asumen más riesgo. Una prima de varios puntos sobre la tasa del préstamo es un punto de partida, no una regla.</li>
+<li><b>Tasas por tipo de proyecto:</b> una tasa menor para inversiones de reposición o ahorro de costos, una intermedia para ampliar un negocio conocido y una mayor para nuevos productos o mercados. En la calculadora esto equivale a variar la prima por riesgo específico.</li>
+</ul>
+<p>Sea cual sea el método, conviene presentar el resultado como un <b>rango</b> y mirar el perfil del VAN: si la decisión no cambia dentro del rango razonable de tasas, la conclusión es robusta; si cambia, hay que mirar el proyecto con más cuidado.</p>
+
+<h2>6. Errores frecuentes</h2>
+<ul>
+<li><b>Usar la tasa del préstamo como tasa de descuento.</b> Ignora el costo del capital propio, que es mayor.</li>
+<li><b>Usar la misma tasa para todos los proyectos.</b> La tasa debe reflejar el riesgo de cada proyecto, no el promedio de la empresa.</li>
+<li><b>Mezclar términos nominales y reales, o monedas.</b> Si los flujos incluyen inflación, la tasa también; si están en euros, la tasa libre de riesgo debe ser en euros.</li>
+<li><b>Descontar con el WACC flujos que ya descuentan el pago de deuda.</b> El WACC se aplica a flujos antes de financiamiento; si no, se cuenta dos veces el costo de la deuda.</li>
+<li><b>Sumar riesgo dos veces.</b> Si los flujos ya son un escenario pesimista, agregar además una prima alta penaliza dos veces el mismo riesgo.</li>
+<li><b>Confiar en un número «exacto».</b> Todo componente del WACC es una estimación; la falsa precisión engaña más que un rango bien explicado.</li>
+<li><b>Creer que más deuda es siempre mejor.</b> El WACC baja con deuda, pero sube el riesgo financiero del dueño y las exigencias del banco (garantías, avales).</li>
+</ul>
+
+<h2>7. Cómo usarlo en el Excel del primer post</h2>
+<p>En el modelo de VAN/TIR, la tasa de descuento se carga en la hoja «Supuestos», y la hoja «Sensibilidad» muestra el perfil del VAN para otras tasas. Una buena práctica: calculá el WACC con esta calculadora, cargalo ahí y revisá en «Sensibilidad» qué pasa con la decisión unos puntos por encima y por debajo.</p>
+
+<p><i>Esta calculadora tiene fines educativos. Los valores son ilustrativos, los datos de mercado cambian y las primas por tamaño y riesgo específico son juicios del analista. No constituye asesoramiento financiero: validá los supuestos con tu asesor y con datos actualizados antes de decidir.</i></p>
+
+</div>
+
+<script>
+(function(){
+/*MATH_START*/
+var FLOWS=[-100000,21750,32212.5,35744.88,39654.82,70693.63];
+function npv(f,r){var s=0,i;for(i=0;i<f.length;i++)s+=f[i]/Math.pow(1+r,i);return s;}
+function irr(f){
+  var lo=-0.99,hi=10,a=npv(f,lo),b=npv(f,hi),i;
+  if(a*b>0)return null;
+  for(i=0;i<200;i++){var m=(lo+hi)/2,v=npv(f,m);if(a*v<=0){hi=m;b=v;}else{lo=m;a=v;}}
+  return (lo+hi)/2;
+}
+function wacc(p){
+  var de=p.wd<1?p.wd/(1-p.wd):1e9;
+  var bl=p.bu*(1+(1-p.t)*de),ke=p.rf+bl*p.erp+p.sz+p.sp,kdn=p.kd*(1-p.t);
+  return{bl:bl,ke:ke,kdn:kdn,w:(1-p.wd)*ke+p.wd*kdn,eq:(1-p.wd)*ke,de:p.wd*kdn};
+}
+function scaled(adj){var f=[FLOWS[0]],i;for(i=1;i<FLOWS.length;i++)f.push(FLOWS[i]*(1+adj));return f;}
+/*MATH_END*/
+
+function $(id){return document.getElementById(id);}
+function fmt(v,d){
+  if(v===undefined||v===null||!isFinite(v))return '—';
+  var m=Math.pow(10,d),s=(Math.round(Math.abs(v)*m+1e-7)/m).toFixed(d),p=s.split('.');
+  p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  var out=p.join(',');
+  return(v<0&&+s!==0)?'-'+out:out;
+}
+function pc(v,d){return fmt(v*100,d===undefined?1:d)+'%';}
+function ticks(lo,hi,target){
+  var span=hi-lo,raw=span/target,mag=Math.pow(10,Math.floor(Math.log10(raw))),nm=raw/mag;
+  var step=(nm<1.5?1:nm<3?2:nm<7?5:10)*mag,start=Math.ceil(lo/step-1e-9)*step,out=[];
+  for(var v=start;v<=hi+1e-9;v+=step)out.push(+v.toFixed(10));
+  return out;
+}
+var PRE={
+  fam:{rf:3.9,erp:5.5,bu:0.9,sz:3,sp:3,wd:0,kd:6,tx:25},
+  pre:{rf:3.9,erp:5.5,bu:0.9,sz:3,sp:3,wd:40,kd:6,tx:25},
+  exp:{rf:3.9,erp:5.5,bu:0.9,sz:3,sp:1,wd:30,kd:6,tx:25},
+  nue:{rf:3.9,erp:5.5,bu:0.9,sz:3,sp:6,wd:10,kd:6,tx:25}
+};
+var IDS=['rf','erp','bu','sz','sp','wd','kd','tx'];
+function read(){
+  var p={};
+  p.rf=+$('wc-rf').value/100;p.erp=+$('wc-erp').value/100;p.bu=+$('wc-bu').value;p.sz=+$('wc-sz').value/100;p.sp=+$('wc-sp').value/100;
+  p.wd=+$('wc-wd').value/100;p.kd=+$('wc-kd').value/100;p.t=+$('wc-tx').value/100;
+  p.adj=+$('wc-adj').value/100;return p;
+}
+function labels(){
+  $('wc-rfv').textContent=fmt(+$('wc-rf').value,1)+'%';
+  $('wc-erpv').textContent=fmt(+$('wc-erp').value,1)+'%';
+  $('wc-buv').textContent=fmt(+$('wc-bu').value,2);
+  $('wc-szv').textContent=fmt(+$('wc-sz').value,1)+'%';
+  $('wc-spv').textContent=fmt(+$('wc-sp').value,1)+'%';
+  $('wc-wdv').textContent=fmt(+$('wc-wd').value,0)+'%';
+  $('wc-kdv').textContent=fmt(+$('wc-kd').value,1)+'%';
+  $('wc-txv').textContent=fmt(+$('wc-tx').value,0)+'%';
+  var a=+$('wc-adj').value;$('wc-adjv').textContent=(a>0?'+':'')+fmt(a,0)+'%';
+}
+function seg(w,color,txt){return '<div style="width:'+w+'%;background:'+color+'" title="'+txt+'">'+(w>=14?txt:'')+'</div>';}
+function render(){
+  var p=read(),r=wacc(p),f=scaled(p.adj),tir=irr(f),van=npv(f,r.w);
+  labels();
+  var h='<div class="wc-card"><b>'+fmt(r.bl,2)+'</b><span>Beta apalancada</span></div>'
+    +'<div class="wc-card"><b>'+pc(r.ke)+'</b><span>Costo del capital propio (Ke)</span></div>'
+    +'<div class="wc-card"><b>'+pc(r.kdn)+'</b><span>Costo de la deuda después de impuestos</span></div>'
+    +'<div class="wc-card wc-main"><b>'+pc(r.w)+'</b><span>WACC (tasa de descuento)</span></div>';
+  $('wc-cards').innerHTML=h;
+  // Composición de Ke
+  var parts=[['Tasa libre de riesgo',p.rf,'#64748b'],['Beta × prima de mercado',r.bl*p.erp,'#1d4ed8'],['Tamaño e iliquidez',p.sz,'#0f766e'],['Riesgo específico',p.sp,'#c2410c']];
+  var tot=0,i;parts.forEach(function(x){tot+=x[1];});
+  var bar='',leg='';
+  parts.forEach(function(x){var w=tot>0?x[1]/tot*100:0;bar+=seg(w,x[2],pc(x[1]));leg+='<i style="background:'+x[2]+'"></i>'+x[0]+' ('+pc(x[1])+')';});
+  $('wc-bke').innerHTML=bar;$('wc-lke').innerHTML=leg;
+  // Composición del WACC
+  var wt=r.eq+r.de;
+  $('wc-bw').innerHTML=seg(wt>0?r.eq/wt*100:0,'#1d4ed8','Capital propio '+pc(r.eq))+seg(wt>0?r.de/wt*100:0,'#6b7280','Deuda '+pc(r.de));
+  $('wc-lw').innerHTML='<i style="background:#1d4ed8"></i>Capital propio: '+pc(1-p.wd,0)+' del capital, aporta '+pc(r.eq)+' <i style="background:#6b7280"></i>Deuda: '+pc(p.wd,0)+' del capital, aporta '+pc(r.de);
+  drawChart(f,r.w,tir);
+  // Tabla de sensibilidad
+  var rows=[['WACC − 3 puntos',Math.max(0,r.w-0.03)],['WACC',r.w],['WACC + 3 puntos',r.w+0.03]];
+  var t='<tr><th>Tasa de descuento</th><th>Tasa</th><th>VAN del proyecto</th><th>¿Conviene?</th></tr>';
+  rows.forEach(function(x){var v=npv(f,x[1]);t+='<tr'+(x[0]==='WACC'?' style="font-weight:700;background:#fff7ed"':'')+'><td>'+x[0]+'</td><td>'+pc(x[1])+'</td><td class="'+(v<0?'wc-neg':'wc-pos')+'">'+fmt(v,0)+'</td><td>'+(v>0?'Sí':'No')+'</td></tr>';});
+  t+='<tr><td>TIR del proyecto</td><td>'+(tir===null?'—':pc(tir))+'</td><td>0</td><td>—</td></tr>';
+  $('wc-tab').innerHTML=t;
+  // Decisión
+  var d='';
+  if(tir===null)d='<div class="wc-note wc-warn">No se puede calcular la TIR con estos flujos.</div>';
+  else if(van>0){
+    var sp=(tir-r.w)*100;
+    d='<div class="wc-note wc-ok"><b>Con un WACC de '+pc(r.w)+', el proyecto crea valor:</b> VAN de '+fmt(van,0)+'. La TIR ('+pc(tir)+') supera a la tasa por '+fmt(sp,1)+' puntos.'
+     +(sp<3?' Es un margen estrecho: un error de pocos puntos en la tasa puede cambiar la decisión, así que conviene revisar los supuestos y trabajar con un rango.':' El margen es amplio: la decisión sobrevive a errores razonables en la estimación de la tasa.')+'</div>';
+  }else{
+    d='<div class="wc-note wc-warn"><b>Con un WACC de '+pc(r.w)+', el proyecto destruye valor:</b> VAN de '+fmt(van,0)+'. La TIR ('+pc(tir)+') queda '+fmt((r.w-tir)*100,1)+' puntos por debajo de la tasa exigida.</div>';
+  }
+  $('wc-dec').innerHTML=d;
+}
+function drawChart(f,w,tir){
+  var W=680,H=340,ml=72,mr=20,mt=18,mb=44,pw=W-ml-mr,ph=H-mt-mb,o=[],i;
+  var xmax=0.4;
+  if(tir!==null&&tir>0.35)xmax=Math.min(1,tir*1.3);
+  if(w>xmax*0.9)xmax=w*1.2;
+  xmax=Math.ceil(xmax/0.05)*0.05;
+  var v0=npv(f,0),vx=npv(f,xmax);
+  var ymax=Math.max(v0,1000)*1.08,ymin=Math.min(0,vx)*1.1-ymax*0.04;
+  function X(x){return ml+x/xmax*pw;}
+  function Y(y){return mt+ph-(y-ymin)/(ymax-ymin)*ph;}
+  var tx=ticks(0,xmax,8),ty=ticks(ymin,ymax,5);
+  tx.forEach(function(v){o.push('<line x1="'+X(v)+'" x2="'+X(v)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#eef0f3"/><text x="'+X(v)+'" y="'+(mt+ph+17)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(v*100,0)+'%</text>');});
+  ty.forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#eef0f3"/><text x="'+(ml-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,0)+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#374151" stroke-width="1.4"/>');
+  var pts=[],N=100;
+  for(i=0;i<=N;i++){var x=xmax*i/N;pts.push(X(x)+','+Y(npv(f,x)));}
+  o.push('<polyline points="'+pts.join(' ')+'" fill="none" stroke="#1d4ed8" stroke-width="2.8"/>');
+  o.push('<line x1="'+X(w)+'" x2="'+X(w)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#c2410c" stroke-width="1.8" stroke-dasharray="5 4"/>');
+  o.push('<circle cx="'+X(w)+'" cy="'+Y(npv(f,w))+'" r="6" fill="#c2410c" stroke="#fff" stroke-width="1.5"/>');
+  o.push('<text x="'+(X(w)+(X(w)>W-170?-10:10))+'" y="'+(mt+14)+'" text-anchor="'+(X(w)>W-170?'end':'start')+'" font-size="12" font-weight="700" fill="#c2410c">WACC '+pc(w)+'</text>');
+  if(tir!==null&&tir>=0&&tir<=xmax){
+    o.push('<circle cx="'+X(tir)+'" cy="'+Y(0)+'" r="6" fill="#15803d" stroke="#fff" stroke-width="1.5"/>');
+    o.push('<text x="'+X(tir)+'" y="'+(Y(0)-12)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#15803d">TIR '+pc(tir)+'</text>');
+  }
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Tasa de descuento</text>');
+  o.push('<text transform="rotate(-90)" x="'+(-(mt+ph/2))+'" y="16" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">VAN</text>');
+  $('wc-svg').innerHTML=o.join('');
+}
+IDS.forEach(function(k){$('wc-'+k).addEventListener('input',function(){var s=$('wc-pre');s.querySelector('option[value=cus]').disabled=false;s.value='cus';render();});});
+$('wc-adj').addEventListener('input',render);
+$('wc-pre').addEventListener('change',function(){
+  var v=PRE[this.value];if(!v)return;
+  IDS.forEach(function(k){$('wc-'+k).value=v[k];});render();
+});
+render();
+})();
+</script><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/wacc-y-tasa-de-descuento-que-tasa-usar.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
