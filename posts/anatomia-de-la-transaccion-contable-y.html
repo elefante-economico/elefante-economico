@@ -1,0 +1,782 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anatomía de la Transacción Contable y Simulador de Libro Diario — El Elefante Económico</title>
+  <meta name="description" content="Anatomía de la Transacción Contable y Simulador de Libro Diario">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/anatomia-de-la-transaccion-contable-y.html">
+  <meta property="og:title" content="Anatomía de la Transacción Contable y Simulador de Libro Diario">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/anatomia-de-la-transaccion-contable-y.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Anatomía de la Transacción Contable y Simulador de Libro Diario</h1>
+  <p class="meta">19 de November de 2026 · Contabilidad, Transacciones económicas</p>
+  <article><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anatomía de la Transacción Contable y Simulador de Libro Diario | El Elefante Económico</title>
+  <style>
+    :root {
+      --bg-color: #fcfcfc;
+      --text-color: #1f2937;
+      --muted-text: #4b5563;
+      --primary: #1e3a8a;
+      --primary-light: #eff6ff;
+      --accent: #0f766e;
+      --border-color: #e5e7eb;
+      --card-bg: #ffffff;
+      --danger: #b91c1c;
+      --success: #15803d;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.75;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    .elefante-post-container {
+      max-width: 860px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .post-header {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .blog-tag {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      line-height: 1.25;
+      color: #111827;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--muted-text);
+      font-style: italic;
+      margin: 0;
+    }
+
+    h2 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.45rem;
+      color: var(--primary);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--primary);
+      padding-left: 0.75rem;
+    }
+
+    h3 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.15rem;
+      color: #111827;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .equation-box {
+      background-color: var(--primary-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 1.25rem;
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 1.75rem 0;
+    }
+
+    table.classification-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.75rem 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.95rem;
+      background-color: var(--card-bg);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    table.classification-table th,
+    table.classification-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.85rem 1rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    table.classification-table th {
+      background-color: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    table.classification-table tr:nth-child(even) {
+      background-color: #f9fafb;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .rule-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .rule-card strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+
+    /* ESTILOS DEL SIMULADOR */
+    .simulator-wrapper {
+      background-color: var(--card-bg);
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 1.75rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .sim-header h3 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 1.25rem;
+    }
+
+    .preset-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-preset {
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 0.4rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-preset:hover {
+      background-color: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .sim-controls {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1.2fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 680px) {
+      .sim-controls {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted-text);
+      margin-bottom: 0.25rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.55rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      box-sizing: border-box;
+    }
+
+    .entry-lines-container {
+      background-color: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .entry-line-row {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr auto;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    @media (max-width: 600px) {
+      .entry-line-row {
+        grid-template-columns: 1fr;
+        border-bottom: 1px dashed #cbd5e1;
+        padding-bottom: 0.6rem;
+      }
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .sim-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .btn-secondary {
+      background-color: #ffffff;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.5rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary-light);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      border: none;
+      color: #ffffff;
+      padding: 0.55rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: #172554;
+    }
+
+    .btn-danger-outline {
+      background-color: transparent;
+      border: 1px solid #fca5a5;
+      color: var(--danger);
+      padding: 0.45rem 0.85rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .status-banner {
+      padding: 0.65rem 1rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .status-error {
+      display: block;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--danger);
+    }
+
+    .journal-ledger {
+      margin-top: 1.75rem;
+      overflow-x: auto;
+    }
+
+    .journal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .journal-table th {
+      background-color: #1e293b;
+      color: #ffffff;
+      padding: 0.7rem 0.85rem;
+      text-align: left;
+    }
+
+    .journal-table th.num,
+    .journal-table td.num {
+      text-align: right;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 600;
+    }
+
+    .journal-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .asiento-header-row {
+      background-color: #f1f5f9;
+      font-weight: 600;
+      color: #334155;
+      font-size: 0.85rem;
+    }
+
+    .credit-indent {
+      padding-left: 2.2rem !important;
+      color: #334155;
+    }
+
+    .badge-type {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 3px;
+      background-color: #e2e8f0;
+      color: #1e293b;
+      margin-left: 0.4rem;
+      font-weight: 600;
+    }
+
+    .journal-totals {
+      background-color: var(--primary-light);
+      font-weight: bold;
+      border-top: 2px solid var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<article class="elefante-post-container">
+  <header class="post-header">
+    <span class="blog-tag">El Elefante Económico · Contabilidad y Finanzas</span>
+    <h1>Anatomía de la Transacción Contable: Clasificación y Simulador de Libro Diario</h1>
+    <p class="subtitle">Cómo los hechos económicos se traducen en registros duales sin romper el equilibrio patrimonial.</p>
+  </header>
+
+  <p>En economía, todo intercambio implica una cesión y una recepción de valor. La contabilidad formaliza esta realidad empírica mediante un lenguaje estructurado: el <strong>sistema de partida doble</strong>. Lejos de ser un mero trámite burocrático, la registración contable constituye un modelo matemático de conservación de valor donde cada hecho económico deja una huella dual.</p>
+
+  <p>Una <strong>transacción contable</strong> es todo acontecimiento económico susceptible de ser cuantificado en términos monetarios que altera la estructura patrimonial, financiera o de resultados de una entidad en un momento determinado.</p>
+
+  <div class="equation-box">
+    Activo (A) = Pasivo (P) + Patrimonio Neto (PN) + [Ingresos (I) − Gastos (G)]
+  </div>
+
+  <h2>1. Clasificación de las Transacciones Contables</h2>
+  <p>No todos los hechos económicos impactan de la misma manera en la arquitectura financiera de una empresa. Desde una perspectiva analítica, las transacciones se clasifican según su efecto sobre el patrimonio neto y la naturaleza de su flujo:</p>
+
+  <table class="classification-table">
+    <thead>
+      <tr>
+        <th style="width: 24%;">Categoría</th>
+        <th style="width: 42%;">Mecanismo Económico</th>
+        <th style="width: 34%;">Ejemplo Empírico</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Permutativas (Cualitativas)</strong></td>
+        <td>Alteran la composición interna del Activo o del Pasivo, pero mantienen inalterado el valor total del Patrimonio Neto. No generan resultados.</td>
+        <td>Compra de mercaderías al contado (aumenta Inventario, disminuye Caja).</td>
+      </tr>
+      <tr>
+        <td><strong>Modificativas (Cuantitativas)</strong></td>
+        <td>Generan una variación neta en la riqueza de la entidad a través de ingresos o gastos, o bien por aportes y retiros directos de capital.</td>
+        <td>Pago de alquileres del mes (disminuye Caja y disminuye Patrimonio Neto vía gasto).</td>
+      </tr>
+      <tr>
+        <td><strong>Mixtas</strong></td>
+        <td>Combinan simultáneamente un cambio cualitativo en los activos/pasivos con una variación cuantitativa en el resultado del ejercicio.</td>
+        <td>Venta de un bien de uso por encima de su valor residual contable (ganancia por venta).</td>
+      </tr>
+      <tr>
+        <td><strong>Explícitas vs. Implícitas</strong></td>
+        <td>Las explícitas surgen de un intercambio con terceros respaldado por comprobantes; las implícitas responden al devengamiento interno del tiempo o uso.</td>
+        <td>Factura de un proveedor (explícita) vs. amortización mensual de maquinaria (implícita).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2. La Lógica del Debe y el Haber</h2>
+  <p>El <strong>Libro Diario</strong> es el registro cronológico primario donde se asientan estas transacciones. Cada asiento exige que la suma de las partidas cargadas en el <em>Debe</em> coincida exactamente con la suma de las partidas abonadas en el <em>Haber</em>. La convención técnica opera según la naturaleza de cada masa patrimonial:</p>
+
+  <div class="rule-grid">
+    <div class="rule-card">
+      <strong>Cuentas de Activo (A)</strong>
+      Nacen y aumentan por el <strong>Debe</strong>. Disminuyen por el <strong>Haber</strong>. Representan recursos controlados y derechos de cobro.
+    </div>
+    <div class="rule-card">
+      <strong>Cuentas de Pasivo (P) y PN</strong>
+      Nacen y aumentan por el <strong>Haber</strong>. Disminuyen por el <strong>Debe</strong>. Reflejan obligaciones y capital propio.
+    </div>
+    <div class="rule-card">
+      <strong>Cuentas de Resultado (G y I)</strong>
+      Los <strong>Gastos</strong> se registran en el <strong>Debe</strong> (consumo de recursos). Los <strong>Ingresos</strong> se registran en el <strong>Haber</strong> (generación de valor).
+    </div>
+  </div>
+
+  <h2>3. Simulador Interactivo de Libro Diario</h2>
+  <p>Utiliza la herramienta a continuación para modelar asientos contables. Puedes cargar operaciones habituales mediante los botones de ejemplo o construir asientos compuestos personalizados. El sistema verificará la condición de equilibrio antes de incorporar el registro al libro.</p>
+
+  <section class="simulator-wrapper" aria-label="Simulador de Libro Diario">
+    <div class="sim-header">
+      <h3>Libro Diario · Registro Cronológico</h3>
+      <button type="button" class="btn-danger-outline" onclick="resetLedger()">Reiniciar Libro</button>
+    </div>
+
+    <div class="preset-buttons">
+      <button type="button" class="btn-preset" onclick="loadPreset('aporte')">+ Aporte de Capital</button>
+      <button type="button" class="btn-preset" onclick="loadPreset('compra_mercaderia')">+ Compra Mercadería (Crédito)</button>
+      <button type="button" class="btn-preset" onclick="loadPreset('venta')">+ Venta al Contado</button>
+      <button type="button" class="btn-preset" onclick="loadPreset('gasto_servicios')">+ Pago Alquiler</button>
+      <button type="button" class="btn-preset" onclick="loadPreset('amortizacion')">+ Amortización (Implícita)</button>
+    </div>
+
+    <div class="sim-controls">
+      <div class="form-group">
+        <label for="entry-date">Fecha</label>
+        <input type="date" id="entry-date">
+      </div>
+      <div class="form-group">
+        <label for="entry-desc">Concepto / Glosa del Asiento</label>
+        <input type="text" id="entry-desc" placeholder="Ej. Venta de mercaderías según Factura A-001">
+      </div>
+      <div class="form-group">
+        <label for="entry-type">Clasificación Contable</label>
+        <select id="entry-type">
+          <option value="Permutativa">Permutativa</option>
+          <option value="Modificativa">Modificativa</option>
+          <option value="Mixta">Mixta</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="entry-lines-container" id="lines-container">
+      <!-- Filas dinámicas de cuentas -->
+    </div>
+
+    <div id="sim-error" class="status-banner"></div>
+
+    <div class="sim-actions">
+      <button type="button" class="btn-secondary" onclick="addEntryLine()">+ Añadir Línea de Cuenta</button>
+      <button type="button" class="btn-primary" onclick="postJournalEntry()">Contabilizar Asiento</button>
+    </div>
+
+    <div class="journal-ledger">
+      <table class="journal-table">
+        <thead>
+          <tr>
+            <th style="width: 14%;">Fecha</th>
+            <th style="width: 50%;">Cuenta / Detalle</th>
+            <th class="num" style="width: 18%;">Debe (€)</th>
+            <th class="num" style="width: 18%;">Haber (€)</th>
+          </tr>
+        </thead>
+        <tbody id="ledger-body">
+          <!-- Registros del libro diario -->
+        </tbody>
+        <tfoot>
+          <tr class="journal-totals">
+            <td colspan="2">TOTALES ACUMULADOS DEL LIBRO DIARIO</td>
+            <td class="num" id="total-debe">0,00</td>
+            <td class="num" id="total-haber">0,00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <p>Observa cómo, independientemente de si la operación es permutativa o modificativa, la columna de totales acumulados conserva estrictamente la igualdad entre el Debe y el Haber. Cuando esta simetría se rompe, el sistema detecta de inmediato una inconsistencia en la medición del hecho económico.</p>
+</article>
+
+<script>
+  const ACCOUNT_CATALOG = [
+    { name: "Caja y Bancos", group: "Activo" },
+    { name: "Cuentas por Cobrar (Clientes)", group: "Activo" },
+    { name: "Mercaderías / Inventario", group: "Activo" },
+    { name: "Maquinaria y Equipos", group: "Activo" },
+    { name: "Amortización Acumulada", group: "Reg. Activo" },
+    { name: "Proveedores", group: "Pasivo" },
+    { name: "Deudas Financieras", group: "Pasivo" },
+    { name: "Capital Social", group: "Patrimonio Neto" },
+    { name: "Ingresos por Ventas", group: "Ingreso" },
+    { name: "Costo de Mercaderías Vendidas", group: "Gasto" },
+    { name: "Gastos de Alquiler", group: "Gasto" },
+    { name: "Gastos de Amortización", group: "Gasto" }
+  ];
+
+  let ledgerEntries = [];
+  let entryCounter = 1;
+
+  function formatCurrency(val) {
+    return val.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function createAccountOptions(selectedAccount = "") {
+    return ACCOUNT_CATALOG.map(acc => {
+      const selected = acc.name === selectedAccount ? "selected" : "";
+      return `<option value="${acc.name}" ${selected}>${acc.name} (${acc.group})</option>`;
+    }).join("");
+  }
+
+  function addEntryLine(account = "", debit = "", credit = "") {
+    const container = document.getElementById("lines-container");
+    const row = document.createElement("div");
+    row.className = "entry-line-row";
+    row.innerHTML = `
+      <select class="line-account">
+        ${createAccountOptions(account)}
+      </select>
+      <input type="number" class="line-debit" placeholder="Debe" step="0.01" min="0" value="${debit}">
+      <input type="number" class="line-credit" placeholder="Haber" step="0.01" min="0" value="${credit}">
+      <button type="button" class="btn-remove" title="Eliminar línea" onclick="removeLine(this)">×</button>
+    `;
+    container.appendChild(row);
+  }
+
+  function removeLine(btn) {
+    const container = document.getElementById("lines-container");
+    if (container.children.length > 2) {
+      btn.parentElement.remove();
+    } else {
+      showError("Un asiento contable requiere al menos dos partidas (una en el Debe y otra en el Haber).");
+    }
+  }
+
+  function showError(msg) {
+    const banner = document.getElementById("sim-error");
+    banner.textContent = msg;
+    banner.className = "status-banner status-error";
+  }
+
+  function clearError() {
+    const banner = document.getElementById("sim-error");
+    banner.style.display = "none";
+    banner.className = "status-banner";
+  }
+
+  function loadPreset(type) {
+    clearError();
+    const container = document.getElementById("lines-container");
+    container.innerHTML = "";
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("entry-date").value = today;
+
+    if (type === "aporte") {
+      document.getElementById("entry-desc").value = "Constitución de sociedad y aporte inicial en efectivo";
+      document.getElementById("entry-type").value = "Modificativa";
+      addEntryLine("Caja y Bancos", "10000", "");
+      addEntryLine("Capital Social", "", "10000");
+    } else if (type === "compra_mercaderia") {
+      document.getElementById("entry-desc").value = "Adquisición de mercaderías en cuenta corriente a 30 días";
+      document.getElementById("entry-type").value = "Permutativa";
+      addEntryLine("Mercaderías / Inventario", "3500", "");
+      addEntryLine("Proveedores", "", "3500");
+    } else if (type === "venta") {
+      document.getElementById("entry-desc").value = "Venta de mercaderías al contado";
+      document.getElementById("entry-type").value = "Modificativa";
+      addEntryLine("Caja y Bancos", "2400", "");
+      addEntryLine("Ingresos por Ventas", "", "2400");
+    } else if (type === "gasto_servicios") {
+      document.getElementById("entry-desc").value = "Devengamiento y pago de alquiler mensual de oficina";
+      document.getElementById("entry-type").value = "Modificativa";
+      addEntryLine("Gastos de Alquiler", "950", "");
+      addEntryLine("Caja y Bancos", "", "950");
+    } else if (type === "amortizacion") {
+      document.getElementById("entry-desc").value = "Depreciación mensual de maquinaria operativa";
+      document.getElementById("entry-type").value = "Modificativa";
+      addEntryLine("Gastos de Amortización", "300", "");
+      addEntryLine("Amortización Acumulada", "", "300");
+    }
+  }
+
+  function postJournalEntry() {
+    clearError();
+    const dateVal = document.getElementById("entry-date").value;
+    const descVal = document.getElementById("entry-desc").value.trim();
+    const typeVal = document.getElementById("entry-type").value;
+
+    if (!dateVal || !descVal) {
+      showError("Por favor, completa la fecha y el concepto descriptivo de la transacción.");
+      return;
+    }
+
+    const rows = document.querySelectorAll(".entry-line-row");
+    let lines = [];
+    let sumDebit = 0;
+    let sumCredit = 0;
+
+    for (let row of rows) {
+      const account = row.querySelector(".line-account").value;
+      const debit = parseFloat(row.querySelector(".line-debit").value) || 0;
+      const credit = parseFloat(row.querySelector(".line-credit").value) || 0;
+
+      if (debit > 0 && credit > 0) {
+        showError(`La cuenta "${account}" no puede tener importes simultáneos en el Debe y en el Haber en la misma línea.`);
+        return;
+      }
+
+      if (debit > 0 || credit > 0) {
+        lines.push({ account, debit, credit });
+        sumDebit += debit;
+        sumCredit += credit;
+      }
+    }
+
+    if (lines.length < 2) {
+      showError("Debes ingresar importes en al menos dos líneas contables.");
+      return;
+    }
+
+    if (Math.abs(sumDebit - sumCredit) > 0.009) {
+      showError(`Asiento descuadrado: Total Debe (${formatCurrency(sumDebit)} €) ≠ Total Haber (${formatCurrency(sumCredit)} €). Diferencia: ${formatCurrency(Math.abs(sumDebit - sumCredit))} €.`);
+      return;
+    }
+
+    ledgerEntries.push({
+      id: entryCounter++,
+      date: dateVal,
+      description: descVal,
+      classification: typeVal,
+      lines: lines
+    });
+
+    renderLedger();
+    clearForm();
+  }
+
+  function clearForm() {
+    document.getElementById("entry-desc").value = "";
+    const container = document.getElementById("lines-container");
+    container.innerHTML = "";
+    addEntryLine("Caja y Bancos", "", "");
+    addEntryLine("Ingresos por Ventas", "", "");
+  }
+
+  function renderLedger() {
+    const tbody = document.getElementById("ledger-body");
+    tbody.innerHTML = "";
+    let totalDebit = 0;
+    let totalCredit = 0;
+
+    ledgerEntries.forEach(entry => {
+      const headerRow = document.createElement("tr");
+      headerRow.className = "asiento-header-row";
+      headerRow.innerHTML = `
+        <td>${entry.date}</td>
+        <td colspan="3">Asiento #${entry.id} — ${entry.description} <span class="badge-type">${entry.classification}</span></td>
+      `;
+      tbody.appendChild(headerRow);
+
+      // Ordenar primero las cuentas del Debe y luego las del Haber
+      const sortedLines = [...entry.lines].sort((a, b) => b.debit - a.debit);
+
+      sortedLines.forEach(line => {
+        totalDebit += line.debit;
+        totalCredit += line.credit;
+
+        const tr = document.createElement("tr");
+        const isCredit = line.credit > 0;
+        tr.innerHTML = `
+          <td></td>
+          <td class="${isCredit ? 'credit-indent' : ''}">${isCredit ? 'a ' + line.account : line.account}</td>
+          <td class="num">${line.debit > 0 ? formatCurrency(line.debit) : ''}</td>
+          <td class="num">${line.credit > 0 ? formatCurrency(line.credit) : ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+
+    document.getElementById("total-debe").textContent = formatCurrency(totalDebit);
+    document.getElementById("total-haber").textContent = formatCurrency(totalCredit);
+  }
+
+  function resetLedger() {
+    ledgerEntries = [];
+    entryCounter = 1;
+    clearError();
+    loadPreset('aporte');
+    postJournalEntry();
+    loadPreset('compra_mercaderia');
+  }
+
+  // Inicialización con un asiento base de ejemplo
+  window.addEventListener("DOMContentLoaded", () => {
+    resetLedger();
+  });
+</script>
+
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/anatomia-de-la-transaccion-contable-y.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>

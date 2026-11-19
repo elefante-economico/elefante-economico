@@ -1,0 +1,407 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelo CAPM: cómo se relaciona el riesgo con el rendimiento (con simuladores) — El Elefante Económico</title>
+  <meta name="description" content="Modelo CAPM: cómo se relaciona el riesgo con el rendimiento (con simuladores)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/modelo-capm-como-se-relaciona-el-riesgo.html">
+  <meta property="og:title" content="Modelo CAPM: cómo se relaciona el riesgo con el rendimiento (con simuladores)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/modelo-capm-como-se-relaciona-el-riesgo.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Modelo CAPM: cómo se relaciona el riesgo con el rendimiento (con simuladores)</h1>
+  <p class="meta">19 de November de 2026 · CAPM</p>
+  <article><!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modelo CAPM: cómo se relaciona el riesgo con el rendimiento (con simuladores) | El Elefante Económico</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;color:#1f2937;max-width:780px;margin:0 auto;padding:20px 16px 48px;background:#fff}
+h1{font-size:1.9rem;line-height:1.25;margin:.4em 0 .2em}
+h2{font-size:1.3rem;margin:1.8em 0 .5em}
+.kicker{color:#6b7280;font-size:.95rem;margin:0 0 1.4em}
+code{background:#f3f4f6;padding:1px 5px;border-radius:4px;font-size:.92em}
+</style>
+</head>
+<body>
+<p class="kicker">El Elefante Económico</p>
+<meta charset="utf-8">
+<style>
+.cp-app{background:#fff;border:1px solid #cfd6df;border-radius:12px;padding:16px;margin:22px 0;color:#1f2937;font-size:15px;line-height:1.45;font-family:inherit;text-align:left}
+.cp-app *{box-sizing:border-box}
+.cp-app .cp-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:12px}
+.cp-app .cp-f{flex:1 1 160px;min-width:140px}
+.cp-app label{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:#374151}
+.cp-app input[type=number]{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #9ca3af;border-radius:8px;background:#fff;color:#111827;width:100%}
+.cp-app input:focus-visible,.cp-app button:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
+.cp-app input[type=range]{width:100%;margin:0}
+.cp-app button{font:inherit;font-size:14px;padding:7px 12px;border-radius:8px;border:1px solid #1d4ed8;background:#1d4ed8;color:#fff;cursor:pointer}
+.cp-app button.cp-sec{background:#fff;color:#1f2937;border-color:#9ca3af}
+.cp-app button:hover{filter:brightness(.95)}
+.cp-app .cp-val{font-variant-numeric:tabular-nums;font-weight:700;color:#111827}
+.cp-app svg.cp-svg{width:100%;height:auto;display:block;background:#fff;border:1px solid #e5e7eb;border-radius:8px}
+.cp-app .cp-h{font-size:17px;font-weight:700;margin:0 0 4px;color:#111827}
+.cp-app .cp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0}
+.cp-app .cp-card{background:#f3f4f6;border-radius:8px;padding:8px 10px}
+.cp-app .cp-card b{display:block;font-size:19px;color:#111827;font-variant-numeric:tabular-nums}
+.cp-app .cp-card span{font-size:12px;color:#4b5563}
+.cp-app .cp-note{background:#eff6ff;border-left:4px solid #1d4ed8;padding:8px 12px;border-radius:4px;font-size:14px;margin-top:10px}
+.cp-app .cp-warn{background:#fef3c7;border-left-color:#b45309}
+.cp-app .cp-ok{background:#ecfdf5;border-left-color:#15803d}
+.cp-app .cp-leg{font-size:13px;color:#4b5563;margin:6px 0 0}
+.cp-app .cp-leg i{display:inline-block;width:18px;height:4px;vertical-align:middle;margin-right:4px;border-radius:2px}
+.cp-app .cp-small{font-size:13px;color:#4b5563;margin-top:4px}
+.cp-app .cp-neg{color:#b91c1c;font-weight:700}
+.cp-app .cp-pos{color:#15803d;font-weight:700}
+</style>
+
+<div id="cp-wrap">
+
+<p>¿Cuánto rendimiento debería exigirle un inversor a una acción, o un dueño a su propio negocio, por el riesgo que asume? Es la pregunta de fondo detrás de la tasa de descuento, y el <b>CAPM</b> (<i>Capital Asset Pricing Model</i>, modelo de valoración de activos de capital) es la respuesta más difundida en finanzas. En el post sobre el WACC lo usamos como pieza del costo del capital propio: acá lo desarmamos para entender qué dice, cómo se estima y dónde tiene límites.</p>
+
+<p>Lo vemos con tres simuladores: uno para la <b>línea del mercado</b> y el concepto de alfa, otro para <b>estimar la beta</b> con datos que se generan al azar, y otro para ver por qué la <b>diversificación</b> elimina parte del riesgo.</p>
+
+<h2>1. Dos tipos de riesgo</h2>
+
+<p>La idea central del CAPM es que el riesgo de un activo tiene dos componentes:</p>
+<ul>
+<li><b>Riesgo sistemático (de mercado):</b> el que comparten todos los activos porque depende de la economía en general: recesiones, tasas de interés, crisis. No se puede eliminar diversificando.</li>
+<li><b>Riesgo específico (diversificable):</b> el propio de cada empresa: un mal gerente, un cliente que se va, una huelga. Al combinar muchos activos, estos riesgos tienden a compensarse entre sí.</li>
+</ul>
+<p>Si el riesgo específico se puede eliminar sin costo, el mercado no tiene por qué pagar un premio por asumirlo. <b>Solo se remunera el riesgo sistemático</b>, y la medida de ese riesgo es la beta.</p>
+
+<h2>2. La fórmula del CAPM</h2>
+
+<p><b>E(Rᵢ) = Rf + βᵢ · [E(Rm) − Rf]</b></p>
+<ul>
+<li><b>Rf:</b> tasa libre de riesgo.</li>
+<li><b>E(Rm) − Rf:</b> prima de riesgo de mercado, el premio por invertir en el mercado en lugar de en el activo sin riesgo.</li>
+<li><b>βᵢ:</b> sensibilidad del activo a los movimientos del mercado.</li>
+</ul>
+<p>La beta se interpreta así: <b>β = 1</b>, el activo se mueve en promedio igual que el mercado; <b>β &gt; 1</b>, amplifica sus movimientos (más riesgo sistemático, más rendimiento exigido); <b>β &lt; 1</b>, los atenúa (por ejemplo, negocios defensivos o de demanda estable); <b>β = 0</b>, no tiene relación con el mercado, y rinde lo mismo que el activo libre de riesgo. Con Rf de 3,9% y prima de 5,5% (valores ilustrativos), un activo con beta 1,2 debería rendir 3,9% + 1,2 × 5,5% = 10,5%.</p>
+<p>La relación es una recta, llamada <b>línea del mercado de valores</b> (SML, por sus siglas en inglés): rendimiento exigido en función de la beta.</p>
+
+<h2>3. Simulador 1: la línea del mercado y el alfa</h2>
+
+<p>Probá estos experimentos:</p>
+<ol>
+<li>Subí la beta: el rendimiento exigido sube a lo largo de la recta. Subí la prima de riesgo y la pendiente aumenta.</li>
+<li>Cambiá la rentabilidad que esperás del activo: si queda por encima de la línea, su <b>alfa</b> (el exceso sobre lo que exige su riesgo) es positivo; por debajo, es negativo.</li>
+<li>Subí la tasa libre de riesgo: toda la línea se desplaza hacia arriba.</li>
+</ol>
+
+<div class="cp-app" id="cp1">
+<noscript>Este simulador necesita JavaScript activado.</noscript>
+<div class="cp-h">Simulador 1. Línea del mercado de valores (SML)</div>
+<div class="cp-row" style="margin-top:8px">
+  <div class="cp-f"><label for="cp1-rf">Tasa libre de riesgo: <span class="cp-val" id="cp1-rfv"></span></label><input type="range" id="cp1-rf" min="0" max="8" step="0.1" value="3.9"></div>
+  <div class="cp-f"><label for="cp1-erp">Prima de riesgo de mercado: <span class="cp-val" id="cp1-erpv"></span></label><input type="range" id="cp1-erp" min="3" max="9" step="0.1" value="5.5"></div>
+  <div class="cp-f"><label for="cp1-b">Beta del activo: <span class="cp-val" id="cp1-bv"></span></label><input type="range" id="cp1-b" min="-0.5" max="2.5" step="0.05" value="1.2"></div>
+  <div class="cp-f"><label for="cp1-e">Rentabilidad que esperás del activo (% anual): <span class="cp-val" id="cp1-ev"></span></label><input type="range" id="cp1-e" min="0" max="25" step="0.1" value="12"></div>
+</div>
+<svg id="cp1-svg" class="cp-svg" viewBox="0 0 680 360" role="img" aria-label="Línea del mercado de valores con el activo analizado"></svg>
+<div class="cp-leg"><i style="background:#1d4ed8"></i>Línea del mercado (rendimiento exigido) &nbsp; <i style="background:#c2410c"></i>Rendimiento exigido a tu activo &nbsp; <i style="background:#15803d"></i>Rentabilidad que esperás</div>
+<div id="cp1-res"></div>
+</div>
+
+<h2>4. De dónde sale la beta</h2>
+
+<p>La beta no se observa: se estima. El procedimiento estándar es una <b>regresión lineal</b> (la misma del post sobre regresión) entre el exceso de rendimiento del activo y el exceso de rendimiento del mercado, ambos sobre la tasa libre de riesgo:</p>
+<p><b>Rᵢ − Rf = α + β · (Rm − Rf) + ε</b></p>
+<p>La pendiente es la beta y la ordenada es el <b>alfa</b>. Según el CAPM, el alfa debería ser cero; si es distinto de cero y significativo, el activo rinde más o menos de lo que su riesgo justificaría. El R² de la regresión indica qué parte de la variación del activo se explica por el mercado, es decir, la proporción de riesgo sistemático.</p>
+<p>Esta estimación tiene un problema práctico enorme: con pocos datos mensuales, la beta es muy imprecisa. El Simulador 2 lo muestra.</p>
+
+<h2>5. Simulador 2: estimar la beta con datos</h2>
+
+<p>El simulador genera rendimientos mensuales del mercado y de un activo cuya beta verdadera elegís vos (el mercado tiene una prima de 5,5% anual y una volatilidad de 16% anual, valores ilustrativos), estima la regresión y compara con la verdad. Probá esto:</p>
+<ol>
+<li>Con 60 meses y un riesgo específico alto, tocá «Nueva muestra» varias veces: la beta estimada se aleja bastante de la verdadera.</li>
+<li>Subí la cantidad de meses: la estimación se vuelve más precisa y el intervalo de confianza se estrecha.</li>
+<li>Bajá el riesgo específico: el R² sube y la beta se estima con más precisión.</li>
+<li>Mirá el alfa: aunque el verdadero es cero, a veces la regresión muestra uno «significativo» solo por azar.</li>
+<li>Tocá «Repetir 500 veces» para ver cuánto varía la beta estimada de una muestra a otra.</li>
+</ol>
+
+<div class="cp-app" id="cp2">
+<noscript>Este simulador necesita JavaScript activado.</noscript>
+<div class="cp-h">Simulador 2. Estimación de la beta por regresión</div>
+<div class="cp-row" style="margin-top:8px">
+  <div class="cp-f"><label for="cp2-b">Beta verdadera: <span class="cp-val" id="cp2-bv"></span></label><input type="range" id="cp2-b" min="0" max="2.5" step="0.05" value="1.2"></div>
+  <div class="cp-f"><label for="cp2-se">Riesgo específico anual (σ): <span class="cp-val" id="cp2-sev"></span></label><input type="range" id="cp2-se" min="5" max="60" step="1" value="25"></div>
+  <div class="cp-f"><label for="cp2-n">Meses de datos: <span class="cp-val" id="cp2-nv"></span></label><input type="range" id="cp2-n" min="12" max="120" step="1" value="60"></div>
+</div>
+<div class="cp-row">
+  <button type="button" id="cp2-new">Nueva muestra</button>
+  <button type="button" id="cp2-rep" class="cp-sec">Repetir 500 veces</button>
+</div>
+<svg id="cp2-svg" class="cp-svg" viewBox="0 0 680 380" role="img" aria-label="Dispersión de rendimientos del activo contra el mercado con la recta de regresión"></svg>
+<div class="cp-leg"><i style="background:#c2410c"></i>Recta estimada (su pendiente es la beta estimada) &nbsp; <i style="background:#15803d"></i>Recta verdadera (β × mercado, alfa = 0)</div>
+<div id="cp2-res"></div>
+<svg id="cp2-hist" class="cp-svg" viewBox="0 0 680 240" role="img" aria-label="Histograma de betas estimadas" style="display:none;margin-top:12px"></svg>
+<div id="cp2-hres"></div>
+</div>
+
+<h2>6. Diversificación: el riesgo que se puede eliminar</h2>
+
+<p>¿Por qué el mercado no paga por el riesgo específico? Porque cualquier inversor puede eliminarlo repartiendo su dinero. En un modelo simplificado donde cada activo tiene riesgo sistemático β · σm y un riesgo específico propio e independiente de los demás, el riesgo de una cartera igualmente ponderada de N activos es:</p>
+<p><b>σcartera = √[ (β · σm)² + σe² / N ]</b></p>
+<p>Al aumentar N, el segundo término desaparece, pero el primero no: queda un «piso» de riesgo de mercado que ninguna diversificación elimina.</p>
+
+<div class="cp-app" id="cp3">
+<noscript>Este simulador necesita JavaScript activado.</noscript>
+<div class="cp-h">Simulador 3. Riesgo y diversificación</div>
+<div class="cp-row" style="margin-top:8px">
+  <div class="cp-f"><label for="cp3-n">Cantidad de activos en la cartera, N: <span class="cp-val" id="cp3-nv"></span></label><input type="range" id="cp3-n" min="1" max="50" step="1" value="10"></div>
+  <div class="cp-f"><label for="cp3-sm">Volatilidad del mercado, σm: <span class="cp-val" id="cp3-smv"></span></label><input type="range" id="cp3-sm" min="10" max="30" step="1" value="16"></div>
+  <div class="cp-f"><label for="cp3-b">Beta de cada activo: <span class="cp-val" id="cp3-bv"></span></label><input type="range" id="cp3-b" min="0.5" max="1.5" step="0.05" value="1"></div>
+  <div class="cp-f"><label for="cp3-se">Riesgo específico de cada activo, σe: <span class="cp-val" id="cp3-sev"></span></label><input type="range" id="cp3-se" min="10" max="60" step="1" value="30"></div>
+</div>
+<svg id="cp3-svg" class="cp-svg" viewBox="0 0 680 340" role="img" aria-label="Riesgo de la cartera según la cantidad de activos"></svg>
+<div class="cp-leg"><i style="background:#1d4ed8"></i>Riesgo de la cartera &nbsp; <i style="background:#6b7280"></i>Piso de riesgo sistemático (no diversificable) &nbsp; <i style="background:#c2410c"></i>Cartera elegida</div>
+<div id="cp3-res"></div>
+</div>
+
+<h2>7. Supuestos y críticas del CAPM</h2>
+
+<p>El CAPM fue desarrollado en los años sesenta (Sharpe, Lintner y Mossin) y sigue siendo el modelo de referencia, pero descansa en supuestos fuertes y tiene críticas conocidas:</p>
+<ul>
+<li><b>Inversores racionales y diversificados,</b> que solo se preocupan por la media y la varianza de sus rendimientos, en un mercado sin costos de transacción ni impuestos.</li>
+<li><b>El portafolio de mercado no es observable.</b> Se usa un índice como aproximación, y la beta depende de cuál se elija (crítica de Roll).</li>
+<li><b>Las betas son inestables:</b> cambian con el tiempo, con el período de estimación y con la frecuencia de los datos.</li>
+<li><b>La evidencia empírica es mixta.</b> La línea observada suele ser más plana que la teórica, y otros factores, como el tamaño o el valor, parecen explicar parte de los rendimientos (modelos de factores, como el de Fama y French).</li>
+</ul>
+<p>Aun así, el CAPM es útil porque ordena la discusión: separa riesgo diversificable de no diversificable y da una forma consistente de pasar del riesgo al rendimiento exigido.</p>
+
+<h2>8. El CAPM en una PyME</h2>
+
+<p>Una PyME no cotiza en bolsa, así que no se puede estimar una beta propia con regresiones. Lo habitual es:</p>
+<ul>
+<li>Tomar la <b>beta de empresas comparables</b> del mismo sector, <b>desapalancarla</b> y volver a <b>apalancarla</b> con la estructura de capital propia: β apalancada = β desapalancada · [1 + (1 − t) · D/E].</li>
+<li>Sumar, si corresponde, primas por <b>tamaño e iliquidez</b> y por <b>riesgo específico</b>, porque el CAPM supone un inversor diversificado y el dueño de una PyME rara vez lo está. Son juicios del analista y deben documentarse.</li>
+<li>Presentar la tasa resultante como un <b>rango</b>, porque cada componente (tasa libre de riesgo, prima, beta) es una estimación.</li>
+</ul>
+
+<h2>9. Errores frecuentes</h2>
+<ul>
+<li><b>Creer que el CAPM predice rendimientos reales.</b> Da rendimientos <i>exigidos</i> según el riesgo, no pronósticos.</li>
+<li><b>Tomar la beta de una regresión corta como un dato exacto.</b> Con pocos meses de datos tiene un margen de error amplio, como muestra el Simulador 2.</li>
+<li><b>Usar la volatilidad total como medida de riesgo en el CAPM.</b> Lo que se premia es la beta, no el riesgo total.</li>
+<li><b>Mezclar monedas, plazos o frecuencias:</b> la tasa libre de riesgo debe estar en la misma moneda que los flujos y tener un plazo comparable.</li>
+<li><b>Interpretar un alfa positivo como una oportunidad segura.</b> Puede ser azar estadístico o un error del modelo, como también se ve en el simulador.</li>
+<li><b>Olvidar que la beta cambia con el apalancamiento.</b> Una empresa más endeudada tiene una beta del capital propio mayor.</li>
+</ul>
+
+<h2>10. ¿Y en Excel?</h2>
+<p>Con los rendimientos periódicos del activo y del mercado (en exceso sobre la tasa libre de riesgo) en dos columnas, la beta es <code>PENDIENTE(rend_activo; rend_mercado)</code>, el alfa es <code>INTERSECCION.EJE(rend_activo; rend_mercado)</code> y el R² es <code>COEFICIENTE.R2(rend_activo; rend_mercado)</code>. También se obtiene como <code>COVARIANZA.M(rend_activo; rend_mercado) / VAR.S(rend_mercado)</code>. Con la beta, el rendimiento exigido es simplemente <code>= Rf + beta * prima_de_mercado</code>.</p>
+
+<p><i>Estos simuladores tienen fines educativos. Los datos se generan al azar en tu navegador y los parámetros de mercado son ilustrativos: no constituyen asesoramiento financiero ni una recomendación de inversión. Con datos reales, revisá los supuestos del modelo antes de decidir.</i></p>
+
+</div>
+
+<script>
+(function(){
+/*MATH_START*/
+function lgamma(x){var c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];var y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);var s=1.000000000190015;for(var j=0;j<6;j++){y+=1;s+=c[j]/y;}return -t+Math.log(2.5066282746310005*s/x);}
+function betacf(a,b,x){var FPMIN=1e-300,qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;var h=d;for(var m=1;m<=300;m++){var m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;var del=d*c;h*=del;if(Math.abs(del-1)<3e-14)break;}return h;}
+function betai(a,b,x){if(x<=0)return 0;if(x>=1)return 1;var bt=Math.exp(lgamma(a+b)-lgamma(a)-lgamma(b)+a*Math.log(x)+b*Math.log(1-x));if(x<(a+1)/(a+b+2))return bt*betacf(a,b,x)/a;return 1-bt*betacf(b,a,1-x)/b;}
+function tcdf(t,df){var p=0.5*betai(df/2,0.5,df/(df+t*t));return t>0?1-p:p;}
+function pTwo(t,df){return betai(df/2,0.5,df/(df+t*t));}
+var tqc={};
+function tq(p,df){var k=p+'|'+df;if(tqc[k]!==undefined)return tqc[k];var lo=0,hi=10;while(tcdf(hi,df)<p)hi*=2;for(var i=0;i<100;i++){var m=(lo+hi)/2;if(tcdf(m,df)<p)lo=m;else hi=m;}return(tqc[k]=(lo+hi)/2);}
+function randn(){var u=Math.random()||1e-12,v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function sml(rf,erp,b){return rf+b*erp;}
+function regress(x,y){
+  var n=x.length,i,mx=0,my=0;
+  for(i=0;i<n;i++){mx+=x[i];my+=y[i];}mx/=n;my/=n;
+  var Sxx=0,Sxy=0,Syy=0;
+  for(i=0;i<n;i++){var dx=x[i]-mx,dy=y[i]-my;Sxx+=dx*dx;Sxy+=dx*dy;Syy+=dy*dy;}
+  var b1=Sxy/Sxx,b0=my-b1*mx,SSE=0;
+  for(i=0;i<n;i++){var e=y[i]-(b0+b1*x[i]);SSE+=e*e;}
+  var df=n-2,s=Math.sqrt(SSE/df),se1=s/Math.sqrt(Sxx),se0=s*Math.sqrt(1/n+mx*mx/Sxx),tc=tq(0.975,df);
+  return{n:n,b0:b0,b1:b1,se0:se0,se1:se1,t0:b0/se0,t1:b1/se1,p0:pTwo(b0/se0,df),p1:pTwo(b1/se1,df),r2:1-SSE/Syy,tc:tc,df:df,mx:mx,my:my};
+}
+function divers(b,sm,se,N){return Math.sqrt(b*b*sm*sm+se*se/N);}
+function pctile(a,p){var s=a.slice().sort(function(u,v){return u-v;}),k=(s.length-1)*p,f=Math.floor(k),c=Math.ceil(k);return s[f]+(s[c]-s[f])*(k-f);}
+/*MATH_END*/
+
+function $(id){return document.getElementById(id);}
+function fmt(v,d){
+  if(v===undefined||v===null||!isFinite(v))return '—';
+  var m=Math.pow(10,d),s=(Math.round(Math.abs(v)*m+1e-7)/m).toFixed(d),p=s.split('.');
+  p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  var out=p.join(',');
+  return(v<0&&+s!==0)?'-'+out:out;
+}
+function ticks(lo,hi,target){
+  var span=hi-lo,raw=span/target,mag=Math.pow(10,Math.floor(Math.log10(raw))),nm=raw/mag;
+  var step=(nm<1.5?1:nm<3?2:nm<7?5:10)*mag,start=Math.ceil(lo/step-1e-9)*step,out=[];
+  for(var v=start;v<=hi+1e-9;v+=step)out.push(+v.toFixed(10));
+  return out;
+}
+function frame(o,W,H,ml,mr,mt,mb,xt,yt,X,Y,xfmt,yfmt){
+  var pw=W-ml-mr,ph=H-mt-mb;
+  xt.forEach(function(v){o.push('<line x1="'+X(v)+'" x2="'+X(v)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#eef0f3"/><text x="'+X(v)+'" y="'+(mt+ph+17)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+xfmt(v)+'</text>');});
+  yt.forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#eef0f3"/><text x="'+(ml-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+yfmt(v)+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+}
+function axisTitles(o,W,H,ml,mr,mt,mb,xl,yl){
+  var pw=W-ml-mr,ph=H-mt-mb;
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">'+xl+'</text>');
+  o.push('<text transform="rotate(-90)" x="'+(-(mt+ph/2))+'" y="16" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">'+yl+'</text>');
+}
+
+/* ---------- Simulador 1: SML ---------- */
+function draw1(){
+  var rf=+$('cp1-rf').value,erp=+$('cp1-erp').value,b=+$('cp1-b').value,e=+$('cp1-e').value;
+  $('cp1-rfv').textContent=fmt(rf,1)+'%';$('cp1-erpv').textContent=fmt(erp,1)+'%';$('cp1-bv').textContent=fmt(b,2);$('cp1-ev').textContent=fmt(e,1)+'%';
+  var req=sml(rf,erp,b),alpha=e-req;
+  var W=680,H=360,ml=64,mr=24,mt=20,mb=46,pw=W-ml-mr,ph=H-mt-mb,o=[];
+  var x0=-0.5,x1=2.5,ys=[sml(rf,erp,x0),sml(rf,erp,x1),e,0],ymin=Math.min.apply(null,ys)-1.5,ymax=Math.max.apply(null,ys)+1.5;
+  function X(v){return ml+(v-x0)/(x1-x0)*pw;}
+  function Y(v){return mt+ph-(v-ymin)/(ymax-ymin)*ph;}
+  frame(o,W,H,ml,mr,mt,mb,ticks(x0,x1,6),ticks(ymin,ymax,6),X,Y,function(v){return fmt(v,1);},function(v){return fmt(v,0)+'%';});
+  if(ymin<0&&ymax>0)o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#9ca3af" stroke-dasharray="4 3"/>');
+  o.push('<line x1="'+X(x0)+'" y1="'+Y(sml(rf,erp,x0))+'" x2="'+X(x1)+'" y2="'+Y(sml(rf,erp,x1))+'" stroke="#1d4ed8" stroke-width="2.8"/>');
+  [[0,'Sin riesgo'],[0.6,'Defensivo'],[1,'Mercado'],[1.5,'Cíclico']].forEach(function(p){
+    o.push('<circle cx="'+X(p[0])+'" cy="'+Y(sml(rf,erp,p[0]))+'" r="4.5" fill="#fff" stroke="#1d4ed8" stroke-width="2"/>');
+    o.push('<text x="'+X(p[0])+'" y="'+(Y(sml(rf,erp,p[0]))+19)+'" text-anchor="middle" font-size="11" fill="#1d4ed8">'+p[1]+'</text>');
+  });
+  var col=alpha>=0?'#15803d':'#b91c1c';
+  o.push('<line x1="'+X(b)+'" x2="'+X(b)+'" y1="'+Y(req)+'" y2="'+Y(e)+'" stroke="'+col+'" stroke-width="2.4"/>');
+  o.push('<circle cx="'+X(b)+'" cy="'+Y(req)+'" r="6.5" fill="#c2410c" stroke="#fff" stroke-width="1.5"/>');
+  o.push('<circle cx="'+X(b)+'" cy="'+Y(e)+'" r="6.5" fill="#15803d" stroke="#fff" stroke-width="1.5"/>');
+  o.push('<text x="'+(X(b)+(X(b)>W-150?-12:12))+'" y="'+(Y(e)+(alpha>=0?-8:16))+'" text-anchor="'+(X(b)>W-150?'end':'start')+'" font-size="12" font-weight="700" fill="'+col+'">Alfa '+(alpha>=0?'+':'')+fmt(alpha,1)+' pp</text>');
+  axisTitles(o,W,H,ml,mr,mt,mb,'Beta','Rendimiento anual');
+  $('cp1-svg').innerHTML=o.join('');
+  var h='<div class="cp-cards">'
+   +'<div class="cp-card"><b>'+fmt(req,2)+'%</b><span>Rendimiento exigido por el CAPM</span></div>'
+   +'<div class="cp-card"><b>'+fmt(e,2)+'%</b><span>Rentabilidad que esperás</span></div>'
+   +'<div class="cp-card"><b class="'+(alpha>=0?'cp-pos':'cp-neg')+'">'+(alpha>=0?'+':'')+fmt(alpha,2)+' pp</b><span>Alfa</span></div>'
+   +'<div class="cp-card"><b>'+fmt(b*erp,2)+' pp</b><span>Prima por riesgo de mercado (β × prima)</span></div></div>';
+  if(Math.abs(alpha)<0.05)h+='<div class="cp-note">El activo rinde justo lo que exige su riesgo sistemático: alfa cero. Es la situación de equilibrio que plantea el CAPM.</div>';
+  else if(alpha>0)h+='<div class="cp-note cp-ok"><b>Alfa positivo:</b> con tu expectativa, el activo rinde '+fmt(alpha,2)+' puntos más de lo que exige su riesgo. Para el CAPM sería una oportunidad atractiva, pero depende de que tu expectativa sea mejor que la del mercado, algo difícil de sostener.</div>';
+  else h+='<div class="cp-note cp-warn"><b>Alfa negativo:</b> con tu expectativa, el activo rinde '+fmt(-alpha,2)+' puntos menos de lo que exige su riesgo: no compensa el riesgo sistemático que asumís.</div>';
+  $('cp1-res').innerHTML=h;
+}
+['cp1-rf','cp1-erp','cp1-b','cp1-e'].forEach(function(id){$(id).addEventListener('input',draw1);});
+
+/* ---------- Simulador 2: estimación de beta ---------- */
+var ERP2=0.055,SM2=0.16;
+var Z2=null;
+function newZ(){Z2={zm:[],ze:[]};for(var i=0;i<120;i++){Z2.zm.push(randn());Z2.ze.push(randn());}}
+function cur2(){
+  var b=+$('cp2-b').value,se=+$('cp2-se').value/100,n=+$('cp2-n').value,x=[],y=[],i;
+  var mm=ERP2/12,sm=SM2/Math.sqrt(12),sd=se/Math.sqrt(12);
+  for(i=0;i<n;i++){var m=mm+sm*Z2.zm[i];x.push(m*100);y.push((b*m+sd*Z2.ze[i])*100);}
+  return{x:x,y:y};
+}
+var D2=null;
+function draw2(){
+  var b=+$('cp2-b').value,se=+$('cp2-se').value,n=+$('cp2-n').value;
+  $('cp2-bv').textContent=fmt(b,2);$('cp2-sev').textContent=fmt(se,0)+'%';$('cp2-nv').textContent=n;
+  D2=cur2();
+  var f=regress(D2.x,D2.y),W=680,H=380,ml=64,mr=20,mt=16,mb=46,pw=W-ml-mr,ph=H-mt-mb,o=[],i;
+  var xmin=Math.min.apply(null,D2.x),xmax=Math.max.apply(null,D2.x),ymin=Math.min.apply(null,D2.y),ymax=Math.max.apply(null,D2.y);
+  var px=(xmax-xmin)*0.08,py=(ymax-ymin)*0.08;xmin-=px;xmax+=px;ymin-=py;ymax+=py;
+  function X(v){return ml+(v-xmin)/(xmax-xmin)*pw;}
+  function Y(v){return mt+ph-(v-ymin)/(ymax-ymin)*ph;}
+  frame(o,W,H,ml,mr,mt,mb,ticks(xmin,xmax,7),ticks(ymin,ymax,6),X,Y,function(v){return fmt(v,0)+'%';},function(v){return fmt(v,0)+'%';});
+  if(xmin<0&&xmax>0)o.push('<line x1="'+X(0)+'" x2="'+X(0)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#9ca3af" stroke-dasharray="4 3"/>');
+  if(ymin<0&&ymax>0)o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#9ca3af" stroke-dasharray="4 3"/>');
+  o.push('<clipPath id="cp2-clip"><rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'"/></clipPath><g clip-path="url(#cp2-clip)">');
+  o.push('<line x1="'+X(xmin)+'" y1="'+Y(b*xmin)+'" x2="'+X(xmax)+'" y2="'+Y(b*xmax)+'" stroke="#15803d" stroke-width="2.2" stroke-dasharray="7 5"/>');
+  o.push('<line x1="'+X(xmin)+'" y1="'+Y(f.b0+f.b1*xmin)+'" x2="'+X(xmax)+'" y2="'+Y(f.b0+f.b1*xmax)+'" stroke="#c2410c" stroke-width="2.6"/></g>');
+  for(i=0;i<n;i++)o.push('<circle cx="'+X(D2.x[i])+'" cy="'+Y(D2.y[i])+'" r="4" fill="#1d4ed8" fill-opacity=".75"/>');
+  axisTitles(o,W,H,ml,mr,mt,mb,'Exceso de rendimiento mensual del mercado','Exceso de rendimiento mensual del activo');
+  $('cp2-svg').innerHTML=o.join('');
+  var lo=f.b1-f.tc*f.se1,hi=f.b1+f.tc*f.se1,inside=(lo<=b&&b<=hi);
+  var r2t=b*b*SM2*SM2/(b*b*SM2*SM2+(se/100)*(se/100));
+  var h='<div class="cp-cards">'
+   +'<div class="cp-card"><b>'+fmt(f.b1,2)+'</b><span>Beta estimada (verdadera: '+fmt(b,2)+')</span></div>'
+   +'<div class="cp-card"><b style="font-size:15px">['+fmt(lo,2)+' ; '+fmt(hi,2)+']</b><span>Intervalo de confianza 95% de la beta</span></div>'
+   +'<div class="cp-card"><b>'+fmt(f.r2,2)+'</b><span>R² (parte del riesgo explicada por el mercado)</span></div>'
+   +'<div class="cp-card"><b>'+(f.b0*12>=0?'+':'')+fmt(f.b0*12,1)+' pp</b><span>Alfa estimado, anualizado (p-valor '+(f.p0<0.001?'< 0,001':fmt(f.p0,3))+')</span></div></div>';
+  h+='<div class="cp-note">El intervalo '+(inside?'<b>sí</b>':'<b>no</b>')+' contiene a la beta verdadera ('+fmt(b,2)+'); en la vida real nunca se la conoce. Con '+n+' meses de datos, el error estándar de la beta es '+fmt(f.se1,2)+'. El R² teórico de este activo es de alrededor de '+fmt(r2t,2)+': el resto es riesgo específico.</div>';
+  if(f.p0<0.05)h+='<div class="cp-note cp-warn">La regresión muestra un alfa estadísticamente significativo (p &lt; 0,05), pero el verdadero es cero: es un falso positivo, que ocurre en alrededor de 1 de cada 20 muestras.</div>';
+  $('cp2-res').innerHTML=h;
+}
+['cp2-b','cp2-se','cp2-n'].forEach(function(id){$(id).addEventListener('input',function(){$('cp2-hist').style.display='none';$('cp2-hres').innerHTML='';draw2();});});
+$('cp2-new').addEventListener('click',function(){newZ();draw2();});
+$('cp2-rep').addEventListener('click',function(){
+  var b=+$('cp2-b').value,se=+$('cp2-se').value/100,n=+$('cp2-n').value,R=500,est=[],i,k,s=0;
+  var mm=ERP2/12,sm=SM2/Math.sqrt(12),sd=se/Math.sqrt(12);
+  for(i=0;i<R;i++){
+    var x=[],y=[];
+    for(k=0;k<n;k++){var m=mm+sm*randn();x.push(m);y.push(b*m+sd*randn());}
+    var f=regress(x,y);est.push(f.b1);s+=f.b1;
+  }
+  var mean=s/R,v=0;est.forEach(function(e){v+=(e-mean)*(e-mean);});var sdv=Math.sqrt(v/(R-1));
+  var p5=pctile(est,0.05),p95=pctile(est,0.95),lo=Math.min.apply(null,est),hi=Math.max.apply(null,est);
+  var nb=24,bins=[],bw=(hi-lo)/nb;for(i=0;i<nb;i++)bins.push(0);
+  est.forEach(function(e){bins[Math.min(nb-1,Math.floor((e-lo)/bw))]++;});
+  var W=680,H=240,ml=40,mr=16,mt=12,mb=44,pw=W-ml-mr,ph=H-mt-mb,mx=Math.max.apply(null,bins),o=[];
+  function X(v){return ml+(v-lo)/(hi-lo)*pw;}
+  bins.forEach(function(c,j){var hh=c/mx*ph;o.push('<rect x="'+(ml+j*pw/nb+1)+'" y="'+(mt+ph-hh)+'" width="'+(pw/nb-2)+'" height="'+hh+'" fill="#93a8d8"/>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  ticks(lo,hi,6).forEach(function(t){o.push('<text x="'+X(t)+'" y="'+(mt+ph+16)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+fmt(t,1)+'</text>');});
+  o.push('<line x1="'+X(b)+'" x2="'+X(b)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#15803d" stroke-width="2.4"/>');
+  if(D2){var f0=regress(D2.x,D2.y);if(f0.b1>=lo&&f0.b1<=hi)o.push('<line x1="'+X(f0.b1)+'" x2="'+X(f0.b1)+'" y1="'+mt+'" y2="'+(mt+ph)+'" stroke="#c2410c" stroke-width="2.4"/>');}
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Beta estimada en cada muestra</text>');
+  var hs=$('cp2-hist');hs.innerHTML=o.join('');hs.style.display='block';
+  var seT=se/(SM2*Math.sqrt(n));
+  $('cp2-hres').innerHTML='<div class="cp-leg"><i style="background:#15803d"></i>Beta verdadera ('+fmt(b,2)+') &nbsp; <i style="background:#c2410c"></i>Tu muestra actual</div>'
+   +'<div class="cp-note">Con '+n+' meses de datos, la beta estimada tuvo un promedio de '+fmt(mean,2)+' y un desvío de '+fmt(sdv,2)+' entre las '+R+' muestras (el error estándar teórico es de unos '+fmt(seT,2)+'). En el 90% de los casos quedó entre <b>'+fmt(p5,2)+'</b> y <b>'+fmt(p95,2)+'</b>: es el margen de error con el que se trabaja cuando se estima una beta con una sola muestra.</div>';
+});
+
+/* ---------- Simulador 3: diversificación ---------- */
+function draw3(){
+  var N=+$('cp3-n').value,sm=+$('cp3-sm').value,b=+$('cp3-b').value,se=+$('cp3-se').value;
+  $('cp3-nv').textContent=N;$('cp3-smv').textContent=fmt(sm,0)+'%';$('cp3-bv').textContent=fmt(b,2);$('cp3-sev').textContent=fmt(se,0)+'%';
+  var s1=divers(b,sm,se,1),sN=divers(b,sm,se,N),floor=b*sm;
+  var W=680,H=340,ml=64,mr=24,mt=20,mb=46,pw=W-ml-mr,ph=H-mt-mb,o=[],n,pts=[];
+  var ymax=s1*1.08,ymin=0;
+  function X(v){return ml+(v-1)/(49)*pw;}
+  function Y(v){return mt+ph-(v-ymin)/(ymax-ymin)*ph;}
+  frame(o,W,H,ml,mr,mt,mb,[1,10,20,30,40,50],ticks(0,ymax,6),X,Y,function(v){return v;},function(v){return fmt(v,0)+'%';});
+  o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(floor)+'" y2="'+Y(floor)+'" stroke="#6b7280" stroke-width="2" stroke-dasharray="6 4"/>');
+  o.push('<text x="'+(ml+pw-6)+'" y="'+(Y(floor)-7)+'" text-anchor="end" font-size="12" font-weight="700" fill="#4b5563">Piso de riesgo sistemático: '+fmt(floor,1)+'%</text>');
+  for(n=1;n<=50;n++)pts.push(X(n)+','+Y(divers(b,sm,se,n)));
+  o.push('<polyline points="'+pts.join(' ')+'" fill="none" stroke="#1d4ed8" stroke-width="2.8"/>');
+  o.push('<line x1="'+X(N)+'" x2="'+X(N)+'" y1="'+Y(sN)+'" y2="'+Y(0)+'" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="4 3"/>');
+  o.push('<circle cx="'+X(N)+'" cy="'+Y(sN)+'" r="6" fill="#c2410c" stroke="#fff" stroke-width="1.5"/>');
+  o.push('<text x="'+(X(N)+(N>35?-10:10))+'" y="'+(Y(sN)-10)+'" text-anchor="'+(N>35?'end':'start')+'" font-size="12" font-weight="700" fill="#c2410c">N = '+N+': '+fmt(sN,1)+'%</text>');
+  axisTitles(o,W,H,ml,mr,mt,mb,'Cantidad de activos en la cartera','Riesgo anual (desvío)');
+  $('cp3-svg').innerHTML=o.join('');
+  var elim=(1-1/N)*100,h='<div class="cp-cards">'
+   +'<div class="cp-card"><b>'+fmt(s1,1)+'%</b><span>Riesgo de un solo activo</span></div>'
+   +'<div class="cp-card"><b>'+fmt(sN,1)+'%</b><span>Riesgo de la cartera con N = '+N+'</span></div>'
+   +'<div class="cp-card"><b>'+fmt(floor,1)+'%</b><span>Piso de riesgo sistemático (β × σm)</span></div>'
+   +'<div class="cp-card"><b>'+fmt(elim,0)+'%</b><span>De la varianza específica eliminada</span></div></div>';
+  h+='<div class="cp-note">Con '+N+' activos el riesgo total baja de '+fmt(s1,1)+'% a '+fmt(sN,1)+'%, pero nunca baja de '+fmt(floor,1)+'%: ese es el riesgo de mercado, el único que el CAPM remunera. '+(N>=20?'Con 20 o más activos ya se logró buena parte del beneficio de diversificar en este modelo.':'Probá aumentar N: la mayor parte de la reducción ocurre con los primeros activos.')+'</div>';
+  h+='<div class="cp-small">Modelo simplificado: activos idénticos, con riesgos específicos independientes entre sí y ponderaciones iguales. En la práctica los riesgos específicos no son totalmente independientes y hace falta más cantidad de activos.</div>';
+  $('cp3-res').innerHTML=h;
+}
+['cp3-n','cp3-sm','cp3-b','cp3-se'].forEach(function(id){$(id).addEventListener('input',draw3);});
+
+newZ();draw1();draw2();draw3();
+})();
+</script>
+
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/modelo-capm-como-se-relaciona-el-riesgo.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>

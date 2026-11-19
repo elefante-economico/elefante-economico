@@ -1,0 +1,517 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Series de tiempo: cómo pronosticar las ventas de tu PyME (con simulador) — El Elefante Económico</title>
+  <meta name="description" content="Series de tiempo: cómo pronosticar las ventas de tu PyME (con simulador)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/series-de-tiempo-como-pronosticar-las.html">
+  <meta property="og:title" content="Series de tiempo: cómo pronosticar las ventas de tu PyME (con simulador)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/series-de-tiempo-como-pronosticar-las.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Series de tiempo: cómo pronosticar las ventas de tu PyME (con simulador)</h1>
+  <p class="meta">19 de November de 2026 · Series de tiempo</p>
+  <article><!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Series de tiempo: cómo pronosticar las ventas de tu PyME (con simulador) | El Elefante Económico</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;color:#1f2937;max-width:780px;margin:0 auto;padding:20px 16px 48px;background:#fff}
+h1{font-size:1.9rem;line-height:1.25;margin:.4em 0 .2em}
+h2{font-size:1.3rem;margin:1.8em 0 .5em}
+.kicker{color:#6b7280;font-size:.95rem;margin:0 0 1.4em}
+code{background:#f3f4f6;padding:1px 5px;border-radius:4px;font-size:.92em}
+</style>
+</head>
+<body>
+<h1>Series de tiempo: cómo pronosticar las ventas de tu PyME (con simulador)</h1>
+<p class="kicker">El Elefante Económico</p>
+<meta charset="utf-8">
+<style>
+#ts-app{background:#fff;border:1px solid #cfd6df;border-radius:12px;padding:16px;margin:22px 0;color:#1f2937;font-size:15px;line-height:1.45;font-family:inherit;text-align:left}
+#ts-app *{box-sizing:border-box}
+#ts-app .ts-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:12px}
+#ts-app .ts-f{flex:1 1 160px;min-width:140px}
+#ts-app label{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:#374151}
+#ts-app select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #9ca3af;border-radius:8px;background:#fff;color:#111827;width:100%}
+#ts-app input:focus-visible,#ts-app select:focus-visible,#ts-app button:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}
+#ts-app input[type=range]{width:100%;margin:0}
+#ts-app button{font:inherit;font-size:14px;padding:7px 12px;border-radius:8px;border:1px solid #1d4ed8;background:#1d4ed8;color:#fff;cursor:pointer}
+#ts-app button.ts-sec{background:#fff;color:#1f2937;border-color:#9ca3af}
+#ts-app button:hover{filter:brightness(.95)}
+#ts-app .ts-val{font-variant-numeric:tabular-nums;font-weight:700;color:#111827}
+#ts-app svg.ts-svg{width:100%;height:auto;display:block;background:#fff;border:1px solid #e5e7eb;border-radius:8px}
+#ts-app .ts-h{font-size:17px;font-weight:700;margin:22px 0 4px;color:#111827;padding-top:14px;border-top:1px solid #e5e7eb}
+#ts-app .ts-h.ts-first{border-top:0;padding-top:0;margin-top:4px}
+#ts-app .ts-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0}
+#ts-app .ts-card{background:#f3f4f6;border-radius:8px;padding:8px 10px}
+#ts-app .ts-card b{display:block;font-size:19px;color:#111827;font-variant-numeric:tabular-nums}
+#ts-app .ts-card span{font-size:12px;color:#4b5563}
+#ts-app .ts-note{background:#eff6ff;border-left:4px solid #1d4ed8;padding:8px 12px;border-radius:4px;font-size:14px;margin-top:10px}
+#ts-app .ts-warn{background:#fef3c7;border-left-color:#b45309}
+#ts-app .ts-ok{background:#ecfdf5;border-left-color:#15803d}
+#ts-app .ts-leg{font-size:13px;color:#4b5563;margin:6px 0 0}
+#ts-app .ts-leg i{display:inline-block;width:18px;height:4px;vertical-align:middle;margin-right:4px;border-radius:2px}
+#ts-app .ts-small{font-size:13px;color:#4b5563;margin-top:4px}
+#ts-app .ts-wrap{overflow-x:auto}
+#ts-app table.ts-t{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+#ts-app table.ts-t th,#ts-app table.ts-t td{padding:5px 8px;border:0;border-bottom:1px solid #e5e7eb;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#ts-app table.ts-t th:first-child,#ts-app table.ts-t td:first-child{text-align:left}
+#ts-app table.ts-t th{background:#f9fafb;font-weight:600;color:#374151}
+#ts-app .ts-best{color:#15803d;font-weight:700}
+</style>
+
+<div id="ts-wrap">
+
+<p>¿Cuánto vas a vender en los próximos meses? De esa respuesta dependen casi todas las decisiones de una PyME: cuánta mercadería comprar, cuántas personas necesitás en temporada alta, cuánta plata te va a hacer falta en caja y cuándo. Pronosticar mal tiene un costo real: faltante de stock y ventas perdidas por un lado, o capital inmovilizado en mercadería que no se vende por el otro.</p>
+
+<p>Las <b>series de tiempo</b> son la herramienta natural para este problema. En este post vemos cómo se descompone una serie de ventas en sus partes, cómo funcionan los métodos de pronóstico más usados y, sobre todo, cómo saber si un pronóstico es bueno. Todo con un simulador donde podés cambiar la tendencia, la estacionalidad, el ruido y hasta provocar un quiebre, como la llegada de un competidor.</p>
+
+<h2>1. Qué es una serie de tiempo</h2>
+
+<p>Es una secuencia de datos medidos a intervalos regulares: ventas por mes, visitas por día, saldo de caja por semana. Lo que la distingue de otros datos es que <b>el orden importa</b>: el dato de este mes depende de lo que pasó los meses anteriores, y mezclar el orden destruye la información. Por eso las técnicas de series de tiempo tratan el tiempo de manera explícita.</p>
+
+<h2>2. Los componentes de una serie</h2>
+
+<p>Una serie de ventas suele mezclar cuatro elementos:</p>
+<ul>
+<li><b>Tendencia:</b> la dirección de fondo, que crece, cae o se mantiene. Responde a cambios estructurales: más clientes, más precio, un mercado que se achica.</li>
+<li><b>Estacionalidad:</b> un patrón que se repite cada año (o semana, o día): más ventas en diciembre, menos en agosto, picos los fines de semana.</li>
+<li><b>Ciclo:</b> oscilaciones más largas y de duración irregular, ligadas a la economía en general.</li>
+<li><b>Ruido (componente irregular):</b> lo que queda: variaciones aleatorias, clima, un día atípico. No se puede pronosticar.</li>
+</ul>
+<p>Hay dos formas de combinarlos. En el modelo <b>aditivo</b>, la estacionalidad suma o resta una cantidad fija (diciembre vende 300 unidades más). En el <b>multiplicativo</b>, el efecto es proporcional al nivel (diciembre vende 25% más), que es lo habitual cuando el negocio crece, porque la estacionalidad crece con él.</p>
+
+<h2>3. Simulador: descomposición y pronóstico</h2>
+
+<p>El simulador genera 48 meses de ventas ficticias de una PyME. Elegí un escenario o ajustá los controles a tu gusto. La parte A separa la serie en tendencia, estacionalidad y ruido; la parte B prueba métodos de pronóstico contra datos que el método no vio.</p>
+<p>Experimentos para probar:</p>
+<ol>
+<li>En la parte A, subí la estacionalidad y mirá cómo los índices por mes reflejan el patrón. Subí el ruido y fijate cuánto cuesta distinguir la señal.</li>
+<li>En la parte B, compará el «Ingenuo estacional» (repetir el mismo mes del año anterior) con Holt-Winters. En el escenario turístico, con mucha estacionalidad y poco crecimiento, el ingenuo casi empata con el método sofisticado. En la panadería, donde el negocio crece, se queda corto porque repite las ventas del año pasado sin incorporar el crecimiento.</li>
+<li>Elegí «Crecimiento fuerte sin estacionalidad»: los métodos sin tendencia (ingenuo, media móvil, suavizamiento simple) se quedan sistemáticamente cortos.</li>
+<li>Elegí «Quiebre de nivel» y comparalos. En promedio, los métodos simples que solo siguen el nivel (suavizamiento simple, media móvil) se recuperan mejor. El ingenuo estacional repite durante varios meses las ventas anteriores al quiebre, y Holt-Winters tiende a confundirlo con tendencia y estacionalidad. A veces un método más sofisticado es más frágil ante un cambio brusco.</li>
+<li>Tocá «Optimizar parámetros» y mirá el error en entrenamiento contra el error de prueba: lo que mejor ajusta el pasado no siempre pronostica mejor el futuro.</li>
+</ol>
+
+<div id="ts-app">
+<noscript>Este simulador necesita JavaScript activado.</noscript>
+
+<div class="ts-h ts-first">Datos de ventas (ficticios)</div>
+<div class="ts-row" style="margin-top:8px">
+  <div class="ts-f" style="flex:2 1 300px">
+    <label for="ts-pre">Escenario</label>
+    <select id="ts-pre">
+      <option value="pan">Panadería: crecimiento moderado y estacionalidad</option>
+      <option value="est">Negocio estable sin estacionalidad</option>
+      <option value="tend">Crecimiento fuerte sin estacionalidad</option>
+      <option value="tur">Negocio turístico muy estacional</option>
+      <option value="qui">Quiebre de nivel (nuevo competidor)</option>
+      <option value="cus" disabled>Personalizado</option>
+    </select>
+  </div>
+  <div class="ts-f" style="flex:0 0 auto"><button type="button" id="ts-new" class="ts-sec">Nueva muestra</button></div>
+</div>
+<div class="ts-row">
+  <div class="ts-f"><label for="ts-g">Tendencia (crecimiento mensual): <span class="ts-val" id="ts-gv"></span></label><input type="range" id="ts-g" min="-1" max="3" step="0.1" value="0.8"></div>
+  <div class="ts-f"><label for="ts-s">Estacionalidad (intensidad): <span class="ts-val" id="ts-sv"></span></label><input type="range" id="ts-s" min="0" max="2.5" step="0.1" value="1"></div>
+  <div class="ts-f"><label for="ts-sg">Ruido (desvío mensual): <span class="ts-val" id="ts-sgv"></span></label><input type="range" id="ts-sg" min="0" max="20" step="1" value="5"></div>
+  <div class="ts-f"><label for="ts-br">Cambio de nivel en el mes 30: <span class="ts-val" id="ts-brv"></span></label><input type="range" id="ts-br" min="-40" max="40" step="5" value="0"></div>
+</div>
+
+<div class="ts-h">Parte A. Componentes de la serie</div>
+<div class="ts-row">
+  <div class="ts-f" style="flex:0 1 300px">
+    <label for="ts-mode">Tipo de estacionalidad</label>
+    <select id="ts-mode"><option value="mul">Multiplicativa (proporcional al nivel)</option><option value="add">Aditiva (cantidad fija)</option></select>
+  </div>
+</div>
+<svg id="ts-dsvg" class="ts-svg" viewBox="0 0 680 480" role="img" aria-label="Descomposición de la serie en tendencia, estacionalidad y residuo"></svg>
+<div class="ts-leg"><i style="background:#1d4ed8"></i>Ventas observadas &nbsp; <i style="background:#c2410c"></i>Tendencia (media móvil centrada de 12 meses)</div>
+<div id="ts-dres"></div>
+
+<div class="ts-h">Parte B. Pronóstico y evaluación</div>
+<div class="ts-small">Los métodos aprenden con los primeros meses y se evalúan en el período de prueba, que no usaron para ajustarse.</div>
+<div class="ts-row" style="margin-top:8px">
+  <div class="ts-f" style="flex:2 1 280px">
+    <label for="ts-meth">Método de pronóstico</label>
+    <select id="ts-meth">
+      <option value="naive">Ingenuo (repite el último valor)</option>
+      <option value="snaive">Ingenuo estacional (mismo mes del año anterior)</option>
+      <option value="ma">Media móvil</option>
+      <option value="ses">Suavizamiento exponencial simple</option>
+      <option value="holt">Holt (nivel y tendencia)</option>
+      <option value="hw" selected>Holt-Winters (nivel, tendencia y estacionalidad)</option>
+    </select>
+  </div>
+  <div class="ts-f" style="flex:0 1 200px">
+    <label for="ts-h">Meses a pronosticar</label>
+    <select id="ts-h"><option value="6">6 meses</option><option value="12" selected>12 meses</option></select>
+  </div>
+</div>
+<div class="ts-row">
+  <div class="ts-f" id="ts-ka"><label for="ts-k">Meses del promedio, k: <span class="ts-val" id="ts-kv"></span></label><input type="range" id="ts-k" min="2" max="12" step="1" value="3"></div>
+  <div class="ts-f" id="ts-aa"><label for="ts-a">Nivel, α: <span class="ts-val" id="ts-av"></span></label><input type="range" id="ts-a" min="0.01" max="1" step="0.01" value="0.3"></div>
+  <div class="ts-f" id="ts-ba"><label for="ts-b">Tendencia, β: <span class="ts-val" id="ts-bv"></span></label><input type="range" id="ts-b" min="0" max="1" step="0.01" value="0.1"></div>
+  <div class="ts-f" id="ts-ga"><label for="ts-c">Estacionalidad, γ: <span class="ts-val" id="ts-cv"></span></label><input type="range" id="ts-c" min="0" max="1" step="0.01" value="0.2"></div>
+</div>
+<div class="ts-row">
+  <button type="button" id="ts-opt">Optimizar parámetros</button>
+</div>
+<svg id="ts-fsvg" class="ts-svg" viewBox="0 0 680 360" role="img" aria-label="Serie de ventas con el pronóstico del método elegido en el período de prueba"></svg>
+<div class="ts-leg"><i style="background:#1d4ed8"></i>Ventas usadas para ajustar &nbsp; <i style="background:#111827"></i>Ventas reales del período de prueba &nbsp; <i style="background:#c2410c"></i>Pronóstico &nbsp; <i style="background:#fdba74"></i>Ajuste dentro de la muestra</div>
+<div id="ts-fres"></div>
+<div class="ts-wrap"><table class="ts-t" id="ts-tab"></table></div>
+<div id="ts-note"></div>
+</div>
+
+<h2>4. Los métodos de pronóstico más usados</h2>
+
+<ul>
+<li><b>Ingenuo:</b> el pronóstico es el último valor observado. Parece trivial, pero es el punto de comparación obligatorio: un método sofisticado tiene que ganarle.</li>
+<li><b>Ingenuo estacional:</b> el pronóstico para un mes es lo que se vendió ese mismo mes el año anterior. Muy eficaz cuando hay una estacionalidad fuerte.</li>
+<li><b>Media móvil:</b> el promedio de los últimos k meses. Suaviza el ruido, pero no capta ni tendencia ni estacionalidad. Con k grande es estable y lento; con k chico, reactivo y ruidoso.</li>
+<li><b>Suavizamiento exponencial simple:</b> un promedio que pondera más lo reciente: <b>nivel nuevo = α · dato actual + (1 − α) · nivel anterior</b>. Con α alto reacciona rápido; con α bajo, es más estable. Sirve para series sin tendencia ni estacionalidad.</li>
+<li><b>Holt:</b> agrega una tendencia al suavizamiento simple, controlada por el parámetro β.</li>
+<li><b>Holt-Winters:</b> suma además la estacionalidad (parámetro γ), en su versión aditiva o multiplicativa. Es la opción habitual para ventas con tendencia y patrón anual.</li>
+</ul>
+
+<h2>5. Cómo saber si un pronóstico es bueno</h2>
+
+<p>La regla más importante: <b>nunca evalúes un método con los mismos datos con los que lo ajustaste</b>. Cualquier modelo puede ajustar bien el pasado; lo que importa es cómo pronostica datos que no vio. Por eso se reserva el último tramo de la serie como <b>período de prueba</b>, como hace el simulador.</p>
+<p>Las medidas de error más usadas son:</p>
+<ul>
+<li><b>MAE (error absoluto medio):</b> cuánto se equivoca en promedio, en las mismas unidades de la serie.</li>
+<li><b>RMSE (raíz del error cuadrático medio):</b> parecida, pero penaliza más los errores grandes.</li>
+<li><b>MAPE (error porcentual absoluto medio):</b> el error como porcentaje de la venta real. Es fácil de comunicar, pero no sirve cuando hay valores cercanos a cero.</li>
+</ul>
+<p>Siempre conviene comparar contra un <b>método de referencia</b> simple (el ingenuo o el ingenuo estacional). Si un modelo complejo no los mejora de forma clara, no vale la complejidad adicional.</p>
+
+<h2>6. Errores frecuentes</h2>
+<ul>
+<li><b>Evaluar con los datos de ajuste.</b> Da una sensación de precisión que desaparece al pronosticar el futuro. Es el famoso sobreajuste, que se ve al optimizar los parámetros en el simulador.</li>
+<li><b>Ignorar los quiebres.</b> Un nuevo competidor, un cambio de precios, un local nuevo o una crisis cambian el nivel de la serie. Los datos anteriores al quiebre pueden dejar de ser representativos, y los métodos con tendencia y estacionalidad pueden interpretar mal el cambio. Conviene detectarlo y, si es necesario, ajustar el modelo solo con los datos posteriores.</li>
+<li><b>Usar muy pocos datos.</b> Para estimar estacionalidad hacen falta al menos dos años completos, y más es mejor.</li>
+<li><b>Extrapolar la tendencia indefinidamente.</b> Ningún negocio crece al 3% mensual para siempre. Para horizontes largos, conviene amortiguar la tendencia o usar escenarios.</li>
+<li><b>Dar un solo número sin rango.</b> Un pronóstico es una estimación con incertidumbre: planificá con un escenario base y uno pesimista.</li>
+<li><b>Confundir demanda con ventas.</b> Si te quedaste sin stock, la venta registrada es menor que la demanda real, y el pronóstico sale subestimado.</li>
+<li><b>Olvidar el calendario y las acciones comerciales.</b> Feriados, promociones o campañas mueven las ventas de maneras que estos métodos simples no ven.</li>
+<li><b>Creer que más complejo es mejor.</b> Para muchas PyMEs, un ingenuo estacional bien aplicado supera a un modelo mal usado.</li>
+</ul>
+
+<h2>7. Para qué sirve en una PyME</h2>
+<ul>
+<li><b>Compras e inventario:</b> cuánto pedir y cuándo, para no quedarte sin stock ni inmovilizar capital.</li>
+<li><b>Caja y capital de trabajo:</b> anticipar los meses de menor ingreso y planificar financiamiento.</li>
+<li><b>Personal:</b> dimensionar turnos y contrataciones temporales.</li>
+<li><b>Presupuesto y metas:</b> fijar objetivos de venta realistas y detectar desvíos a tiempo.</li>
+<li><b>Detección de anomalías:</b> un dato muy alejado del pronóstico es una señal para investigar.</li>
+</ul>
+
+<h2>8. Hacelo en tu propio Excel</h2>
+<p>Con tu historial de ventas mensuales (idealmente 24 meses o más) en dos columnas, fecha y venta, Excel ya trae las herramientas. La opción más directa es <b>Datos → Hoja de previsión</b>, que arma un pronóstico con suavizamiento exponencial triple, estacionalidad incluida, y un intervalo de confianza. Las mismas funciones se pueden usar en celdas: <code>PRONOSTICO.ETS</code>, <code>PRONOSTICO.ETS.ESTACIONALIDAD</code> y <code>PRONOSTICO.ETS.CONFINT</code>. Para una referencia simple, la media móvil se calcula con <code>PROMEDIO</code> sobre las últimas celdas, y el ingenuo estacional es simplemente referenciar la celda de 12 meses atrás. Probá reservar los últimos 6 o 12 meses como período de prueba y comparar los errores, tal como hace el simulador.</p>
+
+<p><i>Este simulador tiene fines educativos. Los datos son ficticios y se generan con ruido aleatorio, y los métodos son versiones simplificadas. No constituyen asesoramiento: con datos reales, validá los supuestos y comparalos siempre contra un método de referencia.</i></p>
+
+</div>
+
+<script>
+(function(){
+/*MATH_START*/
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function randnS(r){var u=r()||1e-12,v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+var PAT0=[-0.10,-0.12,-0.05,0.00,0.04,0.06,0.05,-0.03,-0.02,0.03,0.10,0.14];
+var PATM=0;PAT0.forEach(function(v){PATM+=v;});PATM/=12;
+var PAT=PAT0.map(function(v){return v-PATM;});
+var NT=48,BRK=29;
+function mean(a){var s=0,i;for(i=0;i<a.length;i++)s+=a[i];return s/a.length;}
+function genZ(seed){var r=mulberry32(seed),z=[],i;for(i=0;i<NT;i++)z.push(randnS(r));return z;}
+function genSeries(z,g,s,sg,br){
+  var y=[],t;
+  for(t=0;t<NT;t++){
+    var v=1000*Math.pow(1+g,t)*(1+s*PAT[t%12])*(t>=BRK?1+br:1)*(1+sg*z[t]);
+    y.push(Math.round(v*10)/10);
+  }
+  return y;
+}
+function init(y,mode){
+  var m1=mean(y.slice(0,12)),m2=mean(y.slice(12,24)),T0=(m2-m1)/12,S=[],i;
+  var l=m1-6.5*T0;
+  for(i=0;i<12;i++){var line=m1+T0*(i-5.5);S.push(mode==='mul'?y[i]/line:y[i]-line);}
+  return{l:l,T:T0,S:S};
+}
+function hw(y,a,b,g,mode,h){
+  var st=init(y,mode),l=st.l,T=st.T,S=st.S,fit=[],n=y.length,t,k;
+  for(t=0;t<n;t++){
+    var s=S[t%12],base=l+T,yh=mode==='mul'?base*s:base+s;fit.push(yh);
+    var ln=mode==='mul'?a*(y[t]/s)+(1-a)*base:a*(y[t]-s)+(1-a)*base;
+    var Tn=b*(ln-l)+(1-b)*T;
+    S[t%12]=mode==='mul'?g*(y[t]/base)+(1-g)*s:g*(y[t]-base)+(1-g)*s;
+    l=ln;T=Tn;
+  }
+  var fc=[];
+  for(k=1;k<=h;k++){var s2=S[(n+k-1)%12],bb=l+k*T;fc.push(mode==='mul'?bb*s2:bb+s2);}
+  return{fit:fit,fc:fc};
+}
+function holt(y,a,b,h){
+  var st=init(y,'add'),l=st.l,T=st.T,fit=[],n=y.length,t,k;
+  for(t=0;t<n;t++){
+    var base=l+T;fit.push(base);
+    var ln=a*y[t]+(1-a)*base,Tn=b*(ln-l)+(1-b)*T;l=ln;T=Tn;
+  }
+  var fc=[];for(k=1;k<=h;k++)fc.push(l+k*T);
+  return{fit:fit,fc:fc};
+}
+function ses(y,a,h){
+  var l=y[0],fit=[NaN],n=y.length,t,k;
+  for(t=1;t<n;t++){fit.push(l);l=a*y[t]+(1-a)*l;}
+  var fc=[];for(k=1;k<=h;k++)fc.push(l);
+  return{fit:fit,fc:fc};
+}
+function ma(y,kk,h){
+  var fit=[],n=y.length,t,k,i;
+  for(t=0;t<n;t++){if(t<kk)fit.push(NaN);else{var s=0;for(i=t-kk;i<t;i++)s+=y[i];fit.push(s/kk);}}
+  var s2=0;for(i=n-kk;i<n;i++)s2+=y[i];
+  var fc=[];for(k=1;k<=h;k++)fc.push(s2/kk);
+  return{fit:fit,fc:fc};
+}
+function naive(y,h){
+  var fit=[NaN],n=y.length,t,k;for(t=1;t<n;t++)fit.push(y[t-1]);
+  var fc=[];for(k=1;k<=h;k++)fc.push(y[n-1]);
+  return{fit:fit,fc:fc};
+}
+function snaive(y,h){
+  var fit=[],n=y.length,t,k;for(t=0;t<n;t++)fit.push(t>=12?y[t-12]:NaN);
+  var fc=[];for(k=1;k<=h;k++)fc.push(y[n-12+((k-1)%12)]);
+  return{fit:fit,fc:fc};
+}
+function metrics(act,pred){
+  var n=0,ae=0,se=0,ape=0,i;
+  for(i=0;i<act.length;i++){if(isFinite(pred[i])){var e=act[i]-pred[i];ae+=Math.abs(e);se+=e*e;ape+=Math.abs(e)/Math.abs(act[i]);n++;}}
+  return{mae:ae/n,rmse:Math.sqrt(se/n),mape:ape/n*100,n:n};
+}
+function sse(y,fit,from){var s=0,t;for(t=from;t<y.length;t++){if(isFinite(fit[t])){var e=y[t]-fit[t];s+=e*e;}}return s;}
+function runMethod(key,ytr,h,P){
+  if(key==='naive')return naive(ytr,h);
+  if(key==='snaive')return snaive(ytr,h);
+  if(key==='ma')return ma(ytr,P.k,h);
+  if(key==='ses')return ses(ytr,P.a,h);
+  if(key==='holt')return holt(ytr,P.a,P.b,h);
+  return hw(ytr,P.a,P.b,P.c,P.mode,h);
+}
+function optimize(key,ytr,P){
+  var best=null,bs=Infinity,a,b,c,k,r,s;
+  function tryP(Q){r=runMethod(key,ytr,1,Q);s=sse(ytr,r.fit,12);if(s<bs){bs=s;best=Q;}}
+  if(key==='ma'){for(k=2;k<=12;k++)tryP({k:k,a:P.a,b:P.b,c:P.c,mode:P.mode});}
+  else if(key==='ses'){for(a=1;a<=100;a++)tryP({k:P.k,a:a/100,b:P.b,c:P.c,mode:P.mode});}
+  else if(key==='holt'){for(a=1;a<=20;a++)for(b=0;b<=20;b++)tryP({k:P.k,a:a/20,b:b/20,c:P.c,mode:P.mode});}
+  else if(key==='hw'){for(a=1;a<=20;a++)for(b=0;b<=20;b++)for(c=0;c<=20;c++)tryP({k:P.k,a:a/20,b:b/20,c:c/20,mode:P.mode});}
+  return best;
+}
+function decomp(y,mode){
+  var n=y.length,T=[],t,i,m;
+  for(t=0;t<n;t++){
+    if(t<6||t>n-7){T.push(NaN);continue;}
+    var s=0.5*y[t-6]+0.5*y[t+6];for(i=-5;i<=5;i++)s+=y[t+i];T.push(s/12);
+  }
+  var acc=[],cnt=[];for(m=0;m<12;m++){acc.push(0);cnt.push(0);}
+  for(t=0;t<n;t++){if(isFinite(T[t])){acc[t%12]+=mode==='mul'?y[t]/T[t]:y[t]-T[t];cnt[t%12]++;}}
+  var S=[],sm=0;for(m=0;m<12;m++){S.push(acc[m]/cnt[m]);sm+=S[m];}sm/=12;
+  S=S.map(function(v){return mode==='mul'?v/sm:v-sm;});
+  var R=[];
+  for(t=0;t<n;t++){R.push(isFinite(T[t])?(mode==='mul'?y[t]/(T[t]*S[t%12])-1:y[t]-T[t]-S[t%12]):NaN);}
+  return{T:T,S:S,R:R};
+}
+/*MATH_END*/
+
+function $(id){return document.getElementById(id);}
+function fmt(v,d){
+  if(v===undefined||v===null||!isFinite(v))return '—';
+  var m=Math.pow(10,d),s=(Math.round(Math.abs(v)*m+1e-7)/m).toFixed(d),p=s.split('.');
+  p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  var out=p.join(',');
+  return(v<0&&+s!==0)?'-'+out:out;
+}
+function ticks(lo,hi,target){
+  var span=hi-lo,raw=span/target,mag=Math.pow(10,Math.floor(Math.log10(raw))),nm=raw/mag;
+  var step=(nm<1.5?1:nm<3?2:nm<7?5:10)*mag,start=Math.ceil(lo/step-1e-9)*step,out=[];
+  for(var v=start;v<=hi+1e-9;v+=step)out.push(+v.toFixed(10));
+  return out;
+}
+var MES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+var NAME={naive:'Ingenuo',snaive:'Ingenuo estacional',ma:'Media móvil',ses:'Suavizamiento simple',holt:'Holt',hw:'Holt-Winters'};
+var ORDER=['naive','snaive','ma','ses','holt','hw'];
+var PRE={
+  pan:{g:0.8,s:1,sg:5,br:0},
+  est:{g:0,s:0,sg:4,br:0},
+  tend:{g:2,s:0,sg:4,br:0},
+  tur:{g:0.3,s:2.2,sg:6,br:0},
+  qui:{g:0.5,s:1,sg:5,br:-25}
+};
+var SEED=20261,Z=genZ(SEED);
+
+function readGen(){return{g:+$('ts-g').value/100,s:+$('ts-s').value,sg:+$('ts-sg').value/100,br:+$('ts-br').value/100};}
+function curSeries(){var p=readGen();return genSeries(Z,p.g,p.s,p.sg,p.br);}
+function xaxisYears(o,X,Y0,pw,ml){
+  [0,12,24,36].forEach(function(t){o.push('<line x1="'+X(t)+'" x2="'+X(t)+'" y1="'+(Y0-4)+'" y2="'+(Y0+4)+'" stroke="#6b7280"/><text x="'+X(t)+'" y="'+(Y0+17)+'" font-size="12" fill="#4b5563">Año '+(t/12+1)+'</text>');});
+}
+
+/* ---------- Parte A ---------- */
+function drawA(y){
+  var mode=$('ts-mode').value,d=decomp(y,mode),W=680,H=480,ml=64,mr=16,pw=W-ml-mr,o=[],t,m;
+  function X(v){return ml+v/(NT-1)*pw;}
+  // Panel 1
+  var t1=14,h1=170,lo=Math.min.apply(null,y)*0.9,hi=Math.max.apply(null,y)*1.05;
+  function Y1(v){return t1+h1-(v-lo)/(hi-lo)*h1;}
+  ticks(lo,hi,4).forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y1(v)+'" y2="'+Y1(v)+'" stroke="#eef0f3"/><text x="'+(ml-8)+'" y="'+(Y1(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,0)+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+t1+'" width="'+pw+'" height="'+h1+'" fill="none" stroke="#9ca3af"/>');
+  [12,24,36].forEach(function(tt){o.push('<line x1="'+X(tt)+'" x2="'+X(tt)+'" y1="'+t1+'" y2="'+(t1+h1)+'" stroke="#eef0f3"/>');});
+  var pts=[];for(t=0;t<NT;t++)pts.push(X(t)+','+Y1(y[t]));
+  o.push('<polyline points="'+pts.join(' ')+'" fill="none" stroke="#1d4ed8" stroke-width="2"/>');
+  var tp=[];for(t=0;t<NT;t++)if(isFinite(d.T[t]))tp.push(X(t)+','+Y1(d.T[t]));
+  o.push('<polyline points="'+tp.join(' ')+'" fill="none" stroke="#c2410c" stroke-width="3"/>');
+  o.push('<text x="'+(ml+4)+'" y="'+(t1+14)+'" font-size="12" font-weight="700" fill="#374151">Ventas y tendencia</text>');
+  xaxisYears(o,X,t1+h1,pw,ml);
+  // Panel 2: estacionalidad
+  var t2=232,h2=106,amax=0;d.S.forEach(function(v){amax=Math.max(amax,Math.abs(mode==='mul'?(v-1)*100:v));});amax=Math.max(amax,1e-6)*1.25;
+  function Y2(v){return t2+h2/2-v/amax*h2/2;}
+  ticks(-amax,amax,4).forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y2(v)+'" y2="'+Y2(v)+'" stroke="#eef0f3"/><text x="'+(ml-8)+'" y="'+(Y2(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,mode==='mul'?0:0)+(mode==='mul'?'%':'')+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+t2+'" width="'+pw+'" height="'+h2+'" fill="none" stroke="#9ca3af"/>');
+  o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y2(0)+'" y2="'+Y2(0)+'" stroke="#374151"/>');
+  var bw=pw/12;
+  for(m=0;m<12;m++){
+    var v=mode==='mul'?(d.S[m]-1)*100:d.S[m];
+    var yy=Y2(v),y0=Y2(0);
+    o.push('<rect x="'+(ml+m*bw+bw*0.2)+'" y="'+Math.min(yy,y0)+'" width="'+(bw*0.6)+'" height="'+Math.max(1,Math.abs(yy-y0))+'" fill="'+(v>=0?'#0f766e':'#b91c1c')+'"/>');
+    o.push('<text x="'+(ml+m*bw+bw/2)+'" y="'+(t2+h2+16)+'" text-anchor="middle" font-size="12" fill="#4b5563">'+MES[m]+'</text>');
+  }
+  o.push('<text x="'+(ml+4)+'" y="'+(t2+14)+'" font-size="12" font-weight="700" fill="#374151">Efecto estacional por mes</text>');
+  // Panel 3: residuo
+  var t3=366,h3=84,rmax=0;d.R.forEach(function(v){if(isFinite(v))rmax=Math.max(rmax,Math.abs(mode==='mul'?v*100:v));});rmax=Math.max(rmax,1e-6)*1.25;
+  function Y3(v){return t3+h3/2-v/rmax*h3/2;}
+  ticks(-rmax,rmax,2).forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y3(v)+'" y2="'+Y3(v)+'" stroke="#eef0f3"/><text x="'+(ml-8)+'" y="'+(Y3(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,0)+(mode==='mul'?'%':'')+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+t3+'" width="'+pw+'" height="'+h3+'" fill="none" stroke="#9ca3af"/>');
+  o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y3(0)+'" y2="'+Y3(0)+'" stroke="#374151"/>');
+  for(t=0;t<NT;t++)if(isFinite(d.R[t])){var rv=mode==='mul'?d.R[t]*100:d.R[t];o.push('<line x1="'+X(t)+'" x2="'+X(t)+'" y1="'+Y3(0)+'" y2="'+Y3(rv)+'" stroke="#64748b" stroke-width="2"/><circle cx="'+X(t)+'" cy="'+Y3(rv)+'" r="2.6" fill="#475569"/>');}
+  o.push('<text x="'+(ml+4)+'" y="'+(t3+14)+'" font-size="12" font-weight="700" fill="#374151">Residuo (ruido)</text>');
+  xaxisYears(o,X,t3+h3,pw,ml);
+  $('ts-dsvg').innerHTML=o.join('');
+  // tarjetas
+  var first=-1,last=-1;for(t=0;t<NT;t++)if(isFinite(d.T[t])){if(first<0)first=t;last=t;}
+  var gm=Math.pow(d.T[last]/d.T[first],1/(last-first))-1;
+  var smax=0,smin=0;for(m=1;m<12;m++){if(d.S[m]>d.S[smax])smax=m;if(d.S[m]<d.S[smin])smin=m;}
+  var amp=mode==='mul'?(d.S[smax]-d.S[smin])*100:(d.S[smax]-d.S[smin]);
+  var rs=[];d.R.forEach(function(v){if(isFinite(v))rs.push(v);});var rm=mean(rs),sd=Math.sqrt(rs.reduce(function(a,v){return a+(v-rm)*(v-rm);},0)/(rs.length-1));
+  var h='<div class="ts-cards">'
+   +'<div class="ts-card"><b>'+(gm>=0?'+':'')+fmt(gm*100,2)+'%</b><span>Tendencia: crecimiento mensual estimado</span></div>'
+   +'<div class="ts-card"><b>'+MES[smax]+'</b><span>Mes más fuerte</span></div>'
+   +'<div class="ts-card"><b>'+MES[smin]+'</b><span>Mes más débil</span></div>'
+   +'<div class="ts-card"><b>'+fmt(amp,mode==='mul'?0:0)+(mode==='mul'?' pp':'')+'</b><span>Diferencia entre el mes más fuerte y el más débil</span></div>'
+   +'<div class="ts-card"><b>'+fmt(mode==='mul'?sd*100:sd,mode==='mul'?1:0)+(mode==='mul'?'%':'')+'</b><span>Desvío del ruido estimado</span></div></div>';
+  var p=readGen();
+  if(p.br!==0)h+='<div class="ts-note ts-warn">La serie tiene un cambio de nivel en el mes 30. La media móvil de 12 meses lo suaviza y lo reparte a lo largo de un año, por lo que la tendencia estimada se curva alrededor de ese punto.</div>';
+  else if(p.s===0)h+='<div class="ts-note">Sin estacionalidad, los efectos por mes son pequeños y reflejan solo el ruido: la descomposición siempre encuentra «algo» en los datos, aun cuando no hay patrón real.</div>';
+  $('ts-dres').innerHTML=h;
+}
+
+/* ---------- Parte B ---------- */
+function readP(){return{k:+$('ts-k').value,a:+$('ts-a').value,b:+$('ts-b').value,c:+$('ts-c').value,mode:$('ts-mode').value};}
+function showParams(){
+  var m=$('ts-meth').value;
+  $('ts-ka').style.display=m==='ma'?'':'none';
+  $('ts-aa').style.display=(m==='ses'||m==='holt'||m==='hw')?'':'none';
+  $('ts-ba').style.display=(m==='holt'||m==='hw')?'':'none';
+  $('ts-ga').style.display=m==='hw'?'':'none';
+  $('ts-opt').style.display=(m==='naive'||m==='snaive')?'none':'';
+  $('ts-kv').textContent=$('ts-k').value;$('ts-av').textContent=fmt(+$('ts-a').value,2);$('ts-bv').textContent=fmt(+$('ts-b').value,2);$('ts-cv').textContent=fmt(+$('ts-c').value,2);
+}
+function drawB(y){
+  showParams();
+  var h=+$('ts-h').value,n=NT-h,ytr=y.slice(0,n),yte=y.slice(n),P=readP(),key=$('ts-meth').value;
+  var res={},best=null,bm=Infinity;
+  ORDER.forEach(function(k){
+    var r=runMethod(k,ytr,h,P),te=metrics(yte,r.fc),tr=metrics(ytr.slice(12),r.fit.slice(12));
+    res[k]={r:r,te:te,tr:tr};if(te.mape<bm){bm=te.mape;best=k;}
+  });
+  var sel=res[key],W=680,H=360,ml=64,mr=16,mt=14,mb=44,pw=W-ml-mr,ph=H-mt-mb,o=[],t;
+  var all=y.concat(sel.r.fc),lo=Math.min.apply(null,all)*0.9,hi=Math.max.apply(null,all)*1.05;
+  function X(v){return ml+v/(NT-1)*pw;}
+  function Y(v){return mt+ph-(v-lo)/(hi-lo)*ph;}
+  o.push('<rect x="'+X(n-0.5)+'" y="'+mt+'" width="'+(ml+pw-X(n-0.5))+'" height="'+ph+'" fill="#f3f4f6"/>');
+  ticks(lo,hi,5).forEach(function(v){o.push('<line x1="'+ml+'" x2="'+(ml+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#e5e7eb"/><text x="'+(ml-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="12" fill="#4b5563">'+fmt(v,0)+'</text>');});
+  o.push('<rect x="'+ml+'" y="'+mt+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#9ca3af"/>');
+  o.push('<text x="'+(X(n-0.5)+6)+'" y="'+(mt+14)+'" font-size="12" font-weight="700" fill="#4b5563">Período de prueba</text>');
+  var fp=[];for(t=12;t<n;t++)if(isFinite(sel.r.fit[t]))fp.push(X(t)+','+Y(sel.r.fit[t]));
+  if(fp.length)o.push('<polyline points="'+fp.join(' ')+'" fill="none" stroke="#fdba74" stroke-width="2"/>');
+  var tp=[];for(t=0;t<n;t++)tp.push(X(t)+','+Y(y[t]));
+  o.push('<polyline points="'+tp.join(' ')+'" fill="none" stroke="#1d4ed8" stroke-width="2.4"/>');
+  var ap=[];for(t=n-1;t<NT;t++)ap.push(X(t)+','+Y(y[t]));
+  o.push('<polyline points="'+ap.join(' ')+'" fill="none" stroke="#111827" stroke-width="2.4"/>');
+  var pp=[X(n-1)+','+Y(y[n-1])];for(t=0;t<h;t++)pp.push(X(n+t)+','+Y(sel.r.fc[t]));
+  o.push('<polyline points="'+pp.join(' ')+'" fill="none" stroke="#c2410c" stroke-width="3"/>');
+  for(t=0;t<h;t++){o.push('<circle cx="'+X(n+t)+'" cy="'+Y(sel.r.fc[t])+'" r="3.6" fill="#c2410c"/><circle cx="'+X(n+t)+'" cy="'+Y(yte[t])+'" r="3.6" fill="#111827"/>');}
+  [0,12,24,36].forEach(function(tt){o.push('<text x="'+X(tt)+'" y="'+(mt+ph+17)+'" font-size="12" fill="#4b5563">Año '+(tt/12+1)+'</text>');});
+  o.push('<text x="'+(ml+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Meses</text>');
+  o.push('<text transform="rotate(-90)" x="'+(-(mt+ph/2))+'" y="16" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Ventas</text>');
+  $('ts-fsvg').innerHTML=o.join('');
+  var cards='<div class="ts-cards">'
+   +'<div class="ts-card"><b>'+fmt(sel.te.mape,1)+'%</b><span>Error porcentual en el período de prueba (MAPE)</span></div>'
+   +'<div class="ts-card"><b>'+fmt(sel.te.mae,0)+'</b><span>Error absoluto medio en prueba (MAE)</span></div>'
+   +'<div class="ts-card"><b>'+(isFinite(sel.tr.mape)?fmt(sel.tr.mape,1)+'%':'—')+'</b><span>Error en los datos de ajuste (MAPE, un paso adelante)</span></div></div>';
+  $('ts-fres').innerHTML=cards;
+  var t='<tr><th>Método</th><th>MAPE prueba</th><th>MAE prueba</th><th>RMSE prueba</th><th>MAPE ajuste</th></tr>';
+  ORDER.forEach(function(k){
+    var q=res[k];
+    t+='<tr'+(k===key?' style="font-weight:700;background:#fff7ed"':'')+'><td>'+NAME[k]+(k===best?' <span class="ts-best">(mejor)</span>':'')+'</td><td>'+fmt(q.te.mape,1)+'%</td><td>'+fmt(q.te.mae,0)+'</td><td>'+fmt(q.te.rmse,0)+'</td><td>'+(isFinite(q.tr.mape)?fmt(q.tr.mape,1)+'%':'—')+'</td></tr>';
+  });
+  $('ts-tab').innerHTML=t;
+  var note='';
+  if(isFinite(sel.tr.mape)&&sel.te.mape>sel.tr.mape*1.6&&sel.te.mape>4)note+='<div class="ts-note ts-warn"><b>El error en prueba ('+fmt(sel.te.mape,1)+'%) es bastante mayor que el error de ajuste ('+fmt(sel.tr.mape,1)+'%).</b> Es una señal de que el método describe bien el pasado pero pronostica peor el futuro: por un cambio en la serie, por ruido o por sobreajuste.</div>';
+  if(best===key)note+='<div class="ts-note ts-ok"><b>'+NAME[key]+' es el mejor método de los seis en este período de prueba.</b> Con otra muestra de datos el ranking puede cambiar: probá «Nueva muestra».</div>';
+  else note+='<div class="ts-note">En este período de prueba el mejor método es <b>'+NAME[best]+'</b> ('+fmt(res[best].te.mape,1)+'%), contra '+fmt(sel.te.mape,1)+'% de '+NAME[key]+'.</div>';
+  var p=readGen();
+  if(p.s===0&&key==='hw')note+='<div class="ts-note">Sin estacionalidad real, Holt-Winters agrega complejidad sin beneficio: compará con Holt o con el suavizamiento simple.</div>';
+  if(p.g>=0.015&&(key==='naive'||key==='ma'||key==='ses'))note+='<div class="ts-note">Con una tendencia fuerte, este método no incorpora crecimiento y queda sistemáticamente por debajo de las ventas reales. Probá con Holt.</div>';
+  $('ts-note').innerHTML=note;
+}
+function labels(){
+  $('ts-gv').textContent=(+$('ts-g').value>0?'+':'')+fmt(+$('ts-g').value,1)+'%';
+  $('ts-sv').textContent=fmt(+$('ts-s').value,1)+'x';
+  $('ts-sgv').textContent=fmt(+$('ts-sg').value,0)+'%';
+  var b=+$('ts-br').value;$('ts-brv').textContent=(b>0?'+':'')+fmt(b,0)+'%';
+}
+function render(){labels();var y=curSeries();drawA(y);drawB(y);}
+
+['ts-g','ts-s','ts-sg','ts-br'].forEach(function(id){$(id).addEventListener('input',function(){var s=$('ts-pre');s.querySelector('option[value=cus]').disabled=false;s.value='cus';render();});});
+$('ts-pre').addEventListener('change',function(){var v=PRE[this.value];if(!v)return;$('ts-g').value=v.g;$('ts-s').value=v.s;$('ts-sg').value=v.sg;$('ts-br').value=v.br;render();});
+$('ts-new').addEventListener('click',function(){SEED=Math.floor(Math.random()*1e9);Z=genZ(SEED);render();});
+['ts-mode','ts-meth','ts-h','ts-k','ts-a','ts-b','ts-c'].forEach(function(id){$(id).addEventListener('input',render);$(id).addEventListener('change',render);});
+$('ts-opt').addEventListener('click',function(){
+  var y=curSeries(),h=+$('ts-h').value,ytr=y.slice(0,NT-h),key=$('ts-meth').value,P=readP(),Q=optimize(key,ytr,P);
+  if(!Q)return;
+  $('ts-k').value=Q.k;$('ts-a').value=Q.a;$('ts-b').value=Q.b;$('ts-c').value=Q.c;
+  render();
+  $('ts-note').insertAdjacentHTML('afterbegin','<div class="ts-note"><b>Parámetros optimizados con los datos de ajuste</b> (los que minimizan el error de un paso adelante dentro de la muestra). Compará el error de ajuste con el de prueba: ajustar mejor el pasado no garantiza pronosticar mejor el futuro.</div>');
+});
+render();
+})();
+</script>
+
+</body>
+</html><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/series-de-tiempo-como-pronosticar-las.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
