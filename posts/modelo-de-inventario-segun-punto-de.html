@@ -1,0 +1,168 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelo de Inventario según punto de pedido (con Excel) — El Elefante Económico</title>
+  <meta name="description" content="Modelo de Inventario según punto de pedido (con Excel)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/modelo-de-inventario-segun-punto-de.html">
+  <meta property="og:title" content="Modelo de Inventario según punto de pedido (con Excel)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/modelo-de-inventario-segun-punto-de.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Modelo de Inventario según punto de pedido (con Excel)</h1>
+  <p class="meta">20 de November de 2026 · Inventarios, Punto de Pedido</p>
+  <article><meta charset="utf-8">
+<style>
+.ip-t{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+.ip-t th,.ip-t td{padding:6px 9px;border-bottom:1px solid #d9dee5;text-align:right;white-space:nowrap}
+.ip-t th:first-child,.ip-t td:first-child{text-align:left}
+.ip-t th{background:#f3f4f6;font-weight:700;color:#374151;white-space:normal}
+.ip-wrap{overflow-x:auto}
+.ip-box{background:#eff6ff;border-left:4px solid #1d4ed8;padding:10px 14px;border-radius:4px;margin:14px 0}
+.ip-warn{background:#fef3c7;border-left-color:#b45309}
+.ip-red{color:#b91c1c;font-weight:700}
+.ip-amb{color:#b45309;font-weight:700}
+.ip-grn{color:#15803d;font-weight:700}
+</style>
+
+<div id="ip-wrap">
+
+<p>Una ferretería se queda sin el taladro que el cliente vino a buscar. Otra tiene 743 pares de guantes de trabajo en el depósito, casi el doble de lo que necesitaba. Las dos sufren el mismo problema desde lados opuestos: <b>no saben cuánto pedir ni cuándo pedirlo</b>. En el primer caso pierde ventas y clientes; en el segundo, tiene plata dormida en mercadería que no rota.</p>
+
+<p>En este post vemos cómo resolver ese dilema con dos herramientas clásicas de la gestión de inventarios: el <b>lote económico</b>, que responde cuánto pedir, y el <b>punto de pedido</b>, que responde cuándo pedir. Al final, hay un Excel descargable con una política de reposición completa para hasta 15 productos.</p>
+
+<h2>1. El dilema del inventario</h2>
+
+<p>Tener mercadería cuesta, y no tenerla también:</p>
+<ul>
+<li><b>Costo de mantener:</b> el capital inmovilizado, el espacio de almacenaje, los seguros, la merma, el robo y la obsolescencia. Suele ubicarse entre el 15% y el 30% del valor del stock por año, según el negocio.</li>
+<li><b>Costo de pedir:</b> cada pedido implica trabajo administrativo, transporte, recepción y control. Es un costo por pedido, no por unidad.</li>
+<li><b>Costo de faltante:</b> la venta perdida, el cliente que se va a la competencia y, a veces, una multa o una parada de producción.</li>
+</ul>
+<p>Pedir mucho y pocas veces reduce el costo de pedir pero aumenta el de mantener; pedir poco y seguido hace lo contrario. Y quedarse corto de stock pone en riesgo las ventas. La gestión de inventarios busca el equilibrio entre estas tres fuerzas.</p>
+
+<h2>2. Cuánto pedir: el lote económico (EOQ)</h2>
+
+<p>El <b>lote económico de pedido</b> (EOQ, por sus siglas en inglés) es la cantidad que minimiza la suma del costo anual de pedir y del costo anual de mantener:</p>
+<p><b>EOQ = √( 2 × D × S / (h × c) )</b></p>
+<ul>
+<li><b>D:</b> demanda anual, en unidades.</li>
+<li><b>S:</b> costo de emitir un pedido.</li>
+<li><b>h:</b> costo de mantener, como porcentaje anual del costo unitario.</li>
+<li><b>c:</b> costo unitario del producto.</li>
+</ul>
+<p><b>Ejemplo.</b> Un taladro percutor cuesta 58 € y se venden 326 por año. Emitir un pedido cuesta 25 € y mantener inventario cuesta el 22% anual. El lote económico es √(2 × 326 × 25 / (0,22 × 58)) ≈ <b>36 unidades</b>, con un costo anual de gestión (pedir más mantener) de unos 456 €. Si se pidiera de a 14 unidades, el costo anual subiría a unos 590 €, porque se pediría demasiado seguido; con pedidos de 107 unidades, subiría a unos 760 €, porque habría demasiado stock parado. Cerca del óptimo, la curva es muy plana: un pequeño error en la cantidad no encarece mucho.</p>
+<p>En la práctica, hay que ajustar el resultado a las condiciones del proveedor: pedidos mínimos, cajas o bultos cerrados. El Excel lo hace con dos columnas, «Pedido mínimo» y «Múltiplo de pedido».</p>
+
+<h2>3. Cuándo pedir: el punto de pedido</h2>
+
+<p>Los proveedores no entregan al instante. Si el plazo de entrega es de 14 días, hay que pedir cuando todavía queda stock suficiente para vender durante esos 14 días. Ese nivel es el <b>punto de pedido</b>:</p>
+<p><b>Punto de pedido = demanda durante el plazo de entrega + stock de seguridad</b></p>
+<p>Si la demanda fuera perfectamente constante, bastaría con el primer término. Pero la demanda varía y los proveedores a veces se atrasan, y para eso existe el <b>stock de seguridad</b>, un colchón que protege contra esa incertidumbre:</p>
+<p><b>Stock de seguridad = z × √( plazo × σd² + d² × σp² )</b></p>
+<ul>
+<li><b>z:</b> un factor que depende del nivel de servicio elegido.</li>
+<li><b>d y σd:</b> demanda diaria promedio y su desvío estándar.</li>
+<li><b>σp:</b> desvío del plazo de entrega, en días.</li>
+</ul>
+<p>El <b>nivel de servicio</b> es la probabilidad de no quedarse sin stock durante un plazo de entrega. Cuanto más alto, mayor es z y más grande el colchón:</p>
+
+<div class="ip-wrap">
+<table class="ip-t">
+<tr><th>Nivel de servicio</th><th>90%</th><th>95%</th><th>98%</th><th>99%</th><th>99,9%</th></tr>
+<tr><td>Factor z</td><td>1,28</td><td>1,64</td><td>2,05</td><td>2,33</td><td>3,09</td></tr>
+</table>
+</div>
+
+<p>Subir el nivel de servicio tiene rendimientos decrecientes: pasar del 90% al 95% exige mucho menos stock adicional que pasar del 99% al 99,9%.</p>
+
+<p><b>Ejemplo.</b> Volviendo al taladro: la demanda diaria es de 0,89 unidades, con un desvío de 1,37; el plazo de entrega es de 14 días, con un desvío de 3 días, y se busca un nivel de servicio del 98% (z = 2,05). La demanda durante el plazo es 0,89 × 14 ≈ 12,5 unidades, y el stock de seguridad es 2,05 × √(14 × 1,37² + 0,89² × 3²) ≈ 12 unidades. El <b>punto de pedido es 25 unidades</b>: cuando la posición de inventario llegue a ese nivel, hay que pedir el lote de 36.</p>
+
+<div class="ip-box"><b>Dos fuentes de incertidumbre.</b> Un proveedor impuntual puede obligar a tener tanto stock de seguridad como una demanda muy variable. Medir el plazo real de entrega (la fecha del pedido contra la fecha de recepción) es uno de los datos más baratos y valiosos que una PyME puede registrar.</div>
+
+<h2>4. La posición de inventario: no pedir dos veces</h2>
+
+<p>La decisión de pedir no debería basarse solo en el stock que hay en el depósito, sino en la <b>posición de inventario</b>: el stock actual más los pedidos que ya están en camino. Si no, se corre el riesgo de pedir de nuevo un producto que llega mañana.</p>
+<p>En el Excel de ejemplo, la pintura látex tiene apenas 8 unidades en el depósito, por debajo de su punto de pedido de 15, pero ya hay un pedido de 26 en camino: su posición es 34 y el estado es normal. Sin esa información, el modelo habría sugerido pedir de más.</p>
+
+<h2>5. No todo el inventario merece el mismo trato: clasificación ABC</h2>
+
+<p>Con cientos de productos, no se puede dedicar la misma atención a todos. La <b>clasificación ABC</b> ordena los productos por valor anual consumido (demanda anual × costo unitario) y los divide en tres grupos:</p>
+<ul>
+<li><b>Clase A:</b> los pocos productos que concentran alrededor del 80% del valor. Merecen control estricto, revisión frecuente y alto nivel de servicio.</li>
+<li><b>Clase B:</b> los intermedios, hasta cerca del 95% acumulado.</li>
+<li><b>Clase C:</b> el resto, muchos productos de poco valor. Conviene simplificar su gestión y aceptar un nivel de servicio menor.</li>
+</ul>
+<p>En el ejemplo de la ferretería, 6 de los 10 productos acumulan el 83% del valor anual consumido, y el modelo les asigna un nivel de servicio del 98%, contra 95% para la clase B y 90% para la clase C. Es una forma de invertir el stock de seguridad donde más importa. En un catálogo real, con muchos más productos, la clase A suele ser una porción mucho menor del total.</p>
+
+<h2>6. Cómo se ve una política de reposición</h2>
+
+<p>Aplicando todo lo anterior a cuatro productos del ejemplo de la ferretería:</p>
+
+<div class="ip-wrap">
+<table class="ip-t">
+<tr><th>Producto</th><th>Demanda anual</th><th>Plazo (días)</th><th>Stock de seguridad</th><th>Punto de pedido</th><th>Lote Q</th><th>Stock + en camino</th><th>Estado</th></tr>
+<tr><td>Tornillos 4x40 (caja x100)</td><td>5.046</td><td>7</td><td>66</td><td>163</td><td>580</td><td>244</td><td class="ip-grn">Normal</td></tr>
+<tr><td>Taladro percutor 750 W</td><td>326</td><td>14</td><td>12</td><td>25</td><td>36</td><td>16</td><td class="ip-red">Pedir ahora</td></tr>
+<tr><td>Cable 2,5 mm (rollo 100 m)</td><td>137</td><td>21</td><td>8</td><td>16</td><td>23</td><td>8</td><td class="ip-red">Pedir ahora</td></tr>
+<tr><td>Guantes de trabajo (par)</td><td>1.943</td><td>7</td><td>29</td><td>67</td><td>408</td><td>743</td><td class="ip-amb">Exceso</td></tr>
+</table>
+</div>
+
+<p>Se lee así: el taladro y el cable están por debajo de su punto de pedido y hay que reponerlos hoy. Los guantes tienen un stock de 743 pares cuando su máximo previsto es de 437 (el stock de seguridad más el lote): hay plata inmovilizada de más, y conviene esperar antes de volver a comprar. En conjunto, el panel del Excel muestra 3 productos para pedir hoy, 1 con exceso y 6 en rango normal, y arma una lista de compras con las cantidades sugeridas y su importe.</p>
+
+<h2>7. Indicadores para controlar el inventario</h2>
+<ul>
+<li><b>Rotación del inventario:</b> cuántas veces al año se renueva el stock. Es la demanda anual dividida por el inventario promedio. En el ejemplo, los tornillos rotan unas 14 veces por año y el taladro unas 11.</li>
+<li><b>Días de inventario:</b> 365 dividido por la rotación. Indica cuántos días de venta representa el stock promedio: 26 días para los tornillos y 34 para el taladro.</li>
+<li><b>Días de cobertura:</b> el stock actual dividido por la demanda diaria. Es la señal más directa de urgencia, sobre todo si es menor que el plazo de entrega.</li>
+<li><b>Nivel de servicio real:</b> el porcentaje de pedidos de clientes atendidos sin faltantes. Medirlo permite ver si el stock de seguridad es el adecuado.</li>
+</ul>
+<p>Una rotación baja indica capital inmovilizado; una rotación muy alta, con faltantes frecuentes, puede indicar que se está comprando poco.</p>
+
+<h2>8. Errores frecuentes</h2>
+<ul>
+<li><b>Calcular el punto de pedido solo con el promedio.</b> Sin stock de seguridad, la mitad de las veces que la demanda supere el promedio, hay faltante.</li>
+<li><b>Ignorar el plazo real de entrega.</b> Se toma el plazo prometido por el proveedor en lugar del que realmente cumple.</li>
+<li><b>No considerar los pedidos en camino.</b> Lleva a pedir dos veces el mismo producto.</li>
+<li><b>Usar el mismo nivel de servicio para todo.</b> Cuesta caro proteger con 99% a productos de poco valor.</li>
+<li><b>Confundir ventas con demanda.</b> Si hubo faltantes, las ventas son menores que lo que los clientes querían comprar, y el modelo subestima la demanda y recomienda poco stock.</li>
+<li><b>Aplicar el modelo a demanda muy estacional o errática sin ajustar.</b> Para productos con picos fuertes hay que usar la demanda del período relevante y revisar los parámetros con más frecuencia.</li>
+<li><b>Olvidar las condiciones reales del proveedor.</b> Descuentos por volumen, pedidos mínimos, vencimientos o capacidad de depósito cambian el lote óptimo.</li>
+<li><b>No actualizar los parámetros.</b> La demanda, los costos y los plazos cambian: conviene revisarlos cada trimestre.</li>
+</ul>
+
+<h2>9. El modelo en Excel</h2>
+
+<p>El archivo trae un caso completo de una ferretería con 10 productos, listo para cargar los datos de tu negocio:</p>
+<ul>
+<li><b>Supuestos:</b> costo de emitir un pedido, costo de mantener, niveles de servicio por clase ABC y umbrales de la clasificación.</li>
+<li><b>Datos:</b> hasta 15 productos con su costo, plazo de entrega y su desvío, stock actual, pedidos en camino, condiciones del proveedor y las ventas de los últimos 12 meses (las únicas celdas a completar).</li>
+<li><b>Politica_de_Pedido:</b> para cada producto, la clase ABC, el stock de seguridad, el punto de pedido, el lote económico, el estado con semáforo y las cantidades sugeridas, más los indicadores de rotación y cobertura.</li>
+<li><b>Panel:</b> el resumen de la situación, la distribución por clase y la lista de compras de hoy con su importe.</li>
+<li><b>ABC:</b> el gráfico de Pareto de los productos por valor consumido.</li>
+<li><b>Costos:</b> la curva de costos de pedir, mantener y total para el producto que elijas, donde se ve que el mínimo cae en el lote económico.</li>
+</ul>
+<p>Para usarlo, reemplazá los datos de ejemplo por los tuyos: las ventas mensuales salen de tu sistema de facturación, y el plazo de entrega conviene medirlo con las fechas reales de pedido y recepción. El costo de emitir un pedido se estima sumando el tiempo administrativo, el transporte fijo y los controles de recepción.</p>
+
+<p><a href="https://docs.google.com/spreadsheets/d/1zhlPn3jwuUvjgy9RB03ZE5onnRH7osHT/edit?usp=sharing&ouid=105349212690548031888&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer"><b>Descargar el modelo de Excel</b></a></p>
+
+<div class="ip-box ip-warn"><b>Antes de usarlo.</b> El modelo supone demanda estable y sin descuentos por volumen ni vencimientos, con un solo proveedor por producto. Los datos del archivo son un ejemplo ficticio: validá los parámetros con la información real de tu negocio.</div>
+
+<p><i>Este modelo tiene fines educativos y no constituye asesoramiento. Cada negocio tiene particularidades que conviene analizar antes de definir su política de inventarios.</i></p>
+
+</div><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/modelo-de-inventario-segun-punto-de.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
