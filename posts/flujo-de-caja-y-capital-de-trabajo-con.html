@@ -1,0 +1,165 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flujo de Caja y Capital de Trabajo (con Excel) — El Elefante Económico</title>
+  <meta name="description" content="Flujo de Caja y Capital de Trabajo (con Excel)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/flujo-de-caja-y-capital-de-trabajo-con.html">
+  <meta property="og:title" content="Flujo de Caja y Capital de Trabajo (con Excel)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/flujo-de-caja-y-capital-de-trabajo-con.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Flujo de Caja y Capital de Trabajo (con Excel)</h1>
+  <p class="meta">23 de November de 2026 · Cashflow, Working Capital</p>
+  <article><meta charset="utf-8">
+<style>
+.cf-t{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+.cf-t th,.cf-t td{padding:6px 9px;border-bottom:1px solid #d9dee5;text-align:right;white-space:nowrap}
+.cf-t th:first-child,.cf-t td:first-child{text-align:left}
+.cf-t th{background:#f3f4f6;font-weight:700;color:#374151;white-space:normal}
+.cf-wrap{overflow-x:auto}
+.cf-box{background:#eff6ff;border-left:4px solid #1d4ed8;padding:10px 14px;border-radius:4px;margin:14px 0}
+.cf-warn{background:#fef3c7;border-left-color:#b45309}
+.cf-neg{color:#b91c1c;font-weight:700}
+.cf-pos{color:#15803d;font-weight:700}
+</style>
+
+<div id="cf-wrap">
+
+<p>Un comercio cierra el año con una ganancia de 41.360. Sin embargo, en diciembre, su mejor mes en resultados, tiene el saldo de caja más bajo de todo el año y está por debajo del colchón que se había fijado. ¿Cómo puede un negocio rentable quedarse corto de plata? Es una de las situaciones más comunes y más desconcertantes en una PyME, y se explica con dos conceptos: el <b>flujo de caja</b> y el <b>capital de trabajo</b>.</p>
+
+<p>En este post vemos por qué ganar plata no es lo mismo que tener plata, cómo se proyecta el flujo de caja mes a mes y qué hacer con la proyección. Al final, hay un Excel descargable con el modelo completo.</p>
+
+<h2>1. Resultado y caja: dos medidas distintas</h2>
+
+<p>El <b>resultado</b> (la ganancia o pérdida) se mide por el criterio de lo <b>devengado</b>: una venta cuenta cuando se realiza, aunque se cobre dentro de 60 días, y un costo cuenta cuando se consume la mercadería, aunque se haya pagado antes o se vaya a pagar después.</p>
+<p>La <b>caja</b>, en cambio, solo registra lo <b>efectivamente cobrado y pagado</b>. Las diferencias entre ambas medidas vienen de tres fuentes:</p>
+<ul>
+<li><b>Ventas a crédito:</b> la venta ya figura en el resultado, pero la plata todavía está en manos del cliente.</li>
+<li><b>Inventario:</b> comprar mercadería es una salida de caja, pero no es un costo hasta que se vende.</li>
+<li><b>Pagos a proveedores:</b> pagar más tarde que lo que se cobra alivia la caja; pagar antes, la ahoga.</li>
+</ul>
+<p>A esto se suman movimientos que no son resultado: las inversiones en equipamiento, las cuotas de préstamos y los aportes o retiros de los socios.</p>
+
+<h2>2. Los tres flujos de caja</h2>
+
+<p>El flujo de caja se ordena en tres bloques:</p>
+<ul>
+<li><b>Flujo operativo:</b> lo que genera el negocio en su actividad diaria: cobranzas menos pagos a proveedores, sueldos, alquiler, impuestos y demás gastos.</li>
+<li><b>Flujo de inversión:</b> compras de equipamiento, obras o cualquier activo de largo plazo.</li>
+<li><b>Flujo de financiamiento:</b> préstamos recibidos, cuotas pagadas y aportes o retiros de los dueños.</li>
+</ul>
+<p>El flujo neto del mes se suma al saldo inicial y da el <b>saldo final de caja</b>. La pregunta clave es si ese saldo se mantiene siempre por encima de un <b>mínimo</b>, un colchón que cubra imprevistos (por ejemplo, el equivalente a un mes de gastos fijos).</p>
+
+<h2>3. El capital de trabajo</h2>
+
+<p>El <b>capital de trabajo operativo</b> es el dinero que el negocio necesita tener inmovilizado para funcionar día a día:</p>
+<p><b>Capital de trabajo = cuentas por cobrar + inventario − cuentas por pagar</b></p>
+<p>Los clientes que todavía no pagaron y la mercadería en el depósito inmovilizan dinero; lo que se debe a los proveedores lo financia. Cuando el capital de trabajo <b>aumenta</b>, consume caja; cuando baja, la libera. Y la relación con el resultado es exacta:</p>
+<p><b>Flujo operativo = resultado − aumento de cuentas por cobrar − aumento de inventario + aumento de cuentas por pagar</b></p>
+<p>Por eso, <b>crecer cuesta plata</b>: más ventas implican más clientes con saldo pendiente y más stock, que hay que financiar antes de cobrar. Un negocio que crece rápido puede estar ganando dinero y, a la vez, quedándose sin caja. Es el origen de muchas quiebras de empresas rentables.</p>
+
+<h2>4. El ciclo de conversión de caja</h2>
+
+<p>Para medir cuánto tarda el dinero en volver, se usan tres plazos en días:</p>
+<ul>
+<li><b>Días de cobranza (DSO):</b> cuentas por cobrar / ventas × 30 (en base mensual). Cuánto tardan, en promedio, los clientes en pagar.</li>
+<li><b>Días de inventario (DIO):</b> inventario / costo de ventas × 30. Cuántos días de venta hay en stock.</li>
+<li><b>Días de pago (DPO):</b> cuentas por pagar / compras × 30. Cuánto tarda la empresa en pagarle a sus proveedores.</li>
+</ul>
+<p>El <b>ciclo de conversión de caja</b> es <b>DSO + DIO − DPO</b>: los días que pasan entre que se paga la mercadería y se cobra la venta. Cuanto más largo, más capital de trabajo necesita el negocio. Se puede acortar de tres maneras: <b>cobrar antes</b> (descuentos por pago contado, anticipo de cobranzas), <b>rotar más rápido el stock</b> (menos inventario inmovilizado) y <b>negociar plazos más largos con los proveedores</b>. Cada una tiene su costo, y hay que evaluarlo.</p>
+
+<h2>5. Cómo se proyecta el flujo de caja</h2>
+
+<p>La proyección mensual sigue una secuencia:</p>
+<ol>
+<li><b>Ventas proyectadas</b> de cada mes, con su estacionalidad y los últimos meses reales como punto de partida.</li>
+<li><b>Cobranzas:</b> se reparte cada venta según los plazos de cobro (por ejemplo, 40% en el mes, 35% a 30 días, 20% a 60 días y 5% a 90 días), descontando los incobrables.</li>
+<li><b>Costo de ventas e inventario:</b> se define cuántos días de stock se quieren tener.</li>
+<li><b>Compras:</b> costo de ventas más la variación del inventario. Si se necesita más stock para la temporada alta, hay que comprar más de lo que se vende.</li>
+<li><b>Pagos a proveedores:</b> se reparte cada compra según los plazos de pago.</li>
+<li><b>Gastos:</b> variables (comisiones, fletes), fijos (alquiler, sueldos, servicios) y extraordinarios (seguros anuales, campañas).</li>
+<li><b>Inversiones y financiamiento:</b> equipamiento, préstamos recibidos y cuotas.</li>
+<li><b>Saldo final de caja,</b> comparado con el mínimo que se quiere mantener.</li>
+</ol>
+
+<h2>6. Un ejemplo: rentable, pero con la caja ajustada</h2>
+
+<p>El Excel trae el caso de un comercio minorista con estacionalidad: ventas anuales de 1.213.000, concentradas en noviembre y diciembre; el 60% son costo de ventas, 45 días de inventario, y cobra el 40% al contado y el resto a 30, 60 y 90 días, mientras que paga a sus proveedores a 30 y 60 días. Empieza el año con 35.000 en caja y se fija un mínimo de 15.000. En mayo compra equipamiento por 12.000.</p>
+
+<div class="cf-wrap">
+<table class="cf-t">
+<tr><th>Mes</th><th>Ventas</th><th>Resultado devengado</th><th>Flujo operativo</th><th>Saldo final de caja</th></tr>
+<tr><td>Enero</td><td>88.000</td><td>160</td><td>1.917</td><td>34.517</td></tr>
+<tr><td>Marzo</td><td>95.000</td><td class="cf-neg">−2.400</td><td class="cf-neg">−1.551</td><td>31.722</td></tr>
+<tr><td>Mayo (con inversión de 12.000)</td><td>100.000</td><td>4.000</td><td class="cf-neg">−1.336</td><td class="cf-neg">11.848</td></tr>
+<tr><td>Agosto</td><td>92.000</td><td>1.440</td><td>5.306</td><td class="cf-neg">14.796</td></tr>
+<tr><td>Noviembre</td><td>118.000</td><td>3.760</td><td class="cf-neg">−5.206</td><td class="cf-neg">8.776</td></tr>
+<tr><td>Diciembre</td><td>135.000</td><td class="cf-pos">15.200</td><td>1.877</td><td class="cf-neg">8.253</td></tr>
+</table>
+</div>
+
+<p>Los números cuentan esta historia:</p>
+<ul>
+<li>El <b>resultado del año</b> es de 41.360, pero el <b>flujo operativo</b> es de solo 14.053. Los 27.308 de diferencia quedaron inmovilizados en capital de trabajo, que pasó de 106.995 a 134.303.</li>
+<li>En <b>noviembre</b>, con ventas de 118.000, el flujo operativo es negativo (−5.206): hay que comprar la mercadería de la temporada alta y pagarla antes de cobrar las ventas de fin de año.</li>
+<li>En <b>diciembre</b> el negocio tiene su mejor resultado del año (15.200), pero la mayor parte de esas ventas todavía no se cobró: las cuentas por cobrar llegan a 114.593. El saldo de caja toca su mínimo, 8.253.</li>
+<li>La caja queda por debajo del mínimo de 15.000 en <b>seis meses</b> (mayo, junio, julio, agosto, noviembre y diciembre), y la necesidad máxima de financiamiento para respetar el colchón es de unos <b>6.750</b>.</li>
+<li>El <b>ciclo de conversión de caja</b> promedia 38,7 días: unos 26 de cobranza y 45 de inventario, menos unos 33 de pago a proveedores.</li>
+</ul>
+
+<div class="cf-box"><b>La lección:</b> la rentabilidad no protege de los problemas de caja. Lo que protege es verlos venir. Con una proyección, el comercio sabe desde enero que en mayo y en noviembre-diciembre va a estar ajustado, y puede negociar una línea de crédito, anticipar cobranzas o escalonar sus compras antes de necesitarlo.</div>
+
+<h2>7. Qué hacer con la proyección</h2>
+<ul>
+<li><b>Probar escenarios.</b> ¿Qué pasa si las ventas son un 10% menores? ¿Y si los clientes tardan 15 días más en pagar? ¿Y si los proveedores suben los precios? Un solo escenario es una foto; varios muestran qué tan frágil es la caja.</li>
+<li><b>Definir un saldo mínimo</b> y mirar los meses que quedan por debajo. Ahí hay que actuar.</li>
+<li><b>Conseguir financiamiento antes de necesitarlo.</b> Pedir una línea de crédito con la caja holgada es mucho más fácil y más barato que hacerlo con urgencia.</li>
+<li><b>Actuar sobre el ciclo de caja:</b> cobrar antes, reducir stock inmovilizado o negociar plazos con proveedores libera caja sin endeudarse.</li>
+<li><b>Actualizar la proyección todos los meses</b>, con los datos reales, y mirar el corto plazo (las próximas semanas) con más detalle.</li>
+</ul>
+
+<h2>8. Errores frecuentes</h2>
+<ul>
+<li><b>Confundir ganancia con caja.</b> Es el error más común y el más costoso.</li>
+<li><b>Proyectar ventas optimistas sin mirar cuándo se cobran.</b> Una venta que se cobra a 90 días necesita financiamiento durante tres meses.</li>
+<li><b>Ignorar la estacionalidad.</b> La temporada alta exige comprar antes de vender.</li>
+<li><b>Olvidar los incobrables.</b> Una parte de las ventas nunca se cobra.</li>
+<li><b>No incluir inversiones, cuotas ni gastos anuales</b> (seguros, impuestos, aguinaldos). Aparecen de golpe y desequilibran un mes.</li>
+<li><b>Dejar fuera el IVA y las cargas sociales.</b> El modelo del Excel está expresado sin IVA para simplificar, pero en la realidad el IVA se cobra y se paga con desfase y mueve la caja; conviene proyectarlo aparte.</li>
+<li><b>Proyectar una sola vez al año.</b> La caja se gestiona mes a mes, y semana a semana cuando está ajustada.</li>
+<li><b>Mezclar amortizaciones con gastos de caja.</b> Las amortizaciones son un gasto contable, no una salida de dinero.</li>
+</ul>
+
+<h2>9. El modelo en Excel</h2>
+
+<p>El archivo trae el caso completo del comercio, listo para que cargues los datos de tu negocio:</p>
+<ul>
+<li><b>Supuestos:</b> saldo inicial y mínimo de caja, plazos de cobranza y de pago, costo de ventas, días de inventario, gastos, y la proyección mensual de ventas, inversiones y préstamos. Son las únicas celdas a completar.</li>
+<li><b>Flujo_de_Caja:</b> el flujo mes a mes con los tres bloques (operativo, inversión y financiamiento), el saldo final, el excedente o déficit contra el mínimo y una alerta por mes.</li>
+<li><b>Capital_de_Trabajo:</b> cuentas por cobrar, inventario y cuentas por pagar, los días de cobranza, inventario y pago, el ciclo de conversión de caja y la conciliación entre el resultado y el flujo operativo.</li>
+<li><b>Resumen:</b> los indicadores clave, un diagnóstico automático y dos gráficos: el saldo de caja contra el mínimo, y el resultado contra el flujo operativo.</li>
+</ul>
+<p>Para probar escenarios, cambiá el ajuste de ventas, la variación del costo de ventas o los porcentajes de cobranza en la hoja de supuestos, y mirá cómo cambia el resumen. Las ventas de los últimos tres meses sirven para calcular lo que ya está pendiente de cobro y de pago al empezar.</p>
+
+<p><a href="https://docs.google.com/spreadsheets/d/1y5yFdfHflxVuj5Z74-NJ1yzOqufg_wlR/edit?usp=drive_link&ouid=105349212690548031888&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer"><b>Descargar el modelo de Excel</b></a></p>
+
+<div class="cf-box cf-warn"><b>Antes de usarlo.</b> El modelo es una simplificación: no incluye IVA, no calcula intereses por los déficits de caja y supone que los plazos de cobro y de pago se mantienen constantes. Los datos del archivo son un ejemplo ficticio: validá los supuestos con la información real de tu negocio.</div>
+
+<p><i>Este modelo tiene fines educativos y no constituye asesoramiento financiero. Cada negocio tiene particularidades que conviene analizar antes de tomar decisiones de financiamiento.</i></p>
+
+</div><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/flujo-de-caja-y-capital-de-trabajo-con.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>

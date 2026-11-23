@@ -1,0 +1,109 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Cuántas veces es suma de dos primos un número par? Una auditoría con datos exactos — El Elefante Económico</title>
+  <meta name="description" content="¿Cuántas veces es suma de dos primos un número par? Una auditoría con datos exactos">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/cuantas-veces-es-suma-de-dos-primos-un.html">
+  <meta property="og:title" content="¿Cuántas veces es suma de dos primos un número par? Una auditoría con datos exactos">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/cuantas-veces-es-suma-de-dos-primos-un.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>¿Cuántas veces es suma de dos primos un número par? Una auditoría con datos exactos</h1>
+  <p class="meta">23 de November de 2026 · Goldbach, matemática, modelos, números primos, validación</p>
+  <article><p><em>Este post resume un trabajo en el que revisé un modelo propio sobre la conjetura de Goldbach, retiré lo que no se sostenía y medí qué funciona de verdad. El paper completo, con las tablas y el código, está en Zenodo: <a href="https://zenodo.org/records/24463964">[ENLACE A ZENODO]</a>.</em></p>
+
+<p>La conjetura de Goldbach dice que todo número par mayor que 2 se puede escribir como suma de dos primos. Se verificó por computadora hasta 4·10¹⁸ y nadie encontró un contraejemplo, pero sigue sin demostrarse. Este post no la demuestra, y conviene decirlo desde el principio. Trata de algo más acotado: <strong>cuántas</strong> formas hay de escribir un par C como suma de dos primos, que llamo R(C), y qué tan bien podemos predecir ese número.</p>
+
+<h2>1. Lo primero: retiré un resultado propio</h2>
+
+<p>La versión anterior del trabajo proponía un modelo con tres ingredientes: una densidad logarítmica, un "núcleo" que daba más peso a los primos cercanos a C/2 y unos factores de funciones L de Dirichlet. Informaba errores menores al 0,5% en siete valores de C.</p>
+
+<p>Al volver a correr el código con la fórmula tal como estaba publicada, esos errores no aparecían: daban entre 52% y 79%. Retiré esa afirmación. Había tres problemas concretos: un factor 2 mal normalizado, un núcleo casi plano que no aportaba información y unos factores L que no pertenecen a la teoría de Hardy-Littlewood y dependían de un parámetro libre.</p>
+
+<table style="border-collapse:collapse; width:100%; max-width:640px; margin:1em 0;">
+  <thead>
+    <tr>
+      <th style="border:1px solid #999; padding:6px; text-align:right;">C</th>
+      <th style="border:1px solid #999; padding:6px; text-align:right;">R(C) real</th>
+      <th style="border:1px solid #999; padding:6px; text-align:right;">Fórmula anterior, recalculada</th>
+      <th style="border:1px solid #999; padding:6px; text-align:right;">Hardy–Littlewood clásico</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">4.096</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">53</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">20,7</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">52,6</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">30.030</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">905</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">186,3</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">908,1</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">100.000</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">810</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">229,8</td>
+      <td style="border:1px solid #999; padding:6px; text-align:right;">810,3</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2. Lo que sí funciona: el predictor clásico de 1923</h2>
+
+<p>Hardy y Littlewood propusieron en 1923 una fórmula para R(C). Tiene dos partes: una integral que cuenta cuántos pares de números "podrían" ser primos si los primos aparecieran con densidad 1/ln t, y un factor S(C) que corrige según los divisores impares de C. Un número con muchos divisores impares tiene más particiones de lo que sugiere la densidad sola.</p>
+
+<p>La fórmula no tiene ningún parámetro ajustable. La probé contra los conteos exactos de <strong>todos</strong> los pares entre 100 y 2 millones (casi un millón de números): el error medio es de 2,1% entre 10⁴ y 10⁵, y de 0,5% entre 10⁶ y 2·10⁶. Después hice una prueba de ablación: agregar al modelo clásico el núcleo o los factores L de la versión anterior sube el error de 2% a cerca de 35%. Los ingredientes extra empeoraban el modelo.</p>
+
+<h2>3. Una corrección con fundamento, sin ajustar nada</h2>
+
+<p>Quedaba un sesgo pequeño: el modelo clásico sobrestima R(C) en promedio un 1,3% cerca de C = 50.000 y un 0,2% cerca de 1,5 millones. Tiene una explicación. La densidad 1/ln t cuenta los primos como si fueran todos "puros", pero la fórmula explícita de Riemann dice que el conteo suave de primos incluye correcciones por cuadrados y cubos de primos. Al usar esa densidad corregida, el sesgo prácticamente desaparece. No hay ningún parámetro libre: el valor viene de la teoría.</p>
+
+<p>Lo probé fuera de la muestra de diseño, con muestras aleatorias de entre 200 y 600 pares en once escalas, hasta C ≈ 1,7·10⁹. El sesgo medio queda dentro de ±0,03% en todas, y dentro de ±0,002% desde 10⁸. Lo que queda es dispersión: R(C) fluctúa alrededor de la predicción (unos 0,6% cerca de 10⁶ y 0,03% cerca de 10⁹), y ninguna corrección suave elimina eso.</p>
+
+<h2>4. ¿Es C/2 un "punto dulce"?</h2>
+
+<p>La hipótesis de la versión anterior suponía que los primos de una partición se concentran cerca de la mitad, C/2. La probé de dos maneras.</p>
+
+<ul>
+  <li><strong>Dónde están los pares.</strong> Dividí la posición p₁/C en tramos y comparé lo observado con lo que predice la densidad, en cuatro rangos de C hasta 4·10⁸. En los 24 casos, la relación observado/esperado está entre 0,998 y 1,001, también en el tramo pegado a C/2. La densidad prevista es, de hecho, la <em>más baja</em> en el centro: para C = 10⁶ es un 8% menor que a 0,1·C, y los datos reproducen esa caída suave.</li>
+  <li><strong>Qué tan cerca del centro está el par más cercano.</strong> Esa distancia, Δ(C), es del orden de (ln C)², como predice la densidad común. La constante deriva despacio con C (de 0,40 a 0,51 entre 3·10⁵ y 1,5·10⁹), y los pares aparecen de manera algo más regular que en un proceso sin memoria, algo coherente con la varianza menor a la de Poisson que mencioné antes.</li>
+</ul>
+
+<p>Conclusión: <strong>C/2 no es un lugar especial</strong>. Solo importa como eje de simetría, porque p y C − p forman el mismo par. Tampoco tiene relación con el 1/2 de la hipótesis de Riemann: ese 1/2 es la parte real de los ceros de la función zeta y viene de la ecuación funcional, mientras que C/2 es una posición en la recta.</p>
+
+<h2>5. Las fluctuaciones y el exponente ½</h2>
+
+<p>Medí cómo crece la dispersión del residuo con C: aproximadamente como C<sup>0,46</sup>, y un ajuste con factor logarítmico da C<sup>0,505</sup>·(ln C)<sup>−0,83</sup>. Es compatible con el tamaño √C (con logaritmos) que se espera si la hipótesis de Riemann es cierta. Pero los datos no permiten atribuirlo a los ceros de zeta en vez de al ruido ordinario de contar un conjunto parecido a un tamiz, y además dos décadas y media de C no alcanzan para separar un exponente de otro.</p>
+
+<h2>6. Lo que esto no demuestra</h2>
+
+<ul>
+  <li>No demuestra Goldbach. Un predictor muy preciso de R(C) en 10⁹ valores no dice nada sobre si R(C) &gt; 0 para <em>todo</em> C.</li>
+  <li>Que R(C) se acerque a la fórmula de Hardy-Littlewood es el contenido de una conjetura, que tampoco está demostrada.</li>
+  <li>Aunque la hipótesis de Riemann generalizada esté probada (el 20 de noviembre de 2026 se anunció una demostración formalizada en Lean, cuya verificación independiente sigue en curso), eso no alcanza por sí solo para el problema binario de Goldbach. Nada de lo anterior depende de ello.</li>
+  <li>Más allá de 2 millones usé muestras aleatorias, no todos los pares, así que no cubro los casos extremos de cada escala.</li>
+</ul>
+
+<h2>Una lección que vale para cualquier modelo</h2>
+
+<p>Los tres pasos que cambiaron el resultado son los mismos que ayudarían con un modelo económico: volver a correr lo publicado, comparar con una línea base sin parámetros, y probar cada ingrediente extra por separado para ver si mejora o empeora la predicción. Aquí, la línea base clásica ganó, y retirar lo que no se reproducía fue más útil que defenderlo.</p>
+
+<p>El paper completo, con las tablas y el código para reproducir los números, está en Zenodo: <a href="https://zenodo.org/records/24463964">[ENLACE A ZENODO]</a>.</p><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/cuantas-veces-es-suma-de-dos-primos-un.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
