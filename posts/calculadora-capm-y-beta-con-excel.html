@@ -1,0 +1,94 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora CAPM y Beta (con Excel) — El Elefante Económico</title>
+  <meta name="description" content="Calculadora CAPM y Beta (con Excel)">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/calculadora-capm-y-beta-con-excel.html">
+  <meta property="og:title" content="Calculadora CAPM y Beta (con Excel)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/calculadora-capm-y-beta-con-excel.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Calculadora CAPM y Beta (con Excel)</h1>
+  <p class="meta">24 de November de 2026 · Beta, Calculadora CAPM</p>
+  <article><meta charset="utf-8">
+<style>
+.cm-t{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+.cm-t th,.cm-t td{padding:6px 9px;border-bottom:1px solid #d9dee5;text-align:right;white-space:nowrap}
+.cm-t th:first-child,.cm-t td:first-child{text-align:left;white-space:normal}
+.cm-t th{background:#f3f4f6;font-weight:700;color:#374151;white-space:normal}
+.cm-wrap{overflow-x:auto}
+.cm-box{background:#eff6ff;border-left:4px solid #1d4ed8;padding:10px 14px;border-radius:4px;margin:14px 0}
+.cm-warn{background:#fef3c7;border-left-color:#b45309}
+.cm-pos{color:#15803d;font-weight:700}
+.cm-neg{color:#b91c1c;font-weight:700}
+</style>
+
+<div id="cm-wrap">
+
+<p>¿Cuánto rendimiento hay que exigirle a un activo, o a tu propio negocio, por el riesgo que asume? El <b>CAPM</b> es la respuesta más difundida, y es la base del costo del capital propio que usamos para descontar flujos. Esta es la versión corta: qué dice, cómo se estima la beta y qué tener en cuenta.</p>
+
+<h2>La idea</h2>
+
+<p>El riesgo de un activo tiene dos partes: el <b>sistemático</b> (el de la economía en general, que no se elimina) y el <b>específico</b> (propio de la empresa, que se diversifica repartiendo la inversión). Como el específico se puede eliminar sin costo, el mercado solo paga por el sistemático, y la medida de ese riesgo es la <b>beta</b>:</p>
+<p><b>Rendimiento exigido = Rf + β × prima de riesgo de mercado</b></p>
+<p>Con una tasa libre de riesgo de 3,9% y una prima de 5,5% (valores ilustrativos), un activo con beta 1,2 debe rendir 3,9% + 1,2 × 5,5% = 10,5%. Beta 1 significa que se mueve igual que el mercado; mayor que 1, que amplifica sus movimientos; menor que 1, que los atenúa.</p>
+
+<h2>Cómo se estima la beta</h2>
+
+<p>La beta es la pendiente de una regresión entre el exceso de rendimiento del activo y el del mercado (ambos sobre la tasa libre de riesgo). En Excel alcanza con tres funciones sobre dos columnas de rendimientos: <code>PENDIENTE</code> para la beta, <code>INTERSECCION.EJE</code> para el alfa y <code>COEFICIENTE.R2</code> para la parte del riesgo que explica el mercado.</p>
+<p>El resultado es una <b>estimación con margen de error</b>. En el ejemplo del archivo, con 60 meses de datos ficticios para tres empresas, resulta:</p>
+
+<div class="cm-wrap">
+<table class="cm-t">
+<tr><th>Activo</th><th>Beta estimada (IC 95%)</th><th>R²</th><th>Rendimiento exigido</th><th>Rentabilidad que esperás</th><th>Alfa esperado</th></tr>
+<tr><td>Empresa A (defensiva)</td><td>0,52 (0,34 a 0,70)</td><td>36%</td><td>6,7%</td><td>8,5%</td><td class="cm-pos">+1,8 pp</td></tr>
+<tr><td>Empresa B (similar al mercado)</td><td>1,17 (0,82 a 1,53)</td><td>43%</td><td>10,4%</td><td>9,0%</td><td class="cm-neg">−1,4 pp</td></tr>
+<tr><td>Empresa C (cíclica)</td><td>1,39 (1,04 a 1,74)</td><td>52%</td><td>11,5%</td><td>12,0%</td><td class="cm-pos">+0,5 pp</td></tr>
+</table>
+</div>
+
+<p>Tres lecturas útiles:</p>
+<ul>
+<li><b>El intervalo es ancho.</b> La beta de la Empresa B oscila entre 0,82 y 1,53: con pocos datos mensuales, no es un número exacto. Los datos están simulados con betas verdaderas de 0,6, 1,1 y 1,5, y las estimadas se acercan, pero no coinciden.</li>
+<li><b>El R² dice cuánto del riesgo es de mercado.</b> En la Empresa B, de una volatilidad total de 28% anual, unos 18 puntos son riesgo sistemático y unos 21 son específico (se combinan en cuadratura, no se suman).</li>
+<li><b>El alfa histórico no es significativo.</b> Los p-valores del alfa son de 0,53, 0,46 y 0,63: no hay evidencia de que alguna empresa haya rendido más o menos de lo que justificaba su riesgo. Un alfa «significativo» con pocos datos suele ser azar.</li>
+</ul>
+
+<h2>La diversificación en un número</h2>
+
+<p>Con la Empresa B, una cartera de un solo activo tiene un riesgo de 28%. Con 10 activos iguales e independientes en su parte específica, baja a unos 19,6%, pero nunca por debajo del piso sistemático de 18,4%. Es el riesgo que el CAPM remunera y que ninguna diversificación elimina.</p>
+
+<h2>El CAPM en una PyME</h2>
+
+<p>Una PyME no cotiza, así que no tiene beta propia. El camino habitual es tomar la beta de comparables del sector, desapalancarla y volver a apalancarla con tu nivel de deuda, y sumar primas por tamaño y por riesgo específico:</p>
+<p><b>Ke = Rf + β apalancada × prima de mercado + prima por tamaño + prima específica</b></p>
+<p>Con la beta de la Empresa B como comparable (con 30% de deuda sobre patrimonio), una PyME con 40% de deuda, primas de 3% y 3%, un préstamo al 6% y un impuesto del 25%, la beta apalancada es 1,44, el costo del capital propio es 17,8% y el WACC es 12,5%.</p>
+
+<div class="cm-box"><b>Errores para evitar:</b> tomar la beta de una regresión corta como un dato exacto; creer que el CAPM predice rendimientos (da el rendimiento <i>exigido</i> según el riesgo); usar la volatilidad total como medida de riesgo en lugar de la beta; y presentar la tasa resultante como un número único en lugar de un rango.</div>
+
+<h2>El Excel</h2>
+
+<p>El archivo estima la beta por regresión para hasta tres activos, con su intervalo de confianza, el alfa y su significancia; dibuja la línea del mercado y compara lo exigido con lo esperado; descompone el riesgo en sistemático y específico; muestra el efecto de la diversificación y pasa de la beta de un comparable al costo del capital propio y al WACC de una PyME. Solo tenés que pegar tus rendimientos en la hoja «Datos» y cargar tus supuestos.</p>
+
+<p><a href="https://docs.google.com/spreadsheets/d/1KspA5UUmLggreIEelzmQZhGrkAXH0swq/edit?usp=sharing&ouid=105349212690548031888&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer"><b>Descargar la calculadora de CAPM en Excel</b></a></p>
+
+<div class="cm-box cm-warn"><b>Antes de usarlo.</b> Los datos del archivo son ficticios y simulados, y la tasa libre de riesgo y la prima de mercado son ilustrativas: actualizalas con fuentes reconocidas. El CAPM es un modelo con supuestos fuertes (inversores diversificados, mercado sin fricciones); sirve para ordenar la discusión, no para predecir.</div>
+
+<p><i>Este contenido tiene fines educativos y no constituye asesoramiento financiero ni una recomendación de inversión.</i></p>
+
+</div><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/calculadora-capm-y-beta-con-excel.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
