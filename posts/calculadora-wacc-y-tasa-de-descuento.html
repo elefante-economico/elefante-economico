@@ -1,0 +1,97 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora WACC y tasa de Descuento — El Elefante Económico</title>
+  <meta name="description" content="Calculadora WACC y tasa de Descuento">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/calculadora-wacc-y-tasa-de-descuento.html">
+  <meta property="og:title" content="Calculadora WACC y tasa de Descuento">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/calculadora-wacc-y-tasa-de-descuento.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Calculadora WACC y tasa de Descuento</h1>
+  <p class="meta">24 de November de 2026 · Calculadora WACC, tasa de descuento</p>
+  <article><meta charset="utf-8">
+<style>
+.wm-t{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+.wm-t th,.wm-t td{padding:6px 9px;border-bottom:1px solid #d9dee5;text-align:right;white-space:nowrap}
+.wm-t th:first-child,.wm-t td:first-child{text-align:left;white-space:normal}
+.wm-t th{background:#f3f4f6;font-weight:700;color:#374151;white-space:normal}
+.wm-wrap{overflow-x:auto}
+.wm-box{background:#eff6ff;border-left:4px solid #1d4ed8;padding:10px 14px;border-radius:4px;margin:14px 0}
+.wm-warn{background:#fef3c7;border-left-color:#b45309}
+</style>
+
+<div id="wm-wrap">
+
+<p>Un proyecto con los mismos flujos puede convenir con una tasa del 12% y no convenir con una del 20%. La tasa de descuento decide, y casi nadie en una PyME sabe de dónde sacarla. Esta es la versión corta: qué es, cómo se calcula y cómo usarla sin falsa precisión.</p>
+
+<h2>La idea en una línea</h2>
+
+<p>La tasa de descuento es el <b>costo de oportunidad del capital</b>: lo que podrías ganar en otra alternativa de riesgo parecido. Un proyecto conviene si rinde más que eso. Y como depende del <b>riesgo del proyecto</b>, no sirve usar siempre la misma tasa, ni la del último préstamo.</p>
+
+<h2>El WACC en dos fórmulas</h2>
+
+<p>Si se financia con capital propio y deuda, la tasa es el promedio ponderado de ambos costos:</p>
+<p><b>WACC = % capital propio × Ke + % deuda × Kd × (1 − t)</b></p>
+<p>Para el costo del capital propio (Ke) se usa el CAPM, con dos primas adicionales típicas de una PyME, que no cotiza y cuyo dueño no está diversificado:</p>
+<p><b>Ke = Rf + β × prima de mercado + prima por tamaño + prima por riesgo específico</b></p>
+<p>La beta se toma de empresas comparables del sector, desapalancada y vuelta a apalancar con tu nivel de deuda: <b>β apalancada = β desapalancada × [1 + (1 − t) × D/E]</b>.</p>
+
+<h2>Tres pasos para una PyME</h2>
+<ol>
+<li><b>Reunir los datos:</b> la tasa libre de riesgo (el bono soberano a 10 años; en España rondaba el 3,9% a mediados de noviembre de 2026), una prima de mercado de una fuente reconocida, la beta del sector, la tasa real de un préstamo nuevo y tus primas de riesgo, siempre documentadas.</li>
+<li><b>Calcular un caso base y dos escenarios</b> (bajo y alto), moviendo la prima de mercado y las primas de riesgo.</li>
+<li><b>Mirar el rango, no un número.</b> Si la decisión no cambia dentro del rango, es robusta.</li>
+</ol>
+
+<h2>Un ejemplo con números</h2>
+
+<p>Con una tasa libre de riesgo de 3,9%, una prima de mercado de 5,5%, una beta desapalancada de 0,90, un préstamo al 6% y un impuesto del 25% (todos valores ilustrativos), según el perfil del proyecto el WACC queda así:</p>
+
+<div class="wm-wrap">
+<table class="wm-t">
+<tr><th>Perfil del proyecto</th><th>WACC base</th><th>Rango (bajo – alto)</th></tr>
+<tr><td>PyME familiar, solo capital propio</td><td>14,9%</td><td>11,5% – 19,3%</td></tr>
+<tr><td>PyME con préstamo (40% de deuda)</td><td>12,2%</td><td>9,8% – 15,4%</td></tr>
+<tr><td>Expansión de bajo riesgo</td><td>11,5%</td><td>8,8% – 15,0%</td></tr>
+<tr><td>Nuevo negocio, mayor riesgo</td><td>16,9%</td><td>13,7% – 21,0%</td></tr>
+</table>
+</div>
+
+<p>Ahora el proyecto del post sobre VAN y TIR (inversión de 100.000 y una TIR del 23,2%), evaluado con el perfil de la PyME con préstamo: con la tasa base de 12,2%, el VAN es de 35.002, y sigue siendo positivo incluso con la tasa alta de 15,4%. La decisión es <b>robusta</b>.</p>
+
+<div class="wm-box"><b>Pero si el proyecto rinde un 25% menos de lo previsto,</b> su TIR cae a 12,6%. Con la tasa base todavía conviene, pero con la tasa alta ya no: es una zona donde la elección de la tasa cambia la decisión. Ahí hay que revisar el proyecto, y no solo la tasa.</div>
+
+<h2>Tres errores para evitar</h2>
+<ul>
+<li><b>Usar la tasa del préstamo como tasa de descuento.</b> Ignora lo que exige el capital propio, que siempre es mayor.</li>
+<li><b>Usar la misma tasa para todos los proyectos.</b> Un nuevo negocio no tiene el mismo riesgo que reponer una máquina.</li>
+<li><b>Confiar en un número «exacto».</b> Cada componente es una estimación: los tres métodos de la planilla (WACC con CAPM, costo de la deuda más una prima, y tasa mínima del dueño) dan 12,2%, 8,4% y 15% para el mismo caso. Esa dispersión es la incertidumbre real, y conviene mostrarla.</li>
+</ul>
+
+<h2>El Excel</h2>
+
+<p>El archivo calcula todo lo anterior: la beta del sector a partir de comparables, el WACC en los tres escenarios, la comparación de los tres métodos y el VAN y la TIR de tu proyecto con cada tasa, con un diagnóstico de si la decisión es robusta. Solo hay que cargar tus datos en las celdas amarillas de «Supuestos», «Beta_Sector» y «Proyecto».</p>
+
+<p><a href="https://docs.google.com/spreadsheets/d/18jgnvnlizf1H6X-bdEYTyj8xihhxG16P/edit?usp=sharing&ouid=105349212690548031888&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer"><b>Descargar la calculadora de WACC en Excel</b></a></p>
+
+<div class="wm-box wm-warn"><b>Antes de usarlo.</b> Los valores del archivo son ilustrativos y los datos de mercado cambian: actualizá la tasa libre de riesgo y la prima de mercado cada vez que evalúes un proyecto. Las primas por tamaño y por riesgo específico son juicios del analista: documentalas.</div>
+
+<p><i>Este contenido tiene fines educativos y no constituye asesoramiento financiero.</i></p>
+
+</div><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/calculadora-wacc-y-tasa-de-descuento.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
