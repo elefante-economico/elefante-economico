@@ -1,0 +1,169 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El espectro político y sus políticas económicas — El Elefante Económico</title>
+  <meta name="description" content="El espectro político y sus políticas económicas">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/el-espectro-politico-y-sus-politicas.html">
+  <meta property="og:title" content="El espectro político y sus políticas económicas">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/el-espectro-politico-y-sus-politicas.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>El espectro político y sus políticas económicas</h1>
+  <p class="meta">25 de November de 2026 · Política Económica</p>
+  <article><!-- Post para El Elefante Económico: el espectro político y sus políticas económicas -->
+<p>Solemos escuchar que un gobierno es “de izquierda” o “de derecha”, como si la economía viniera en dos paquetes cerrados. Sin embargo, entre un extremo y otro hay una línea continua con muchos matices, y cada punto de esa línea defendió, a lo largo de la historia, un conjunto distinto de herramientas económicas.</p>
+<p>En este post se puede recorrer esa línea con un simulador: al mover el punto aparece lo que cada espacio defiende históricamente en impuestos, gasto, mercado, trabajo y comercio. Más abajo, un segundo simulador muestra qué ocurre cuando cambia el contexto económico. El post describe posiciones; no toma partido por ninguna.</p>
+
+<div class="ee" id="ee-espectro">
+<style>
+.ee{font-family:Georgia,"Times New Roman",serif;color:#1f2933;background:#fbfaf7;border:1px solid #e2ded3;border-radius:12px;padding:18px;max-width:760px;margin:18px auto;line-height:1.5;box-sizing:border-box}
+.ee *{box-sizing:border-box}
+.ee h3{margin:0 0 4px;font-size:19px}
+.ee .ee-sub{margin:0 0 10px;font-size:14px;color:#4b5563}
+.ee-range{-webkit-appearance:none;appearance:none;display:block;width:80%;margin:16px 10% 6px;height:8px;border-radius:4px;background:linear-gradient(90deg,#b5483a,#9a5f1f,#6b7280,#4a78a8,#2f5d8a);outline:none}
+.ee-range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:5px solid var(--c,#555);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.ee-range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:5px solid var(--c,#555);cursor:pointer}
+.ee-lbls{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.ee-lbls button{background:none;border:0;border-bottom:3px solid transparent;font:inherit;font-size:12px;line-height:1.2;padding:6px 1px;cursor:pointer;color:#374151;word-break:break-word}
+.ee-lbls button.on{font-weight:bold;border-bottom-color:var(--c);color:var(--c)}
+.ee-panel{margin-top:12px;background:#fff;border:1px solid #e5e7eb;border-left:6px solid var(--c);border-radius:8px;padding:14px}
+.ee-panel h4{margin:0 0 2px;font-size:18px}
+.ee-tag{margin:0 0 10px;font-style:italic;color:#4b5563;font-size:14px}
+.ee-row{display:grid;grid-template-columns:150px 1fr;gap:8px;padding:7px 0;border-top:1px solid #eef0f2;font-size:14px}
+.ee-row b{color:#111827}
+.ee-ref{margin:10px 0 0;font-size:13px;color:#4b5563}
+.ee-note{font-size:12.5px;color:#6b7280;margin:10px 0 0}
+.ee-ctx{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.ee-ctx button{font:inherit;font-size:13px;padding:8px 12px;border-radius:20px;border:1px solid #9ca3af;background:#fff;color:#1f2933;cursor:pointer}
+.ee-ctx button.on{background:#1f2933;color:#fff;border-color:#1f2933}
+.ee-out ul{list-style:none;margin:0;padding:0}
+.ee-out li{padding:9px 0;border-top:1px solid #eef0f2;font-size:14px}
+.ee-chip{display:inline-block;color:#fff;font-size:11px;padding:1px 8px;border-radius:10px;margin:4px 4px 0 0;font-family:Arial,sans-serif}
+.ee-sum{margin-top:10px;font-size:14px;background:#fff;border:1px dashed #9ca3af;border-radius:8px;padding:10px}
+@media(max-width:560px){.ee-row{grid-template-columns:1fr;gap:2px}.ee-lbls button{font-size:10.5px}}
+</style>
+
+<h3>1. La línea política y sus políticas económicas</h3>
+<p class="ee-sub">Mueve el control o toca una etiqueta para recorrer el espectro.</p>
+<input type="range" class="ee-range" id="ee-range" min="0" max="4" step="1" value="2" aria-label="Posición en el espectro político">
+<div class="ee-lbls" id="ee-lbls"></div>
+<div class="ee-panel" id="ee-panel" aria-live="polite"></div>
+<p class="ee-note">Mapa simplificado: el significado de izquierda y derecha cambia según el país y la época, y ningún partido real encaja a la perfección en una sola casilla.</p>
+
+<h3 style="margin-top:26px">2. Y si cambia el contexto, ¿qué herramientas piden los problemas?</h3>
+<p class="ee-sub">Elige una situación económica y mira de qué espacios suelen venir las herramientas para enfrentarla.</p>
+<div class="ee-ctx" id="ee-ctx"></div>
+<div class="ee-out" id="ee-out"></div>
+
+<script>
+(function(){
+var P=[
+{n:"Izquierda",c:"#b5483a",tag:"Más Estado y más igualdad: la economía al servicio de lo colectivo.",
+r:["Muy progresivos sobre la renta y el patrimonio; impuestos a grandes fortunas y herencias.",
+"Servicios universales y gratuitos (salud, educación, pensiones públicas); amplia redistribución.",
+"Propiedad pública o control estatal de sectores estratégicos (energía, banca, transporte); topes a precios y alquileres.",
+"Sindicatos fuertes, salarios mínimos altos, reducción de jornada y estabilidad laboral.",
+"Protección de la industria local, control de capitales; el Estado como gran inversor o planificador."],
+ref:"Referentes históricos: propuestas de nacionalización y planificación del siglo XX; hoy, impuestos a grandes patrimonios y alquileres regulados."},
+{n:"Centroizquierda",c:"#9a5f1f",tag:"Capitalismo con red de seguridad: mercado más Estado de bienestar.",
+r:["Progresivos, para financiar el Estado de bienestar.",
+"Gasto contracíclico (herencia de Keynes), salud y educación públicas, seguro de desempleo, vivienda social.",
+"Economía mixta: mercado con regulación, defensa de la competencia y control de abusos.",
+"Negociación colectiva, salario mínimo y derechos laborales.",
+"Apertura con compensaciones para los sectores perjudicados; deuda pública para invertir."],
+ref:"Referentes históricos: Estado de bienestar europeo de la posguerra y modelo nórdico."},
+{n:"Centro",c:"#6b7280",tag:"Pragmatismo: lo que funcione, con reglas claras e instituciones sólidas.",
+r:["Base amplia y tasas moderadas; neutralidad y lucha contra la evasión.",
+"Equilibrio fiscal a lo largo del ciclo, inversión en capital humano e infraestructura, estabilizadores automáticos.",
+"Economía social de mercado: competencia con reglas y alianzas público-privadas.",
+"Flexiseguridad: flexibilidad para las empresas con protección y capacitación para los trabajadores.",
+"Apertura comercial y banco central independiente con metas de inflación."],
+ref:"Referentes históricos: economía social de mercado alemana y la Tercera Vía de los años 90."},
+{n:"Centroderecha",c:"#4a78a8",tag:"Mercado primero, con un Estado acotado pero presente en lo esencial.",
+r:["Moderados y competitivos; alivio para familias y empresas.",
+"Disciplina fiscal y deuda baja; protección social básica y focalizada.",
+"Privatizaciones selectivas, menos burocracia y regulación que preserve la competencia.",
+"Mayor flexibilidad laboral e incentivos al empleo privado.",
+"Libre comercio, estabilidad monetaria y atracción de inversiones."],
+ref:"Referentes históricos: democracia cristiana europea y el ordoliberalismo de la posguerra."},
+{n:"Derecha",c:"#2f5d8a",tag:"Libertad económica: el motor es la iniciativa privada.",
+r:["Bajos y simples; recortes para estimular la inversión (economía de la oferta).",
+"Reducción del gasto y del tamaño del Estado; déficit mínimo o cero.",
+"Desregulación y privatización amplias; la propiedad privada como eje.",
+"Mercado laboral flexible, negociación individual o por empresa.",
+"Libre comercio, moneda sana y mínima intervención monetaria."],
+ref:"Referentes históricos: Thatcher y Reagan en los años 80 (privatizaciones, recortes de impuestos) y el liberalismo clásico."}
+];
+var A=["Impuestos","Gasto público y Estado","Mercado y regulación","Trabajo","Comercio, moneda y deuda"];
+var C=[
+{n:"Recesión y desempleo alto",i:[
+["Estímulo fiscal temporal y obra pública para sostener la demanda.",[1]],
+["Seguro de desempleo y transferencias para evitar que caiga el consumo.",[0,1]],
+["Alivio impositivo y menos trabas para reactivar la inversión privada.",[3,4]],
+["Política monetaria expansiva, con banco central independiente.",[2]]]},
+{n:"Inflación alta y deuda insostenible",i:[
+["Ordenamiento fiscal creíble: reducir el déficit y la deuda.",[3,4]],
+["Banco central independiente con metas de inflación.",[2]],
+["Protección focalizada de los más vulnerables durante el ajuste.",[0,1]],
+["Mejor recaudación (lucha contra la evasión) y eficiencia del gasto.",[2]]]},
+{n:"Crecimiento con desigualdad creciente",i:[
+["Impuestos progresivos y acceso universal a salud y educación.",[0,1]],
+["Incentivos a la inversión y a la productividad, menos burocracia.",[3,4]],
+["Reglas de competencia contra la concentración de mercados.",[1,2]],
+["Capacitación y flexiseguridad laboral.",[2]]]},
+{n:"Monopolio natural o falla de mercado",i:[
+["Regulación de tarifas o propiedad pública del servicio.",[0,1]],
+["Concesión privada con contrato y supervisión estricta.",[2,3]],
+["Apertura a la competencia donde el mercado sí puede funcionar.",[3,4]],
+["Evaluar con evidencia, caso por caso, qué modelo rinde mejor.",[2]]]}
+];
+var rg=document.getElementById("ee-range"),lb=document.getElementById("ee-lbls"),pn=document.getElementById("ee-panel"),cx=document.getElementById("ee-ctx"),out=document.getElementById("ee-out");
+var bs=[];
+P.forEach(function(p,i){var b=document.createElement("button");b.type="button";b.textContent=p.n;b.style.setProperty("--c",p.c);b.onclick=function(){show(i)};lb.appendChild(b);bs.push(b)});
+function show(i){
+var p=P[i];rg.value=i;rg.style.setProperty("--c",p.c);pn.style.setProperty("--c",p.c);
+bs.forEach(function(b,k){b.className=k===i?"on":""});
+var h="<h4 style=\"color:"+p.c+"\">"+p.n+"</h4><p class=\"ee-tag\">"+p.tag+"</p>";
+A.forEach(function(a,k){h+="<div class=\"ee-row\"><b>"+a+"</b><span>"+p.r[k]+"</span></div>"});
+h+="<p class=\"ee-ref\">"+p.ref+"</p>";
+pn.innerHTML=h;
+}
+rg.oninput=function(){show(+rg.value)};
+function chip(k){return "<span class=\"ee-chip\" style=\"background:"+P[k].c+"\">"+P[k].n+"</span>"}
+var cb=[];
+C.forEach(function(c,i){var b=document.createElement("button");b.type="button";b.textContent=c.n;b.onclick=function(){ctx(i)};cx.appendChild(b);cb.push(b)});
+function ctx(i){
+cb.forEach(function(b,k){b.className=k===i?"on":""});
+var used={},h="<ul>";
+C[i].i.forEach(function(it){h+="<li>"+it[0]+"<br>";it[1].forEach(function(k){used[k]=1;h+=chip(k)});h+="</li>"});
+h+="</ul>";
+var n=Object.keys(used).map(Number).sort();
+h+="<div class=\"ee-sum\">En este contexto, las herramientas vienen de <b>"+n.length+" de los 5 espacios</b> del espectro: "+n.map(chip).join("")+"</div>";
+out.innerHTML=h;
+}
+show(2);ctx(0);
+})();
+</script>
+</div>
+
+<h3>Conclusión: la economía es una caja de herramientas</h3>
+<p>Todo lo anterior ocurre, y esto es lo central, dentro de un marco democrático: elecciones libres, división de poderes, prensa independiente y alternancia en el poder. Ese marco es lo que permite que los ciudadanos premien o castiguen los resultados y corrijan el rumbo cuando una política no funciona.</p>
+<p>Dentro de ese marco, los partidos de hoy no pueden encerrarse en el recetario de su casillero histórico. Una recesión profunda suele pedir herramientas que la tradición asocia con el centroizquierda; un desequilibrio fiscal con inflación alta, otras más cercanas al centro y la derecha; y una economía que crece pero deja gente atrás necesita combinar incentivos a la inversión con instituciones de redistribución. La historia reciente tiene ejemplos de ambos lados: laboristas y socialdemócratas que impulsaron reformas de mercado en los años 80 y 90, y conservadores que aceptaron el Estado de bienestar de la posguerra.</p>
+<p>Lo que define a un buen gobierno, entonces, no es qué tan fiel es a una etiqueta, sino qué tan bien diagnostica el contexto, qué tan bien elige las herramientas de todo el espectro y qué tan transparente es al rendir cuentas.</p>
+<p><b>Matices.</b> Esta mirada tiene críticas legítimas. Algunos sostienen que, sin un norte de valores, el pragmatismo se vuelve oportunismo o renuncia a los ideales (es una crítica clásica a la Tercera Vía). Otros señalan que cambiar de herramientas según el contexto puede erosionar la previsibilidad que necesitan las inversiones. Y los propios economistas discrepan sobre cuál es la mejor herramienta en cada situación. Justamente por eso importan la evidencia, el debate abierto y las instituciones democráticas que permiten corregir errores.</p>
+<p><b>Para profundizar:</b> <a href="https://en.wikipedia.org/wiki/Economic_progressivism" target="_blank" rel="noopener">economic progressivism</a>, <a href="https://en.wikipedia.org/wiki/Fiscal_conservatism" target="_blank" rel="noopener">fiscal conservatism</a>, <a href="https://en.wikipedia.org/wiki/Third_Way" target="_blank" rel="noopener">Third Way</a> y <a href="https://www.britannica.com/topic/third-way" target="_blank" rel="noopener">Britannica: third way</a>.</p><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/el-espectro-politico-y-sus-politicas.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
