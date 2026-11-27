@@ -1,0 +1,184 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cálculo actuarial de siniestros: los modelos detrás del seguro de coche — El Elefante Económico</title>
+  <meta name="description" content="Cálculo actuarial de siniestros: los modelos detrás del seguro de coche">
+  <link rel="canonical" href="https://elelefanteeconomico.blogspot.com/2026/11/calculo-actuarial-de-siniestros-los.html">
+  <meta property="og:title" content="Cálculo actuarial de siniestros: los modelos detrás del seguro de coche">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://elefante-economico.github.io/elefante-economico/posts/calculo-actuarial-de-siniestros-los.html">
+  <style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+    a { color: #0056b3; }
+    .meta { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <p><a href="../">← Volver al índice</a></p>
+  <h1>Cálculo actuarial de siniestros: los modelos detrás del seguro de coche</h1>
+  <p class="meta">27 de November de 2026 · Calculo actuarial, siniestros de coches</p>
+  <article><article class="ee-post">
+<style>
+.ee-post{--ee-text:#1f2328;--ee-muted:#5b6470;--ee-bg:#ffffff;--ee-card:#f4f6f8;--ee-line:#d9dee3;--ee-accent:#0b5c8a;max-width:760px;margin:0 auto;line-height:1.7;font-size:17px;color:var(--ee-text)}
+@media (prefers-color-scheme:dark){.ee-post{--ee-text:#e6e9ed;--ee-muted:#a3acb7;--ee-bg:#14181d;--ee-card:#1d232a;--ee-line:#323a44;--ee-accent:#6cb6e6}}
+.ee-post h1{font-size:2em;line-height:1.25;margin:0 0 .3em}
+.ee-post h2{font-size:1.45em;margin:1.8em 0 .5em;padding-bottom:.25em;border-bottom:2px solid var(--ee-accent)}
+.ee-post h3{font-size:1.15em;margin:1.4em 0 .3em;color:var(--ee-accent)}
+.ee-post .ee-lead{font-size:1.12em;color:var(--ee-muted)}
+.ee-post .ee-box{background:var(--ee-card);border-left:4px solid var(--ee-accent);padding:.9em 1.1em;border-radius:6px;margin:1.2em 0}
+.ee-post .ee-formula{background:var(--ee-card);border:1px solid var(--ee-line);border-radius:6px;padding:.7em 1em;margin:.8em 0;font-family:Georgia,"Times New Roman",serif;font-size:1.05em;text-align:center;overflow-x:auto}
+.ee-post .ee-table-wrap{overflow-x:auto;margin:1em 0}
+.ee-post table{border-collapse:collapse;width:100%;font-size:.93em}
+.ee-post th,.ee-post td{border:1px solid var(--ee-line);padding:.55em .7em;text-align:left;vertical-align:top}
+.ee-post th{background:var(--ee-card)}
+.ee-post td.ee-num,.ee-post th.ee-num{text-align:right;font-variant-numeric:tabular-nums}
+.ee-post .ee-note{font-size:.88em;color:var(--ee-muted);margin-top:2em;border-top:1px solid var(--ee-line);padding-top:1em}
+</style>
+
+<h1>Cálculo actuarial de siniestros: los modelos detrás del seguro de coche</h1>
+<p class="ee-lead">Cuando una aseguradora te ofrece una prima para tu coche, detrás hay una pregunta estadística: ¿cuántos siniestros tendrá una persona como tú y cuánto costarán? En este post vemos cómo lo calculan los actuarios, qué modelos usan para fijar precios (tarificación) y cuáles para estimar cuánto dinero deben tener guardado para siniestros ya ocurridos (reservas).</p>
+
+<h2>1. El problema actuarial: el riesgo se compra antes de conocer su costo</h2>
+<p>El seguro tiene una particularidad económica: el <strong>costo del producto se conoce después de venderlo</strong>. La aseguradora cobra hoy una prima y pagará siniestros dentro de meses o incluso de años, sobre todo en daños corporales. El trabajo actuarial se divide en dos grandes bloques:</p>
+<ul>
+<li><strong>Tarificación (<em>pricing</em>):</strong> fijar la prima justa para cada perfil de riesgo, mirando al futuro.</li>
+<li><strong>Reservas (<em>reserving</em>):</strong> estimar el costo final de los siniestros ya ocurridos, mirando al pasado, para provisionar lo necesario.</li>
+</ul>
+<p>Ambos se apoyan en una idea central de la estadística: la <strong>ley de los grandes números</strong>. Lo impredecible para un conductor individual se vuelve razonablemente predecible en una cartera de cientos de miles.</p>
+
+<h2>2. Anatomía de un siniestro: frecuencia y severidad</h2>
+<p>El enfoque clásico separa el costo en dos componentes que se modelan por separado:</p>
+<div class="ee-formula">Prima pura = Frecuencia esperada × Severidad media</div>
+<ul>
+<li><strong>Frecuencia:</strong> número de siniestros por unidad de exposición (por ejemplo, por vehículo-año).</li>
+<li><strong>Severidad:</strong> costo de cada siniestro cuando ocurre.</li>
+</ul>
+<div class="ee-box">
+<p><strong>Ejemplo ilustrativo (cifras inventadas):</strong> si un perfil de conductor tiene una frecuencia de 0,06 siniestros por año (6 de cada 100 pólizas) y una severidad media de 2.800 €, la prima pura es 0,06 × 2.800 = <strong>168 €</strong>. A eso se le suman gastos de gestión, comisiones, margen de seguridad, recargo para reaseguro y beneficio, además de impuestos y recargos legales, para llegar a la prima comercial.</p>
+</div>
+<p>Separar frecuencia y severidad es útil porque los factores que las explican son distintos. La frecuencia depende mucho de la edad, la experiencia y el uso; la severidad, del valor del vehículo, del costo de reparaciones y, sobre todo, de si hay lesiones personales.</p>
+
+<h2>3. Modelos de frecuencia: contar siniestros</h2>
+<h3>3.1. Distribución de Poisson</h3>
+<p>Para sucesos poco frecuentes e independientes, el número de siniestros se modela con una <strong>Poisson</strong>:</p>
+<div class="ee-formula">P(N = k) = e<sup>−λ</sup> · λ<sup>k</sup> / k! &nbsp;&nbsp;&nbsp; con E[N] = Var[N] = λ</div>
+<h3>3.2. Binomial negativa y modelos con exceso de ceros</h3>
+<p>En la práctica los datos muestran <strong>sobredispersión</strong>: la varianza supera a la media, porque los conductores no son homogéneos (algunos son sistemáticamente más propensos). La <strong>binomial negativa</strong> (equivalente a una Poisson cuyo parámetro varía entre asegurados según una distribución gamma) lo corrige. Cuando hay demasiadas pólizas sin siniestros, se emplean modelos <strong>inflados en ceros</strong> (<em>zero-inflated</em>).</p>
+
+<h2>4. Modelos de severidad: cuánto cuesta cada siniestro</h2>
+<p>Los costos son positivos, asimétricos y con cola larga: muchos siniestros pequeños y pocos enormes. Las distribuciones habituales son:</p>
+<ul>
+<li><strong>Gamma y lognormal</strong> para el cuerpo de la distribución (siniestros "normales").</li>
+<li><strong>Pareto generalizada (GPD)</strong> para la cola, siguiendo la teoría de valores extremos, aplicada a siniestros que superan un umbral alto.</li>
+<li><strong>Modelos mixtos:</strong> cuerpo con lognormal o gamma y cola con Pareto, empalmados en un umbral.</li>
+</ul>
+<p>Los <strong>siniestros graves</strong>, típicamente los daños corporales, se tratan aparte. En España, la indemnización por lesiones y fallecimiento en accidentes de tráfico se rige por el <strong>baremo</strong> de la Ley 35/2015, lo que introduce un componente normativo en la severidad y obliga a actualizar los modelos cuando cambia la regulación. También es habitual separar por <strong>garantía</strong>: responsabilidad civil obligatoria, daños propios, lunas, robo, asistencia, etc., porque cada una tiene su propia dinámica.</p>
+
+<h2>5. Modelos lineales generalizados (GLM): el estándar de la industria</h2>
+<p>Los <strong>GLM</strong> son la herramienta más extendida para tarificación. Permiten explicar la frecuencia o la severidad en función de variables del conductor, del vehículo y de la zona, con una estructura multiplicativa fácil de interpretar y de auditar:</p>
+<div class="ee-formula">E[Y] = μ = exp(β<sub>0</sub> + β<sub>1</sub>·edad + β<sub>2</sub>·zona + β<sub>3</sub>·potencia + …)</div>
+<ul>
+<li><strong>Frecuencia:</strong> GLM Poisson (o binomial negativa) con enlace logarítmico y la exposición como <em>offset</em>.</li>
+<li><strong>Severidad:</strong> GLM gamma con enlace logarítmico.</li>
+<li><strong>Prima pura directa:</strong> modelo <strong>Tweedie</strong>, que acepta una masa de ceros (pólizas sin siniestro) junto con valores positivos continuos.</li>
+</ul>
+<p>Cada coeficiente se traduce en un <strong>relativo de tarifa</strong>: por ejemplo, "esta zona cuesta un 12 % más que la base". Esa transparencia explica por qué los reguladores y las propias aseguradoras valoran los GLM.</p>
+
+<h3>Variables de tarificación habituales</h3>
+<div class="ee-table-wrap">
+<table>
+<thead><tr><th>Dimensión</th><th>Ejemplos</th></tr></thead>
+<tbody>
+<tr><td>Conductor</td><td>Edad, antigüedad del carné, historial de siniestros</td></tr>
+<tr><td>Vehículo</td><td>Marca y modelo, potencia, valor, antigüedad, dispositivos de seguridad</td></tr>
+<tr><td>Uso</td><td>Kilómetros anuales, uso particular o profesional, garaje</td></tr>
+<tr><td>Geografía</td><td>Código postal, densidad de tráfico, riesgo de robo</td></tr>
+<tr><td>Comportamiento</td><td>Telemática (frenadas, velocidad, horarios), antigüedad como cliente</td></tr>
+</tbody>
+</table>
+</div>
+<p>Hay un límite normativo importante: en la UE, desde 2012 está prohibido usar el sexo como factor de tarificación (sentencia Test-Achats), y el uso de datos personales está sujeto al RGPD. Esto obliga a los actuarios a trabajar con otras variables y a vigilar que no se reintroduzca discriminación por vías indirectas.</p>
+
+<h2>6. Credibilidad: cuánto confiar en la experiencia propia</h2>
+<p>Un conductor con un solo año de historial, o un segmento con pocos datos, ¿debe pagar según su experiencia reciente o según la media? La <strong>teoría de la credibilidad</strong> (Bühlmann, Bühlmann–Straub) responde combinando ambas fuentes con un peso Z:</p>
+<div class="ee-formula">Prima = Z · (experiencia propia) + (1 − Z) · (prima colectiva) &nbsp;&nbsp;&nbsp; con &nbsp; Z = n / (n + k)</div>
+<p>A mayor volumen de datos (n), mayor peso de la experiencia propia. Es el fundamento matemático de que un gran flotista pague según sus propios resultados y un conductor nuevo según el perfil de su grupo.</p>
+
+<h2>7. Bonus-malus: un sistema de Markov</h2>
+<p>El clásico sistema de bonificaciones y recargos por historial de siniestros se modela como una <strong>cadena de Markov</strong>: cada nivel de descuento es un estado y la probabilidad de pasar de un nivel a otro depende de si hubo o no siniestros durante el año. El actuario calcula la <strong>distribución estacionaria</strong> de la cadena para comprobar que el sistema, en equilibrio, recauda la prima necesaria. Es además un mecanismo de incentivos: premia la conducción prudente y corrige la selección adversa.</p>
+
+<h2>8. Reservas: cuánto costarán los siniestros que ya ocurrieron</h2>
+<p>Un siniestro ocurrido hoy puede liquidarse años después, y otros todavía no se han declarado. Las reservas técnicas deben cubrir:</p>
+<ul>
+<li><strong>Siniestros pendientes de pago o liquidación</strong> (conocidos).</li>
+<li><strong>IBNR</strong> (<em>Incurred But Not Reported</em>): siniestros ocurridos pero aún no declarados, y también la evolución adversa de los ya conocidos (IBNER).</li>
+</ul>
+
+<h3>8.1. El triángulo de desarrollo y el método Chain-Ladder</h3>
+<p>Los siniestros se organizan en un <strong>triángulo de run-off</strong>: filas por año de ocurrencia, columnas por años de desarrollo y valores acumulados pagados. El método <strong>Chain-Ladder</strong> calcula factores de desarrollo medios y los usa para proyectar el costo último.</p>
+<div class="ee-box">
+<p><strong>Ejemplo ilustrativo (miles de €, pagos acumulados):</strong></p>
+<div class="ee-table-wrap">
+<table>
+<thead><tr><th>Año de ocurrencia</th><th class="ee-num">Año 1</th><th class="ee-num">Año 2</th><th class="ee-num">Año 3</th><th class="ee-num">Año 4</th></tr></thead>
+<tbody>
+<tr><td>2022</td><td class="ee-num">1.000</td><td class="ee-num">1.800</td><td class="ee-num">2.000</td><td class="ee-num">2.050</td></tr>
+<tr><td>2023</td><td class="ee-num">1.100</td><td class="ee-num">2.000</td><td class="ee-num">2.250</td><td class="ee-num">—</td></tr>
+<tr><td>2024</td><td class="ee-num">1.200</td><td class="ee-num">2.150</td><td class="ee-num">—</td><td class="ee-num">—</td></tr>
+<tr><td>2025</td><td class="ee-num">1.300</td><td class="ee-num">—</td><td class="ee-num">—</td><td class="ee-num">—</td></tr>
+</tbody>
+</table>
+</div>
+<p>Factores de desarrollo (suma de columna siguiente ÷ suma de la columna anterior, solo con años completos):</p>
+<ul>
+<li>Año 1 → 2: (1.800 + 2.000 + 2.150) ÷ (1.000 + 1.100 + 1.200) = <strong>1,803</strong></li>
+<li>Año 2 → 3: (2.000 + 2.250) ÷ (1.800 + 2.000) = <strong>1,118</strong></li>
+<li>Año 3 → 4: 2.050 ÷ 2.000 = <strong>1,025</strong></li>
+</ul>
+<p>Costo último proyectado por año y reserva (último − pagado a la fecha): 2022 → 2.050 (reserva 0); 2023 → 2.306 (reserva 56); 2024 → 2.465 (reserva 315); 2025 → 2.687 (reserva 1.387). <strong>Reserva total estimada ≈ 1.758 miles de €.</strong></p>
+</div>
+<p>El método asume que el patrón de desarrollo pasado se repetirá, lo cual falla si cambian los procesos de liquidación, la inflación de reparaciones o la jurisprudencia.</p>
+
+<h3>8.2. Otros métodos de reservas</h3>
+<ul>
+<li><strong>Bornhuetter–Ferguson:</strong> combina la proyección del Chain-Ladder con una expectativa <em>a priori</em> de la siniestralidad final. Es más estable en años recientes, donde hay pocos datos.</li>
+<li><strong>Cape Cod:</strong> variante que estima la siniestralidad a priori a partir de los propios datos.</li>
+<li><strong>Frecuencia × severidad por garantía:</strong> proyecta por separado el número de siniestros y el costo medio, útil cuando cambian las mezclas de siniestros.</li>
+<li><strong>Modelos estocásticos:</strong> el <strong>modelo de Mack</strong> da una estimación del error estándar de la reserva del Chain-Ladder, y el <strong>bootstrap</strong> (England–Verrall) simula miles de triángulos para obtener una distribución completa de la reserva, no solo un número.</li>
+</ul>
+
+<h2>9. Cuando entran el aprendizaje automático y la telemática</h2>
+<p>Los GLM siguen siendo el estándar, pero se complementan con:</p>
+<ul>
+<li><strong>Gradient boosting y bosques aleatorios</strong> para detectar interacciones y no linealidades que un GLM no capta fácilmente.</li>
+<li><strong>Seguros basados en uso (UBI/PAYD):</strong> datos de telemática (velocidad, aceleraciones, frenadas, horarios) que miden el comportamiento real en lugar de proxies demográficos.</li>
+<li><strong>Visión por computadora</strong> para valorar daños a partir de fotos, y <strong>modelos de detección de fraude</strong> en la liquidación.</li>
+</ul>
+<p>El desafío no es solo predictivo: es de <strong>explicabilidad, equidad y cumplimiento normativo</strong>. Un modelo más preciso pero opaco, o que discrimine indirectamente, puede ser inaceptable para el regulador y para el cliente.</p>
+
+<h2>10. Capital y regulación: Solvencia II e IFRS 17</h2>
+<p>Una vez estimado el costo esperado, falta cubrir la posibilidad de que sea peor. En la UE, <strong>Solvencia II</strong> exige a las aseguradoras un capital de solvencia obligatorio (SCR) calibrado para un nivel de confianza del 99,5 % a un año. Para seguros de no vida, el módulo de riesgo de primas y reservas se calcula con la fórmula estándar o con modelos internos aprobados por el supervisor. En paralelo, la norma contable <strong>IFRS 17</strong> cambió la forma de presentar y valorar los contratos de seguro, incluyendo un ajuste explícito por riesgo no financiero. Para los actuarios, esto implica vincular los modelos de reservas con los de capital y con la información financiera.</p>
+<p>Y un recordatorio de gestión de riesgos: el <strong>reaseguro</strong> (por ejemplo, de exceso de siniestro para cubrir los grandes daños corporales) y los límites de retención permiten acotar las colas que los modelos estiman con más incertidumbre.</p>
+
+<h2>11. Los límites de los modelos</h2>
+<ul>
+<li><strong>Inflación de siniestros:</strong> el encarecimiento de repuestos y mano de obra o el aumento de costos de daños corporales rompe los patrones históricos.</li>
+<li><strong>Cambios en el comportamiento:</strong> teletrabajo, pandemia, movilidad urbana, vehículos eléctricos y sistemas de asistencia a la conducción alteran frecuencia y severidad.</li>
+<li><strong>Cambios legislativos y jurisprudenciales:</strong> como una actualización del baremo.</li>
+<li><strong>Riesgo de modelo:</strong> sobreajuste, datos incompletos y sesgos en la selección de variables.</li>
+<li><strong>Selección adversa y riesgo moral:</strong> el asegurado conoce su riesgo mejor que la aseguradora; los sistemas de tarifas y franquicias intentan reducir esa brecha de información.</li>
+</ul>
+
+<h2>Conclusión</h2>
+<p>El cálculo actuarial de siniestros combina estadística, economía de la información y regulación. En <strong>tarificación</strong>, el esquema frecuencia–severidad con GLM, credibilidad y bonus-malus sigue siendo la columna vertebral; en <strong>reservas</strong>, el Chain-Ladder y sus variantes estocásticas permiten estimar no solo un valor central sino su incertidumbre. El aprendizaje automático y la telemática afinan la medición del riesgo, pero no reemplazan el criterio profesional: la tarea del actuario es construir modelos útiles sabiendo en qué punto dejan de serlo.</p>
+
+<p class="ee-note">Este contenido es divulgativo y educativo. Las cifras de los ejemplos son ilustrativas y no representan datos reales de ninguna aseguradora. La normativa citada (baremo, Solvencia II, IFRS 17, RGPD) puede haber sido modificada; conviene verificar la versión vigente antes de aplicarla.</p>
+</article><div class="blogger-post-footer">El Elefante Económico</div></article>
+  <hr>
+  <p><a href="https://elelefanteeconomico.blogspot.com/2026/11/calculo-actuarial-de-siniestros-los.html" target="_blank">Ver en el blog original</a></p>
+</body>
+</html>
